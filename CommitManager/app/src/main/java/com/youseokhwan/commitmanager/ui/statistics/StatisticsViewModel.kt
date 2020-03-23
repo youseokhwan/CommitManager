@@ -1,13 +1,13 @@
-package com.youseokhwan.commitmanager.ui.dashboard
+package com.youseokhwan.commitmanager.ui.statistics
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class DashboardViewModel : ViewModel() {
+class StatisticsViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is dashboard Fragment"
+        value = "This is statistics Fragment"
     }
     val text: LiveData<String> = _text
 }
