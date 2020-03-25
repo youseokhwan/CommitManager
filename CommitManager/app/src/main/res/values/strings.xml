@@ -3,4 +3,10 @@
     <string name="title_home">Home</string>
     <string name="title_statistics">Statistics</string>
     <string name="title_settings">Settings</string>
+    <string name="title_welcome">Welcome!</string>
+    <string name="context_welcome">Let\'s Commit!!</string>
+    <string name="button_welcome">Next</string>
+    <string name="temp_githubid">GitHub ID</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
 </resources>

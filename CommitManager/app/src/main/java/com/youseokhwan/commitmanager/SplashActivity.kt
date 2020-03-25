@@ -17,7 +17,9 @@ class SplashActivity : AppCompatActivity() {
         /*
          * 최초 실행일 경우 FirstRunActivity, 아닐 경우 MainActivity로 이동
          */
-        if (settings.getBoolean("isFirstRun", true)) {
+//        if (settings.getBoolean("isFirstRun", true)) {
+            Log.d("CommitManagerLog", "isFirstRun: true")
+
             /*
              * editor 코드 블럭은 FirstRunActivity에서 구현해야 함
              * 기본 설정을 마치면 isFirstRun을 false로 변경하도록 구현하고 line 25-28은 삭제할 것
@@ -27,13 +29,13 @@ class SplashActivity : AppCompatActivity() {
             editor.putBoolean("isFirstRun", false)
             editor.apply()
 
-            Log.d("CommitManagerLog", "First Run")
-
             startActivity<FirstRunActivity>()
             finish()
-        } else {
-            startActivity<MainActivity>()
-            finish()
-        }
+//        } else {
+//            Log.d("CommitManagerLog", "isFirstRun: false")
+//
+//            startActivity<MainActivity>()
+//            finish()
+//        }
     }
 }

@@ -2,7 +2,8 @@ package com.youseokhwan.commitmanager
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import org.jetbrains.anko.startActivity
+import com.youseokhwan.commitmanager.ui.githubid.GitHubIdFragment
+import com.youseokhwan.commitmanager.ui.welcome.WelcomeFragment
 
 class FirstRunActivity : AppCompatActivity() {
 
@@ -12,11 +13,27 @@ class FirstRunActivity : AppCompatActivity() {
 
         /*
          * 최초 실행 시 환영 문구 출력
-         * GitHub ID 입력받고 알람 시간 설정 등 작업 후 MainActivity로 이동
+         */
+        onFragmentChange("welcome")
+
+        /* GitHub ID 입력받고 알람 시간 설정 등 작업 후 MainActivity로 이동
          * 실행 시 isFirstRun 값을 바로 false로 바꾸는 것이 아닌 기본 설정이 끝날 때 바꿀 것
          */
 
 //        startActivity<MainActivity>()
 //        finish()
+    }
+
+    public fun onFragmentChange(name: String) {
+        when (name) {
+            "welcome" -> {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.framelayout_firstrun, WelcomeFragment()).commit()
+            }
+            "githubid" -> {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.framelayout_firstrun, GitHubIdFragment()).commit()
+            }
+        }
     }
 }
