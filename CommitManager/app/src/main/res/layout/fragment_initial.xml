@@ -36,10 +36,12 @@
 
     <Button
         android:id="@+id/InitialFragment_Button_GitHubIdCheck"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/ButtonTheme"
+        android:layout_width="50dp"
+        android:layout_height="30dp"
         android:layout_marginEnd="32dp"
         android:text="@string/button_githubid"
+        android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@+id/InitialFragment_EditText_GithubId"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/InitialFragment_EditText_GithubId" />
@@ -49,9 +51,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
-        android:text="유효하지 않은 아이디입니다."
+        android:text="@string/label_verify_no"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:textColor="@android:color/holo_red_dark"
+        android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/InitialFragment_EditText_GithubId" />
 
@@ -72,7 +75,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:gravity="center_horizontal"
-        android:text="1차"
+        android:text="@string/label_time_first"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintBottom_toBottomOf="@+id/InitialFragment_EditText_First"
         app:layout_constraintStart_toStartOf="parent"
@@ -80,7 +83,7 @@
 
     <EditText
         android:id="@+id/InitialFragment_EditText_First"
-        android:layout_width="120dp"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
@@ -97,7 +100,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:gravity="center_horizontal"
-        android:text="2차"
+        android:text="@string/label_time_second"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintBottom_toBottomOf="@+id/InitialFragment_EditText_Second"
         app:layout_constraintStart_toStartOf="parent"
@@ -105,7 +108,7 @@
 
     <EditText
         android:id="@+id/InitialFragment_EditText_Second"
-        android:layout_width="120dp"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:ems="10"
@@ -117,6 +120,7 @@
 
     <CheckBox
         android:id="@+id/InitialFragment_CheckBox_Second"
+        style="@style/CheckBoxTheme"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -127,13 +131,12 @@
 
     <Button
         android:id="@+id/InitialFragment_Button_Start"
-        android:layout_width="wrap_content"
+        style="@style/ButtonTheme"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="32dp"
-        android:background="@android:color/holo_green_dark"
         android:text="@string/button_initial"
-        android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

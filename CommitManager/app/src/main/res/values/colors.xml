@@ -3,4 +3,30 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
+
+    <color name="black">#000000</color>
+    <color name="white">#ffffff</color>
+    <color name="ssienna">#a0522d</color>
+    <color name="rosybrown">#bc8f8f</color>
+    <color name="coral">#ff7f50</color>
+    <color name="darkorange">#ff8c00</color>
+    <color name="orange">#ffa500</color>
+    <color name="darkgoldenrod">#b8860b</color>
+    <color name="gold">#ffd700</color>
+    <color name="yellow">#ffff00</color>
+    <color name="chartreuse">#7fff00</color>
+    <color name="lawngreen">#7cfc00</color>
+    <color name="lime">#00ff00</color>
+    <color name="limegreen">#32cd32</color>
+    <color name="springgreen">#00ff7f</color>
+    <color name="mediumseagreen">#3cb371</color>
+    <color name="greenyellow">#adff2f</color>
+    <color name="darkseagreen">#8fbc8f</color>
+    <color name="lightgreen">#00ee90</color>
+    <color name="palegreen">#08fb98</color>
+    <color name="yellowgreen">#9acd32</color>
+    <color name="seagreen">#2e8b57</color>
+    <color name="mediumspringgreen">#00fa9a</color>
+    <color name="lightseagreen">#20b2aa</color>
+    <color name="mediumaquamarine">#66cdaa</color>
 </resources>

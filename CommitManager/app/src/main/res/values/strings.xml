@@ -10,4 +10,8 @@
     <string name="button_initial">Start</string>
     <string name="button_githubid">Check</string>
     <string name="label_time">Notification</string>
+    <string name="label_verify_yes">OK.</string>
+    <string name="label_verify_no">This ID isn\'t valid.</string>
+    <string name="label_time_first">1st</string>
+    <string name="label_time_second">2nd</string>
 </resources>
