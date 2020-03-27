@@ -1,4 +1,4 @@
-package com.youseokhwan.commitmanager.ui.welcome
+package com.youseokhwan.commitmanager.ui.initial
 
 import android.content.Context
 import android.os.Bundle
@@ -7,16 +7,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.youseokhwan.commitmanager.FirstRunActivity
+import com.youseokhwan.commitmanager.MainActivity
 import com.youseokhwan.commitmanager.R
-import kotlinx.android.synthetic.main.fragment_welcome.view.*
+import kotlinx.android.synthetic.main.fragment_initial.view.*
+import org.jetbrains.anko.support.v4.startActivity
 
 /**
- * WelcomeFragment
+ * InitialFragment
  *
- * 환영 문구를 출력하는 Fragment
+ * 최초 실행 시 초기 설정을 진행하는 Fragment
+ * 1. GitHub ID를 입력받고 유효성 검사
+ * 2. 알림 시간 설정 및 진동 여부 설정
  * @property firstRunActivity
  */
-class WelcomeFragment : Fragment() {
+class InitialFragment : Fragment() {
 
     private var firstRunActivity = FirstRunActivity()
 
@@ -27,11 +31,11 @@ class WelcomeFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_welcome, null)
+        val view = inflater.inflate(R.layout.fragment_initial, null)
 
-        // 다음 버튼을 클릭하면 InitialFragment로 전환
-        view.WelcomeFragment_Button_Next.setOnClickListener {
-            firstRunActivity.onFragmentChange("initial")
+        // 시작하기 버튼을 클릭하면 초기 설정을 마침
+        view.InitialFragment_Button_Start.setOnClickListener {
+            firstRunActivity.finishInitialSettings()
         }
 
         return view

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/InitialLayout_ConstraintLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.home.HomeFragment">
+
+    <TextView
+        android:id="@+id/InitialFragment_TextView_GithubIdLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="48dp"
+        android:text="@string/label_githubid"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="22sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/InitialFragment_EditText_GithubId"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:autofillHints=""
+        android:ems="10"
+        android:hint="@string/label_githubid"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toStartOf="@+id/InitialFragment_Button_GitHubIdCheck"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/InitialFragment_TextView_GithubIdLabel" />
+
+    <Button
+        android:id="@+id/InitialFragment_Button_GitHubIdCheck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:text="@string/button_githubid"
+        app:layout_constraintBottom_toBottomOf="@+id/InitialFragment_EditText_GithubId"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/InitialFragment_EditText_GithubId" />
+
+    <TextView
+        android:id="@+id/InitialFragment_TextView_Verify"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:text="유효하지 않은 아이디입니다."
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColor="@android:color/holo_red_dark"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/InitialFragment_EditText_GithubId" />
+
+    <TextView
+        android:id="@+id/InitialFragment_TextView_Time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="48dp"
+        android:text="@string/label_time"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/InitialFragment_TextView_Verify" />
+
+    <TextView
+        android:id="@+id/InitialFragment_TextView_First"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:gravity="center_horizontal"
+        android:text="1차"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintBottom_toBottomOf="@+id/InitialFragment_EditText_First"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/InitialFragment_EditText_First" />
+
+    <EditText
+        android:id="@+id/InitialFragment_EditText_First"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:gravity="center_horizontal"
+        android:hint="오후 6시"
+        android:inputType="time"
+        app:layout_constraintStart_toEndOf="@+id/InitialFragment_TextView_First"
+        app:layout_constraintTop_toBottomOf="@+id/InitialFragment_TextView_Time" />
+
+    <TextView
+        android:id="@+id/InitialFragment_TextView_Second"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:gravity="center_horizontal"
+        android:text="2차"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintBottom_toBottomOf="@+id/InitialFragment_EditText_Second"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/InitialFragment_EditText_Second" />
+
+    <EditText
+        android:id="@+id/InitialFragment_EditText_Second"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:ems="10"
+        android:gravity="center_horizontal"
+        android:hint="오후 10시"
+        android:inputType="time"
+        app:layout_constraintStart_toEndOf="@+id/InitialFragment_TextView_Second"
+        app:layout_constraintTop_toBottomOf="@+id/InitialFragment_EditText_First" />
+
+    <CheckBox
+        android:id="@+id/InitialFragment_CheckBox_Second"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:checked="true"
+        app:layout_constraintBottom_toBottomOf="@+id/InitialFragment_EditText_Second"
+        app:layout_constraintStart_toEndOf="@+id/InitialFragment_EditText_Second"
+        app:layout_constraintTop_toTopOf="@+id/InitialFragment_EditText_Second" />
+
+    <Button
+        android:id="@+id/InitialFragment_Button_Start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"
+        android:background="@android:color/holo_green_dark"
+        android:text="@string/button_initial"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
