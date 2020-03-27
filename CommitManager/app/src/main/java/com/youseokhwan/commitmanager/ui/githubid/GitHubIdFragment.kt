@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import com.youseokhwan.commitmanager.R
 
 /**
- * A simple [Fragment] subclass.
+ * GitHubIdFragment
+ *
+ * GitHub ID를 입력받고 유효성을 검사하는 Fragment
  */
 class GitHubIdFragment : Fragment() {
 

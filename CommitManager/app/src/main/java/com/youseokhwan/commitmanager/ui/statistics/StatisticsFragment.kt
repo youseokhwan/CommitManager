@@ -10,6 +10,12 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.youseokhwan.commitmanager.R
 
+/**
+ * StatisticsFragment
+ *
+ * 월간, 주간 Commit 통계를 표시하는 Fragment
+ * @property statisticsViewModel
+ */
 class StatisticsFragment : Fragment() {
 
     private lateinit var statisticsViewModel: StatisticsViewModel

@@ -4,6 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
+/**
+ * StatisticsViewModel
+ *
+ * @property _text
+ * @property text
+ */
 class StatisticsViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {

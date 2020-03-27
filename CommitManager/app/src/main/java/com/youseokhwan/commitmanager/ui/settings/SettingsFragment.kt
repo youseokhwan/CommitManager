@@ -10,6 +10,12 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.youseokhwan.commitmanager.R
 
+/**
+ * SettingsFragment
+ *
+ * 사용자 설정 Fragment
+ * @property settingsViewModel
+ */
 class SettingsFragment : Fragment() {
 
     private lateinit var settingsViewModel: SettingsViewModel
