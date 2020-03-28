@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 
 /**
  * SettingsViewModel
- *
  * @property _text
  * @property text
  */

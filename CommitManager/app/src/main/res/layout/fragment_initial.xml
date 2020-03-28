@@ -30,6 +30,7 @@
         android:ems="10"
         android:hint="@string/label_githubid"
         android:inputType="textPersonName"
+        android:maxLength="39"
         app:layout_constraintEnd_toStartOf="@+id/InitialFragment_Button_GitHubIdCheck"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/InitialFragment_TextView_GithubIdLabel" />
@@ -40,6 +41,7 @@
         android:layout_width="50dp"
         android:layout_height="30dp"
         android:layout_marginEnd="32dp"
+        android:imeOptions="actionDone"
         android:text="@string/button_githubid"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@+id/InitialFragment_EditText_GithubId"
@@ -55,6 +57,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:textColor="@android:color/holo_red_dark"
         android:textSize="12sp"
+        android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/InitialFragment_EditText_GithubId" />
 
@@ -66,6 +69,7 @@
         android:layout_marginTop="48dp"
         android:text="@string/label_time"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/InitialFragment_TextView_Verify" />
 
@@ -77,6 +81,7 @@
         android:gravity="center_horizontal"
         android:text="@string/label_time_first"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/InitialFragment_EditText_First"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/InitialFragment_EditText_First" />
@@ -91,6 +96,7 @@
         android:gravity="center_horizontal"
         android:hint="오후 6시"
         android:inputType="time"
+        android:visibility="invisible"
         app:layout_constraintStart_toEndOf="@+id/InitialFragment_TextView_First"
         app:layout_constraintTop_toBottomOf="@+id/InitialFragment_TextView_Time" />
 
@@ -102,6 +108,7 @@
         android:gravity="center_horizontal"
         android:text="@string/label_time_second"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/InitialFragment_EditText_Second"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/InitialFragment_EditText_Second" />
@@ -115,6 +122,7 @@
         android:gravity="center_horizontal"
         android:hint="오후 10시"
         android:inputType="time"
+        android:visibility="invisible"
         app:layout_constraintStart_toEndOf="@+id/InitialFragment_TextView_Second"
         app:layout_constraintTop_toBottomOf="@+id/InitialFragment_EditText_First" />
 
@@ -125,6 +133,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:checked="true"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/InitialFragment_EditText_Second"
         app:layout_constraintStart_toEndOf="@+id/InitialFragment_EditText_Second"
         app:layout_constraintTop_toTopOf="@+id/InitialFragment_EditText_Second" />
@@ -136,7 +145,10 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="32dp"
+        android:enabled="false"
+        android:imeOptions="actionDone"
         android:text="@string/button_initial"
+        android:textColor="@color/gray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

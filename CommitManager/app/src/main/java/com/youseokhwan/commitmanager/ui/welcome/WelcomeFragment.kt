@@ -11,8 +11,6 @@ import com.youseokhwan.commitmanager.R
 import kotlinx.android.synthetic.main.fragment_welcome.view.*
 
 /**
- * WelcomeFragment
- *
  * 환영 문구를 출력하는 Fragment
  * @property firstRunActivity
  */

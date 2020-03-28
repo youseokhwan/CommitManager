@@ -4,15 +4,14 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import com.youseokhwan.commitmanager.exception.InvalidParameterNameException
 import com.youseokhwan.commitmanager.ui.initial.InitialFragment
 import com.youseokhwan.commitmanager.ui.welcome.WelcomeFragment
 import kotlinx.android.synthetic.main.fragment_initial.*
 import org.jetbrains.anko.startActivity
 
 /**
- * FirstRunActivity
- *
- * 최초 실행 시 초기 설정 Activity
+ * 최초 실행 시 초기 설정을 진행하는 Activity
  */
 class FirstRunActivity : AppCompatActivity() {
 
@@ -22,12 +21,6 @@ class FirstRunActivity : AppCompatActivity() {
 
         // WelcomeFragment로 전환
         onFragmentChange("welcome")
-
-        // 초기 설정을 모두 마치면 isFirstRun을 false로 변경
-
-        // MainActivity로 이동
-//        startActivity<MainActivity>()
-//        finish()
     }
 
     /**
@@ -48,8 +41,10 @@ class FirstRunActivity : AppCompatActivity() {
             }
             // 유효한 Fragment 이름이 아닐 경우
             else -> {
-                throw InvalidFragmentNameException("InvalidFragmentNameException:" +
-                        "${name}은 유효하지 않은 Fragment 이름입니다.")
+                throw InvalidParameterNameException(
+                    "InvalidParameterNameException:" +
+                            "${name}은 유효하지 않은 Fragment 이름입니다."
+                )
             }
         }
     }

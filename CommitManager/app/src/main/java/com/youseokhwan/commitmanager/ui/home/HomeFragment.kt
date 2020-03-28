@@ -11,8 +11,6 @@ import androidx.lifecycle.ViewModelProviders
 import com.youseokhwan.commitmanager.R
 
 /**
- * HomeFragment
- *
  * 오늘 커밋이 있는지 알려주는 이미지와 이번 주 커밋 통계를 표시하는 메인 Fragment
  * @property homeViewModel
  */

@@ -5,7 +5,9 @@
     <color name="colorAccent">#03DAC5</color>
 
     <color name="black">#000000</color>
+    <color name="gray">@android:color/darker_gray</color>
     <color name="white">#ffffff</color>
+
     <color name="ssienna">#a0522d</color>
     <color name="rosybrown">#bc8f8f</color>
     <color name="coral">#ff7f50</color>

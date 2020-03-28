@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 
 /**
  * StatisticsViewModel
- *
  * @property _text
  * @property text
  */

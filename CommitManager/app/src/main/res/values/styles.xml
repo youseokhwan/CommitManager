@@ -16,7 +16,7 @@
 
     <!-- Button -->
     <style name="ButtonTheme" parent="Widget.AppCompat.Button">
-        <item name="android:background">@drawable/button_border</item>
+        <item name="android:background">@drawable/button_selector</item>
         <item name="android:textColor">@color/limegreen</item>
     </style>
 

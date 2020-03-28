@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 
 /**
  * HomeViewModel
- *
  * @property _text
  * @property text
  */
