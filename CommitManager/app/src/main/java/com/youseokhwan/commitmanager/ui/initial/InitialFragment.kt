@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
@@ -31,19 +33,34 @@ import retrofit2.Response
  * 1. GitHub ID를 입력받고 유효성 검사
  * 2. 알림 시간 설정 및 진동 여부 설정
  * @property firstRunActivity
+ * @property fadeIn0 FadeIn 애니메이션 1
+ * @property fadeIn1 FadeIn 애니메이션 2
+ * @property fadeOut FadeOut 애니메이션
  */
 class InitialFragment : Fragment() {
 
     private var firstRunActivity = FirstRunActivity()
+    private lateinit var fadeIn0: Animation
+    private lateinit var fadeIn1: Animation
+    private lateinit var fadeOut: Animation
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+
         firstRunActivity = activity as FirstRunActivity
+        fadeIn0 = AnimationUtils.loadAnimation(context, R.anim.fade_in_0)
+        fadeIn1 = AnimationUtils.loadAnimation(context, R.anim.fade_in_1)
+        fadeOut = AnimationUtils.loadAnimation(context, R.anim.fade_out)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_initial, null)
+
+        // FadeIn 애니메이션
+        view.InitialFragment_TextView_GithubIdLabel.startAnimation(fadeIn0)
+        view.InitialFragment_EditText_GithubId     .startAnimation(fadeIn1)
+        view.InitialFragment_Button_GitHubIdCheck  .startAnimation(fadeIn1)
 
         // EditText의 내용이 변경되면 하단 UI Invisible, Disabled 처리
         view.InitialFragment_EditText_GithubId.doOnTextChanged { _, _, _, _ ->
@@ -51,10 +68,9 @@ class InitialFragment : Fragment() {
             changeStartButtonState("disabled")
         }
 
-        // EditText IME_ACTION_DONE 이벤트 발생 시 GitHubIdCheck 클릭 이벤트 발생
+        // EditText IME_ACTION 이벤트 발생 시 GitHubIdCheck 클릭 이벤트 발생
         view.InitialFragment_EditText_GithubId.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                Log.d("CommitManagerLog", "DONE !!")
+            if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_NEXT) {
                 view.InitialFragment_Button_GitHubIdCheck.performClick()
                 true
             } else {
@@ -67,6 +83,7 @@ class InitialFragment : Fragment() {
             Log.d("CommitManagerLog",
                 "입력된 GitHub ID: ${InitialFragment_EditText_GithubId.text}")
 
+            InitialFragment_EditText_GithubId.clearFocus()
             InitialFragment_TextView_Verify.text = ""
             hideKeyboard()
             githubIdCheck()
@@ -157,24 +174,40 @@ class InitialFragment : Fragment() {
     private fun changeStartButtonState(status: String) {
         when (status) {
             "enabled" -> {
-                InitialFragment_TextView_Time.visibility   = View.VISIBLE
-                InitialFragment_TextView_First.visibility  = View.VISIBLE
+                InitialFragment_TextView_Time  .visibility = View.VISIBLE
+                InitialFragment_TextView_First .visibility = View.VISIBLE
                 InitialFragment_TextView_Second.visibility = View.VISIBLE
-                InitialFragment_EditText_First.visibility  = View.VISIBLE
+                InitialFragment_EditText_First .visibility = View.VISIBLE
                 InitialFragment_EditText_Second.visibility = View.VISIBLE
                 InitialFragment_CheckBox_Second.visibility = View.VISIBLE
-                InitialFragment_Button_Start.textColor     = ContextCompat.getColor(context!!, R.color.limegreen)
-                InitialFragment_Button_Start.isEnabled     = true
+                InitialFragment_Button_Start   .textColor  = ContextCompat.getColor(context!!, R.color.limegreen)
+                InitialFragment_Button_Start   .isEnabled  = true
+
+                InitialFragment_TextView_Time  .startAnimation(fadeIn0)
+                InitialFragment_TextView_First .startAnimation(fadeIn1)
+                InitialFragment_TextView_Second.startAnimation(fadeIn1)
+                InitialFragment_EditText_First .startAnimation(fadeIn1)
+                InitialFragment_EditText_Second.startAnimation(fadeIn1)
+                InitialFragment_CheckBox_Second.startAnimation(fadeIn1)
             }
             "disabled" -> {
-                InitialFragment_TextView_Time.visibility   = View.INVISIBLE
-                InitialFragment_TextView_First.visibility  = View.INVISIBLE
-                InitialFragment_TextView_Second.visibility = View.INVISIBLE
-                InitialFragment_EditText_First.visibility  = View.INVISIBLE
-                InitialFragment_EditText_Second.visibility = View.INVISIBLE
-                InitialFragment_CheckBox_Second.visibility = View.INVISIBLE
-                InitialFragment_Button_Start.textColor     = ContextCompat.getColor(context!!, R.color.gray)
-                InitialFragment_Button_Start.isEnabled     = false
+                if (InitialFragment_TextView_Time.visibility == View.VISIBLE) {
+                    InitialFragment_TextView_Time  .visibility = View.INVISIBLE
+                    InitialFragment_TextView_First .visibility = View.INVISIBLE
+                    InitialFragment_TextView_Second.visibility = View.INVISIBLE
+                    InitialFragment_EditText_First .visibility = View.INVISIBLE
+                    InitialFragment_EditText_Second.visibility = View.INVISIBLE
+                    InitialFragment_CheckBox_Second.visibility = View.INVISIBLE
+                    InitialFragment_Button_Start   .textColor  = ContextCompat.getColor(context!!, R.color.gray)
+                    InitialFragment_Button_Start   .isEnabled  = false
+
+                    InitialFragment_TextView_Time  .startAnimation(fadeOut)
+                    InitialFragment_TextView_First .startAnimation(fadeOut)
+                    InitialFragment_TextView_Second.startAnimation(fadeOut)
+                    InitialFragment_EditText_First .startAnimation(fadeOut)
+                    InitialFragment_EditText_Second.startAnimation(fadeOut)
+                    InitialFragment_CheckBox_Second.startAnimation(fadeOut)
+                }
             }
             else -> {
                 throw InvalidParameterNameException(
