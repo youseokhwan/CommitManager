@@ -39,6 +39,7 @@ import java.util.*
  * @property fadeIn0 FadeIn 애니메이션 0
  * @property fadeIn1 FadeIn 애니메이션 1
  * @property fadeIn2 FadeIn 애니메이션 2
+ * @property shake shake 애니메이션
  * @property fadeOut FadeOut 애니메이션
  */
 class InitialFragment : Fragment() {
@@ -47,6 +48,7 @@ class InitialFragment : Fragment() {
     private lateinit var fadeIn0: Animation
     private lateinit var fadeIn1: Animation
     private lateinit var fadeIn2: Animation
+    private lateinit var shake  : Animation
     private lateinit var fadeOut: Animation
 
     override fun onAttach(context: Context) {
@@ -56,6 +58,7 @@ class InitialFragment : Fragment() {
         fadeIn0 = AnimationUtils.loadAnimation(context, R.anim.fade_in_0)
         fadeIn1 = AnimationUtils.loadAnimation(context, R.anim.fade_in_1)
         fadeIn2 = AnimationUtils.loadAnimation(context, R.anim.fade_in_2)
+        shake   = AnimationUtils.loadAnimation(context, R.anim.shake)
         fadeOut = AnimationUtils.loadAnimation(context, R.anim.fade_out)
     }
 
@@ -163,6 +166,7 @@ class InitialFragment : Fragment() {
 
                         if (user?.isExist == true) {
                             changeVerifyUi("yes")
+//                            getUsername()
                         } else {
                             changeVerifyUi("no")
                         }
@@ -186,14 +190,17 @@ class InitialFragment : Fragment() {
                 changeBottomUiState("enabled")
             }
             "no" -> {
+                InitialFragment_TextView_Verify.startAnimation(shake)
                 InitialFragment_TextView_Verify.text      = getString(R.string.label_verify_no)
                 InitialFragment_TextView_Verify.textColor = Color.RED
             }
             "null" -> {
+                InitialFragment_TextView_Verify.startAnimation(shake)
                 InitialFragment_TextView_Verify.text      = getString(R.string.label_verify_null)
                 InitialFragment_TextView_Verify.textColor = Color.RED
             }
             "error" -> {
+                InitialFragment_TextView_Verify.startAnimation(shake)
                 InitialFragment_TextView_Verify.text      = getString(R.string.label_verify_error)
                 InitialFragment_TextView_Verify.textColor = Color.RED
             }
