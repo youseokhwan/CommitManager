@@ -75,7 +75,7 @@
 
     <TextView
         android:id="@+id/InitialFragment_TextView_First"
-        android:layout_width="30dp"
+        android:layout_width="35dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:gravity="center_horizontal"
@@ -88,21 +88,38 @@
 
     <EditText
         android:id="@+id/InitialFragment_EditText_First"
-        android:layout_width="100dp"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:clickable="true"
+        android:cursorVisible="false"
+        android:editable="false"
         android:ems="10"
+        android:focusable="false"
         android:gravity="center_horizontal"
-        android:hint="오후 6시"
+        android:hint="--:--"
         android:inputType="time"
+        android:text="22:00"
+        android:textColor="@color/black"
         android:visibility="invisible"
         app:layout_constraintStart_toEndOf="@+id/InitialFragment_TextView_First"
         app:layout_constraintTop_toBottomOf="@+id/InitialFragment_TextView_Time" />
 
+    <CheckBox
+        android:id="@+id/InitialFragment_CheckBox_First"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:checked="true"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/InitialFragment_EditText_First"
+        app:layout_constraintStart_toEndOf="@+id/InitialFragment_EditText_First"
+        app:layout_constraintTop_toTopOf="@+id/InitialFragment_EditText_First" />
+
     <TextView
         android:id="@+id/InitialFragment_TextView_Second"
-        android:layout_width="30dp"
+        android:layout_width="35dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:gravity="center_horizontal"
@@ -115,28 +132,33 @@
 
     <EditText
         android:id="@+id/InitialFragment_EditText_Second"
-        android:layout_width="100dp"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:clickable="true"
+        android:cursorVisible="false"
+        android:editable="false"
         android:ems="10"
+        android:focusable="false"
         android:gravity="center_horizontal"
-        android:hint="오후 10시"
+        android:hint="--:--"
         android:inputType="time"
+        android:text="--:--"
+        android:textColor="@color/gray"
         android:visibility="invisible"
         app:layout_constraintStart_toEndOf="@+id/InitialFragment_TextView_Second"
         app:layout_constraintTop_toBottomOf="@+id/InitialFragment_EditText_First" />
 
     <CheckBox
         android:id="@+id/InitialFragment_CheckBox_Second"
-        style="@style/CheckBoxTheme"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:checked="true"
+        android:checked="false"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/InitialFragment_EditText_Second"
         app:layout_constraintStart_toEndOf="@+id/InitialFragment_EditText_Second"
-        app:layout_constraintTop_toTopOf="@+id/InitialFragment_EditText_Second" />
+        app:layout_constraintTop_toBottomOf="@+id/InitialFragment_EditText_First" />
 
     <Button
         android:id="@+id/InitialFragment_Button_Start"
@@ -151,5 +173,19 @@
         android:textColor="@color/gray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/InitialFragment_TextView_TimeGuide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/guide_time"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColor="@color/gray"
+        android:textSize="12sp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/InitialFragment_EditText_Second" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

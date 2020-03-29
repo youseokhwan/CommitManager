@@ -10,11 +10,12 @@
     <string name="label_githubid">GitHub 아이디</string>
     <string name="button_initial">시작하기</string>
     <string name="button_githubid">확인</string>
-    <string name="label_time">알림 시간</string>
+    <string name="label_time">푸시 알림</string>
     <string name="label_verify_yes">존재하는 아이디입니다.</string>
     <string name="label_verify_no">유효하지 않은 아이디입니다.</string>
     <string name="label_time_first">1차</string>
     <string name="label_time_second">2차</string>
     <string name="label_verify_null">아이디를 입력해주세요.</string>
     <string name="label_verify_error">오류가 발생하였습니다.</string>
+    <string name="guide_time">그날 커밋내역이 없으면 푸시알림을 보냅니다.</string>
 </resources>

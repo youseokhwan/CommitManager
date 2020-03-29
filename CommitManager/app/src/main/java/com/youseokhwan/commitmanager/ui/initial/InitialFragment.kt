@@ -1,5 +1,6 @@
 package com.youseokhwan.commitmanager.ui.initial
 
+import android.app.TimePickerDialog
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
@@ -27,14 +28,17 @@ import org.jetbrains.anko.textColor
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  * 최초 실행 시 초기 설정을 진행하는 Fragment
  * 1. GitHub ID를 입력받고 유효성 검사
  * 2. 알림 시간 설정 및 진동 여부 설정
  * @property firstRunActivity
- * @property fadeIn0 FadeIn 애니메이션 1
- * @property fadeIn1 FadeIn 애니메이션 2
+ * @property fadeIn0 FadeIn 애니메이션 0
+ * @property fadeIn1 FadeIn 애니메이션 1
+ * @property fadeIn2 FadeIn 애니메이션 2
  * @property fadeOut FadeOut 애니메이션
  */
 class InitialFragment : Fragment() {
@@ -42,6 +46,7 @@ class InitialFragment : Fragment() {
     private var firstRunActivity = FirstRunActivity()
     private lateinit var fadeIn0: Animation
     private lateinit var fadeIn1: Animation
+    private lateinit var fadeIn2: Animation
     private lateinit var fadeOut: Animation
 
     override fun onAttach(context: Context) {
@@ -50,6 +55,7 @@ class InitialFragment : Fragment() {
         firstRunActivity = activity as FirstRunActivity
         fadeIn0 = AnimationUtils.loadAnimation(context, R.anim.fade_in_0)
         fadeIn1 = AnimationUtils.loadAnimation(context, R.anim.fade_in_1)
+        fadeIn2 = AnimationUtils.loadAnimation(context, R.anim.fade_in_2)
         fadeOut = AnimationUtils.loadAnimation(context, R.anim.fade_out)
     }
 
@@ -65,7 +71,7 @@ class InitialFragment : Fragment() {
         // EditText의 내용이 변경되면 하단 UI Invisible, Disabled 처리
         view.InitialFragment_EditText_GithubId.doOnTextChanged { _, _, _, _ ->
             InitialFragment_TextView_Verify.text = ""
-            changeStartButtonState("disabled")
+            changeBottomUiState("disabled")
         }
 
         // EditText IME_ACTION 이벤트 발생 시 GitHubIdCheck 클릭 이벤트 발생
@@ -87,6 +93,40 @@ class InitialFragment : Fragment() {
             InitialFragment_TextView_Verify.text = ""
             hideKeyboard()
             githubIdCheck()
+        }
+
+        // 알림 시간 팝업 다이얼로그(First)
+        view.InitialFragment_EditText_First.setOnClickListener {
+            showTimePickerDialog(it.id)
+        }
+
+        // 1차 알림 체크박스 변경 시 이벤트
+        view.InitialFragment_CheckBox_First.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                InitialFragment_EditText_First.textColor = Color.BLACK
+            } else {
+                InitialFragment_EditText_First.textColor = Color.GRAY
+                InitialFragment_EditText_First.setText("--:--")
+            }
+
+            checkStartButtonState()
+        }
+
+        // 알림 시간 팝업 다이얼로그(Second)
+        view.InitialFragment_EditText_Second.setOnClickListener {
+            showTimePickerDialog(it.id)
+        }
+
+        // 2차 알림 체크박스 변경 시 이벤트
+        view.InitialFragment_CheckBox_Second.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                InitialFragment_EditText_Second.textColor = Color.BLACK
+            } else {
+                InitialFragment_EditText_Second.textColor = Color.GRAY
+                InitialFragment_EditText_Second.setText("--:--")
+            }
+
+            checkStartButtonState()
         }
 
         // 시작하기 버튼을 클릭하면 초기 설정을 마침
@@ -143,7 +183,7 @@ class InitialFragment : Fragment() {
             "yes" -> {
                 InitialFragment_TextView_Verify.text      = getString(R.string.label_verify_yes)
                 InitialFragment_TextView_Verify.textColor = ContextCompat.getColor(context!!, R.color.limegreen)
-                changeStartButtonState("enabled")
+                changeBottomUiState("enabled")
             }
             "no" -> {
                 InitialFragment_TextView_Verify.text      = getString(R.string.label_verify_no)
@@ -168,45 +208,55 @@ class InitialFragment : Fragment() {
     }
 
     /**
-     * Start 버튼 및 하단 UI의 Enable, Visible 상태 값 변경
+     * GitHub ID Check 시 Start 버튼 및 하단 UI의 상태 값 변경
      * @param status 상태 값
      */
-    private fun changeStartButtonState(status: String) {
+    private fun changeBottomUiState(status: String) {
         when (status) {
             "enabled" -> {
-                InitialFragment_TextView_Time  .visibility = View.VISIBLE
-                InitialFragment_TextView_First .visibility = View.VISIBLE
-                InitialFragment_TextView_Second.visibility = View.VISIBLE
-                InitialFragment_EditText_First .visibility = View.VISIBLE
-                InitialFragment_EditText_Second.visibility = View.VISIBLE
-                InitialFragment_CheckBox_Second.visibility = View.VISIBLE
-                InitialFragment_Button_Start   .textColor  = ContextCompat.getColor(context!!, R.color.limegreen)
-                InitialFragment_Button_Start   .isEnabled  = true
+                InitialFragment_TextView_Time     .visibility = View.VISIBLE
+                InitialFragment_TextView_First    .visibility = View.VISIBLE
+                InitialFragment_TextView_Second   .visibility = View.VISIBLE
+                InitialFragment_EditText_First    .visibility = View.VISIBLE
+                InitialFragment_CheckBox_First    .visibility = View.VISIBLE
+                InitialFragment_EditText_Second   .visibility = View.VISIBLE
+                InitialFragment_CheckBox_Second   .visibility = View.VISIBLE
+                InitialFragment_TextView_TimeGuide.visibility = View.VISIBLE
+                InitialFragment_Button_Start      .textColor  = ContextCompat.getColor(context!!, R.color.limegreen)
+                InitialFragment_Button_Start      .isEnabled  = true
 
-                InitialFragment_TextView_Time  .startAnimation(fadeIn0)
-                InitialFragment_TextView_First .startAnimation(fadeIn1)
-                InitialFragment_TextView_Second.startAnimation(fadeIn1)
-                InitialFragment_EditText_First .startAnimation(fadeIn1)
-                InitialFragment_EditText_Second.startAnimation(fadeIn1)
-                InitialFragment_CheckBox_Second.startAnimation(fadeIn1)
+                InitialFragment_TextView_Time     .startAnimation(fadeIn0)
+                InitialFragment_TextView_First    .startAnimation(fadeIn1)
+                InitialFragment_TextView_Second   .startAnimation(fadeIn1)
+                InitialFragment_EditText_First    .startAnimation(fadeIn1)
+                InitialFragment_CheckBox_First    .startAnimation(fadeIn1)
+                InitialFragment_EditText_Second   .startAnimation(fadeIn1)
+                InitialFragment_CheckBox_Second   .startAnimation(fadeIn1)
+                InitialFragment_TextView_TimeGuide.startAnimation(fadeIn2)
+
+                checkStartButtonState()
             }
             "disabled" -> {
                 if (InitialFragment_TextView_Time.visibility == View.VISIBLE) {
-                    InitialFragment_TextView_Time  .visibility = View.INVISIBLE
-                    InitialFragment_TextView_First .visibility = View.INVISIBLE
-                    InitialFragment_TextView_Second.visibility = View.INVISIBLE
-                    InitialFragment_EditText_First .visibility = View.INVISIBLE
-                    InitialFragment_EditText_Second.visibility = View.INVISIBLE
-                    InitialFragment_CheckBox_Second.visibility = View.INVISIBLE
-                    InitialFragment_Button_Start   .textColor  = ContextCompat.getColor(context!!, R.color.gray)
-                    InitialFragment_Button_Start   .isEnabled  = false
+                    InitialFragment_TextView_Time     .visibility = View.INVISIBLE
+                    InitialFragment_TextView_First    .visibility = View.INVISIBLE
+                    InitialFragment_TextView_Second   .visibility = View.INVISIBLE
+                    InitialFragment_EditText_First    .visibility = View.INVISIBLE
+                    InitialFragment_CheckBox_First    .visibility = View.INVISIBLE
+                    InitialFragment_EditText_Second   .visibility = View.INVISIBLE
+                    InitialFragment_CheckBox_Second   .visibility = View.INVISIBLE
+                    InitialFragment_TextView_TimeGuide.visibility = View.INVISIBLE
+                    InitialFragment_Button_Start      .textColor  = ContextCompat.getColor(context!!, R.color.gray)
+                    InitialFragment_Button_Start      .isEnabled  = false
 
-                    InitialFragment_TextView_Time  .startAnimation(fadeOut)
-                    InitialFragment_TextView_First .startAnimation(fadeOut)
-                    InitialFragment_TextView_Second.startAnimation(fadeOut)
-                    InitialFragment_EditText_First .startAnimation(fadeOut)
-                    InitialFragment_EditText_Second.startAnimation(fadeOut)
-                    InitialFragment_CheckBox_Second.startAnimation(fadeOut)
+                    InitialFragment_TextView_Time     .startAnimation(fadeOut)
+                    InitialFragment_TextView_First    .startAnimation(fadeOut)
+                    InitialFragment_TextView_Second   .startAnimation(fadeOut)
+                    InitialFragment_EditText_First    .startAnimation(fadeOut)
+                    InitialFragment_CheckBox_First    .startAnimation(fadeOut)
+                    InitialFragment_EditText_Second   .startAnimation(fadeOut)
+                    InitialFragment_CheckBox_Second   .startAnimation(fadeOut)
+                    InitialFragment_TextView_TimeGuide.startAnimation(fadeOut)
                 }
             }
             else -> {
@@ -223,5 +273,70 @@ class InitialFragment : Fragment() {
     private fun hideKeyboard() {
         val inputMethodManager = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(view?.windowToken, 0)
+    }
+
+    /**
+     * showTimePickerDialog()
+     * @param viewId
+     */
+    private fun showTimePickerDialog(viewId: Int) {
+        val cal = Calendar.getInstance()
+
+        when (viewId) {
+            R.id.InitialFragment_EditText_First -> {
+                val timeSetListener = TimePickerDialog.OnTimeSetListener { _, hour, minute ->
+                    cal.set(Calendar.HOUR_OF_DAY, hour)
+                    cal.set(Calendar.MINUTE, minute)
+                    InitialFragment_EditText_First
+                        .setText(SimpleDateFormat("HH:mm", Locale.getDefault()).format(cal.time))
+                    checkStartButtonState()
+                }
+                TimePickerDialog(context, timeSetListener, 18,0, true)
+                    .show()
+            }
+            R.id.InitialFragment_EditText_Second -> {
+                if (InitialFragment_CheckBox_Second.isChecked) {
+                    val timeSetListener = TimePickerDialog.OnTimeSetListener { _, hour, minute ->
+                        cal.set(Calendar.HOUR_OF_DAY, hour)
+                        cal.set(Calendar.MINUTE, minute)
+                        InitialFragment_EditText_Second
+                            .setText(SimpleDateFormat("HH:mm", Locale.getDefault()).format(cal.time))
+                        checkStartButtonState()
+                    }
+                    TimePickerDialog(context, timeSetListener, 22, 30, true)
+                        .show()
+                }
+            }
+            else -> {
+                throw InvalidParameterNameException(
+                    "InvalidParameterNameException: 유효하지 않은 TimePickerDialog 호출입니다."
+                )
+            }
+        }
+    }
+
+    /**
+     * 입력 값 변경 시 Start 버튼의 유효성을 검사하고 상태 값 변경
+     */
+    private fun checkStartButtonState() {
+        if (InitialFragment_CheckBox_First.isChecked) {
+            if (InitialFragment_EditText_First.text.toString() == "--:--") {
+                InitialFragment_Button_Start.textColor = ContextCompat.getColor(context!!, R.color.gray)
+                InitialFragment_Button_Start.isEnabled = false
+                return
+            }
+        }
+
+        if (InitialFragment_CheckBox_Second.isChecked) {
+            if (InitialFragment_EditText_Second.text.toString() == "--:--") {
+                InitialFragment_Button_Start.textColor = ContextCompat.getColor(context!!, R.color.gray)
+                InitialFragment_Button_Start.isEnabled = false
+                return
+            }
+        }
+
+        // 문제되는 사항이 없으면 enable
+        InitialFragment_Button_Start.textColor = ContextCompat.getColor(context!!, R.color.limegreen)
+        InitialFragment_Button_Start.isEnabled = true
     }
 }

@@ -9,11 +9,12 @@
     <string name="label_githubid">GitHub ID</string>
     <string name="button_initial">Start</string>
     <string name="button_githubid">Check</string>
-    <string name="label_time">Notification</string>
+    <string name="label_time">Push Notification</string>
     <string name="label_verify_yes">OK.</string>
     <string name="label_verify_no">This ID isn\'t valid.</string>
     <string name="label_time_first">1st</string>
     <string name="label_time_second">2nd</string>
     <string name="label_verify_null">Please enter your ID.</string>
     <string name="label_verify_error">An error has occurred.</string>
+    <string name="guide_time">If there is no commit then send push notification.</string>
 </resources>
