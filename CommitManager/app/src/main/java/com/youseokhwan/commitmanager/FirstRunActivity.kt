@@ -73,8 +73,9 @@ class FirstRunActivity : AppCompatActivity() {
 
     /**
      * 초기 설정을 저장하고 MainActivity로 전환하는 메소드
+     * @param username
      */
-    fun finishInitialSettings() {
+    fun finishInitialSettings(username: String) {
         // 사용자 설정을 저장하는 SharedPreferences
         val settings: SharedPreferences = getSharedPreferences("settings", MODE_PRIVATE)
         val editor: SharedPreferences.Editor = settings.edit()
@@ -86,7 +87,7 @@ class FirstRunActivity : AppCompatActivity() {
 
         // 설정 값을 settings에 저장
         editor.putString("id", InitialFragment_EditText_GithubId.text.toString())
-        editor.putString("name", "Default") // 아직 미구현
+        editor.putString("name", username) // 아직 미구현
         editor.putString("first", InitialFragment_EditText_First.text.toString())
         editor.putString("second", InitialFragment_EditText_Second.text.toString())
         editor.putBoolean("isFirstRun", false)

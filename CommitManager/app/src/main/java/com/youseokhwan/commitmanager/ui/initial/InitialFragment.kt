@@ -20,10 +20,12 @@ import com.youseokhwan.commitmanager.R
 import com.youseokhwan.commitmanager.exception.InvalidParameterNameException
 import com.youseokhwan.commitmanager.exception.RetrofitException
 import com.youseokhwan.commitmanager.retrofit.User
+import com.youseokhwan.commitmanager.retrofit.UserInfo
 import com.youseokhwan.commitmanager.retrofit.UserRetrofit
 import kotlinx.android.synthetic.main.fragment_initial.*
 import kotlinx.android.synthetic.main.fragment_initial.view.*
 import kotlinx.android.synthetic.main.fragment_initial.view.InitialFragment_EditText_GithubId
+import org.jetbrains.anko.support.v4.toast
 import org.jetbrains.anko.textColor
 import retrofit2.Call
 import retrofit2.Callback
@@ -132,9 +134,26 @@ class InitialFragment : Fragment() {
             checkStartButtonState()
         }
 
-        // 시작하기 버튼을 클릭하면 초기 설정을 마침
+        // 시작하기 버튼을 클릭하면 Username을 받아서 저장하고 초기 설정을 마침
         view.InitialFragment_Button_Start.setOnClickListener {
-            firstRunActivity.finishInitialSettings()
+            // GET("/userinfo?id=${id}")
+            UserRetrofit.getService().getUserInfo(id = InitialFragment_EditText_GithubId.text.toString())
+                .enqueue(object : Callback<UserInfo> {
+                    override fun onFailure(call: Call<UserInfo>?, t: Throwable?) {
+                        throw RetrofitException("RetrofitException: onFailure()\n${t.toString()}")
+                    }
+
+                    override fun onResponse(call: Call<UserInfo>, response: Response<UserInfo>) {
+                        if (response.isSuccessful) {
+                            Log.d("CommitManagerLog", response.body().toString())
+
+                            val userInfo: UserInfo? = response.body()
+                            firstRunActivity.finishInitialSettings(userInfo?.name.toString())
+                        } else {
+                            throw RetrofitException("RetrofitException: response.isSuccessful is false")
+                        }
+                    }
+                })
         }
 
         return view
@@ -166,7 +185,6 @@ class InitialFragment : Fragment() {
 
                         if (user?.isExist == true) {
                             changeVerifyUi("yes")
-//                            getUsername()
                         } else {
                             changeVerifyUi("no")
                         }

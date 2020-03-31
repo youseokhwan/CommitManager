@@ -29,12 +29,13 @@ class MainActivity : AppCompatActivity() {
 
         // 사용자 설정을 저장하는 SharedPreferences
         val settings: SharedPreferences = getSharedPreferences("settings", MODE_PRIVATE)
+        val name: String = settings.getString("name", "Default")!!
 
         // 환영 Toast 메시지 출력
-        toast("${settings.getString("name", "Default")}님 환영합니다!")
+        toast("${name}님 환영합니다!")
 
         // ActionBar Title을 Username으로 설정
-        supportActionBar?.title = "Default"
+        supportActionBar?.title = name
     }
 
     /**
