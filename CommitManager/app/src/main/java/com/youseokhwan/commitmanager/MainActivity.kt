@@ -32,6 +32,9 @@ class MainActivity : AppCompatActivity() {
 
         // 환영 Toast 메시지 출력
         toast("${settings.getString("name", "Default")}님 환영합니다!")
+
+        // ActionBar Title을 Username으로 설정
+        supportActionBar?.title = "Default"
     }
 
     /**
