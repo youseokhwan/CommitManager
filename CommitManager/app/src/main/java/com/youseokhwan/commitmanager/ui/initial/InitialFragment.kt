@@ -140,6 +140,7 @@ class InitialFragment : Fragment() {
             UserRetrofit.getService().getUserInfo(id = InitialFragment_EditText_GithubId.text.toString())
                 .enqueue(object : Callback<UserInfo> {
                     override fun onFailure(call: Call<UserInfo>?, t: Throwable?) {
+                        toast("오류가 발생했습니다. 다시 시도해주세요.")
                         throw RetrofitException("RetrofitException: onFailure()\n${t.toString()}")
                     }
 
@@ -147,9 +148,9 @@ class InitialFragment : Fragment() {
                         if (response.isSuccessful) {
                             Log.d("CommitManagerLog", response.body().toString())
 
-                            val userInfo: UserInfo? = response.body()
-                            firstRunActivity.finishInitialSettings(userInfo?.name.toString())
+                            firstRunActivity.finishInitialSettings(response.body())
                         } else {
+                            toast("오류가 발생했습니다. 다시 시도해주세요.")
                             throw RetrofitException("RetrofitException: response.isSuccessful is false")
                         }
                     }

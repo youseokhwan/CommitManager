@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import com.youseokhwan.commitmanager.exception.InvalidParameterNameException
+import com.youseokhwan.commitmanager.retrofit.UserInfo
 import com.youseokhwan.commitmanager.ui.initial.InitialFragment
 import com.youseokhwan.commitmanager.ui.welcome.WelcomeFragment
 import kotlinx.android.synthetic.main.fragment_initial.*
@@ -73,24 +74,38 @@ class FirstRunActivity : AppCompatActivity() {
 
     /**
      * 초기 설정을 저장하고 MainActivity로 전환하는 메소드
-     * @param username
+     * @param userInfo
      */
-    fun finishInitialSettings(username: String) {
+    fun finishInitialSettings(userInfo: UserInfo?) {
         // 사용자 설정을 저장하는 SharedPreferences
         val settings: SharedPreferences = getSharedPreferences("settings", MODE_PRIVATE)
         val editor: SharedPreferences.Editor = settings.edit()
 
-        Log.d("CommitManagerLog", "GitHub ID: ${InitialFragment_EditText_GithubId.text}, "
-                + "First: ${InitialFragment_EditText_First.text}, "
-                + "Second: ${InitialFragment_CheckBox_Second.isChecked}, "
-                + "${InitialFragment_EditText_Second.text}")
+//        Log.d("CommitManagerLog", "GitHub ID: ${InitialFragment_EditText_GithubId.text}, "
+//                + "First: ${InitialFragment_EditText_First.text}, "
+//                + "Second: ${InitialFragment_CheckBox_Second.isChecked}, "
+//                + "${InitialFragment_EditText_Second.text}")
 
         // 설정 값을 settings에 저장
         editor.putString("id", InitialFragment_EditText_GithubId.text.toString())
-        editor.putString("name", username) // 아직 미구현
         editor.putString("first", InitialFragment_EditText_First.text.toString())
         editor.putString("second", InitialFragment_EditText_Second.text.toString())
         editor.putBoolean("isFirstRun", false)
+
+        // =========================================================================================
+
+        // UserInfo GET 호출로 받은 response를 settings에 저장
+        editor.putString("name", userInfo?.name.toString())
+        editor.putString("imgSrc", userInfo?.imgSrc.toString())
+        editor.putInt("follower", userInfo?.follower?:0)
+        editor.putInt("following", userInfo?.following?:0)
+
+        // 앱 실행중에 유저 정보가 바뀌는 경우 대처해야 함
+        // onCreate 때마다 updateUserInfo() 형식으로 갱신
+        // 혹은 상단 Action Bar를 터치할 때 유저 정보를 보여주고 확장하는 방식
+
+        // =========================================================================================
+
         editor.apply()
 
         // MainActivity로 이동

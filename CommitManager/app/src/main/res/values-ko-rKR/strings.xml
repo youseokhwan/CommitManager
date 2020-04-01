@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="title_welcome">환영합니다!</string>
-    <string name="app_name">CommitManager</string>
+    <string name="app_name">1일 1커밋</string>
     <string name="title_home">Home</string>
     <string name="title_statistics">Statistics</string>
     <string name="title_settings">Settings</string>

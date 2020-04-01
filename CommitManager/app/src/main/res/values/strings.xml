@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CommitManager</string>
+    <string name="app_name">Commit\nManager</string>
     <string name="title_home">Home</string>
     <string name="title_statistics">Statistics</string>
     <string name="title_settings">Settings</string>
