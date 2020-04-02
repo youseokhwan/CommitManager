@@ -29,9 +29,9 @@ class SplashActivity : AppCompatActivity() {
             Log.d("CommitManagerLog", "isFirstRun: false")
 
             // MainActivity로 이동
-//            startActivity<MainActivity>()
+            startActivity<MainActivity>()
             // =====================================================================================
-            startActivity<FirstRunActivity>()
+//            startActivity<FirstRunActivity>()
             // =====================================================================================
             finish()
         }

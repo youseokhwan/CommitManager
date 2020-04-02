@@ -93,7 +93,6 @@ class FirstRunActivity : AppCompatActivity() {
         editor.putBoolean("isFirstRun", false)
 
         // =========================================================================================
-
         // UserInfo GET 호출로 받은 response를 settings에 저장
         editor.putString("name", userInfo?.name.toString())
         editor.putString("imgSrc", userInfo?.imgSrc.toString())
@@ -103,7 +102,6 @@ class FirstRunActivity : AppCompatActivity() {
         // 앱 실행중에 유저 정보가 바뀌는 경우 대처해야 함
         // onCreate 때마다 updateUserInfo() 형식으로 갱신
         // 혹은 상단 Action Bar를 터치할 때 유저 정보를 보여주고 확장하는 방식
-
         // =========================================================================================
 
         editor.apply()
