@@ -26,6 +26,8 @@
         android:layout_marginTop="4dp"
         android:layout_marginEnd="4dp"
         android:background="#BF000000"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -45,16 +47,53 @@
             app:srcCompat="@drawable/splash_sample" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/MainActivity_TextView_GitHubId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="48dp"
-            android:text="팔로워\n팔로잉"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="GitHub ID"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="@color/white"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/MainActivity_ImageView_Avatar"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/MainActivity_TextView_Follower"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="Follower"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toEndOf="@+id/MainActivity_ImageView_Avatar"
+            app:layout_constraintTop_toBottomOf="@+id/MainActivity_TextView_GitHubId" />
+
+        <TextView
+            android:id="@+id/MainActivity_TextView_Following"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:text="Following"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toEndOf="@+id/MainActivity_ImageView_Avatar"
+            app:layout_constraintTop_toBottomOf="@+id/MainActivity_TextView_Follower" />
+
+        <Button
+            android:id="@+id/MainActivity_Button_GitHubPage"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            android:text="GitHub Page"
+            android:textSize="10sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/MainActivity_ImageView_Avatar" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
