@@ -3,7 +3,6 @@ package com.youseokhwan.commitmanager
 import android.content.SharedPreferences
 import android.graphics.Rect
 import android.os.Bundle
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.animation.Animation
@@ -53,25 +52,26 @@ class MainActivity : AppCompatActivity() {
         val following: Int = settings.getInt("following", 0)
 
         // 환영 Toast 메시지 출력
-        toast("${name}님 환영합니다!")
+//        toast("${name}님 환영합니다!")
 
-        // Toolbar 설정
+        // Toolbar Title 설정
         MainActivity_Toolbar.title = name
+
+        // Toolbar 클릭하면 UserInfo 패널 Visible
         MainActivity_Toolbar.setOnClickListener {
             if (MainActivity_ConstraintLayout_UserInfo.visibility == View.INVISIBLE) {
                 MainActivity_ConstraintLayout_UserInfo.startAnimation(fadeIn)
                 MainActivity_ConstraintLayout_UserInfo.visibility = View.VISIBLE
-            } else {
-                MainActivity_ConstraintLayout_UserInfo.startAnimation(fadeOut)
-                MainActivity_ConstraintLayout_UserInfo.visibility = View.INVISIBLE
             }
         }
 
         // UserInfo 패널 설정
         Glide.with(this).load(imgSrc).into(MainActivity_ImageView_Avatar)
         MainActivity_TextView_GitHubId.text = id
-        MainActivity_TextView_Follower.setText("follower: ${follower}명")
-        MainActivity_TextView_Following.setText("following: ${following}명")
+        MainActivity_TextView_Follower.text = "follower: ${follower}명"
+        MainActivity_TextView_Following.text = "following: ${following}명"
+
+
     }
 
     /**
@@ -89,27 +89,29 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // =============================================================================================
-    // UserInfo의 바깥 영역을 터치하면 Invisible 처리하려는 의도
-    // 의도대로 안되는 중
+    /**
+     * UserInfo 패널 바깥 영역을 터치하면 Invisible 처리
+     */
+    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+        // UserInfo 패널이 Visible 상태일 때
+        if (MainActivity_ConstraintLayout_UserInfo.visibility == View.VISIBLE) {
+            val rect = Rect()
+            MainActivity_ConstraintLayout_UserInfo.getGlobalVisibleRect(rect)
 
-//    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
-//        // UserInfo 패널이 보일 때만 실행
-//        if (MainActivity_ConstraintLayout_UserInfo.visibility == View.INVISIBLE) {
-//            return true
-//        }
-//
-//        val viewRect: Rect = Rect()
-//        MainActivity_ConstraintLayout_UserInfo.getGlobalVisibleRect(viewRect)
-//
-//        // UserInfo의 바깥 영역을 터치하면 Invisible 처리
-//        return if (!viewRect.contains(ev!!.rawX.toInt(), ev.rawY.toInt())) {
-//            MainActivity_ConstraintLayout_UserInfo.startAnimation(fadeOut)
-//            MainActivity_ConstraintLayout_UserInfo.visibility = View.INVISIBLE
-//            true
-//        } else {
-//            super.dispatchTouchEvent(ev)
-//        }
-//    }
-    // =============================================================================================
+            // Touch Point가 UserInfo 패널 범위 바깥이라면 Invisible
+            if (!rect.contains(ev?.x?.toInt() ?: 0, ev?.y?.toInt() ?: 0)) {
+                MainActivity_ConstraintLayout_UserInfo.startAnimation(fadeOut)
+                MainActivity_ConstraintLayout_UserInfo.visibility = View.INVISIBLE
+
+                /*
+                 * UserInfo 패널이 Visible인 상태에서 Toolbar를 터치하면
+                 * 이 메소드에 의해 Invisible 처리된 후 Toolbar OnClick 이벤트에 의해 다시 Visible 처리됨
+                 * Toolbar의 OnClick 이벤트가 발생하지 않도록 true 리턴
+                 */
+                return true
+            }
+        }
+
+        return super.dispatchTouchEvent(ev)
+    }
 }
