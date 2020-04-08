@@ -34,7 +34,8 @@ interface RetrofitService {
     //    @Headers("")
     @GET("/commit")
     fun getTodayCommit(
-        @Query("id") id: String
+        @Query("id") id: String,
+        @Query("token") token: String
     ): Call<Commit>
 
 }
