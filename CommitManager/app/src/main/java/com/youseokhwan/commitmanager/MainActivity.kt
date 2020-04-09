@@ -3,6 +3,7 @@ package com.youseokhwan.commitmanager
 import android.content.SharedPreferences
 import android.graphics.Rect
 import android.os.Bundle
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.animation.Animation
@@ -11,8 +12,18 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.bumptech.glide.Glide
+import com.youseokhwan.commitmanager.exception.RetrofitException
+import com.youseokhwan.commitmanager.retrofit.Commit
+import com.youseokhwan.commitmanager.retrofit.UserRetrofit
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_home.*
+import org.jetbrains.anko.image
 import org.jetbrains.anko.toast
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 /**
  * MainActivity
@@ -71,7 +82,33 @@ class MainActivity : AppCompatActivity() {
         MainActivity_TextView_Follower.text = "follower: ${follower}명"
         MainActivity_TextView_Following.text = "following: ${following}명"
 
+        // 앱 실행 시 오늘 날짜로 초기화
 
+        // 오늘 커밋 여부 판단하여 로고 변경
+        // GET("/userinfo?id=${id}")
+        UserRetrofit.getService().getTodayCommit(id = id, token = "defaultToken")
+            .enqueue(object : Callback<Commit> {
+                override fun onFailure(call: Call<Commit>?, t: Throwable?) {
+                    toast("오류가 발생했습니다. 다시 시도해주세요.")
+                    throw RetrofitException("RetrofitException: onFailure()\n${t.toString()}")
+                }
+
+                override fun onResponse(call: Call<Commit>, response: Response<Commit>) {
+                    if (response.isSuccessful) {
+                        Log.d("CommitManagerLog", response.body().toString())
+
+                        // count가 0보다 크면 커밋이 완료된 것임
+                        if (response.body()?.count?:0 > 0) {
+                            HomeFragment_ImageView_Daily.setImageResource(R.drawable.ic_check_black_24dp)
+                        } else {
+                            HomeFragment_ImageView_Daily.setImageResource(R.drawable.ic_close_black_24dp)
+                        }
+                    } else {
+                        toast("오류가 발생했습니다. 다시 시도해주세요.")
+                        throw RetrofitException("RetrofitException: response.isSuccessful is false")
+                    }
+                }
+            })
     }
 
     /**

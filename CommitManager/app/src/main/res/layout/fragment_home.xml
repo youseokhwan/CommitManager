@@ -36,7 +36,8 @@
         android:src="@drawable/ic_check_black_24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/HomeFragment_TextView_DailyLabel" />
+        app:layout_constraintTop_toBottomOf="@+id/HomeFragment_TextView_DailyLabel"
+        app:srcCompat="?android:attr/actionModeWebSearchDrawable" />
 
     <TextView
         android:id="@+id/HomeFragment_TextView_CountLabel"
