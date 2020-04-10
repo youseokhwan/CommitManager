@@ -18,6 +18,7 @@ import com.youseokhwan.commitmanager.retrofit.UserRetrofit
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.jetbrains.anko.image
+import org.jetbrains.anko.support.v4.toast
 import org.jetbrains.anko.toast
 import retrofit2.Call
 import retrofit2.Callback
@@ -33,6 +34,8 @@ import java.time.format.DateTimeFormatter
  * @property fadeOut
  */
 class MainActivity : AppCompatActivity() {
+
+    private var id: String = "DefaultID"
 
     // 뒤로가기 2번 누르면 앱 종료
     private val FINISH_INTERVAL_TIME: Long = 3000
@@ -56,14 +59,11 @@ class MainActivity : AppCompatActivity() {
 
         // 사용자 설정을 저장하는 SharedPreferences
         val settings: SharedPreferences = getSharedPreferences("settings", MODE_PRIVATE)
-        val id: String = settings.getString("id", "null")!!
+        id = settings.getString("id", "null")!!
         val name: String = settings.getString("name", "null")!!
         val imgSrc: String = settings.getString("imgSrc", "null")!!
         val follower: Int = settings.getInt("follower", 0)
         val following: Int = settings.getInt("following", 0)
-
-        // 환영 Toast 메시지 출력
-//        toast("${name}님 환영합니다!")
 
         // Toolbar Title 설정
         MainActivity_Toolbar.title = name
@@ -81,34 +81,6 @@ class MainActivity : AppCompatActivity() {
         MainActivity_TextView_GitHubId.text = id
         MainActivity_TextView_Follower.text = "follower: ${follower}명"
         MainActivity_TextView_Following.text = "following: ${following}명"
-
-        // 앱 실행 시 오늘 날짜로 초기화
-
-        // 오늘 커밋 여부 판단하여 로고 변경
-        // GET("/userinfo?id=${id}")
-        UserRetrofit.getService().getTodayCommit(id = id, token = "defaultToken")
-            .enqueue(object : Callback<Commit> {
-                override fun onFailure(call: Call<Commit>?, t: Throwable?) {
-                    toast("오류가 발생했습니다. 다시 시도해주세요.")
-                    throw RetrofitException("RetrofitException: onFailure()\n${t.toString()}")
-                }
-
-                override fun onResponse(call: Call<Commit>, response: Response<Commit>) {
-                    if (response.isSuccessful) {
-                        Log.d("CommitManagerLog", response.body().toString())
-
-                        // count가 0보다 크면 커밋이 완료된 것임
-                        if (response.body()?.count?:0 > 0) {
-                            HomeFragment_ImageView_Daily.setImageResource(R.drawable.ic_check_black_24dp)
-                        } else {
-                            HomeFragment_ImageView_Daily.setImageResource(R.drawable.ic_close_black_24dp)
-                        }
-                    } else {
-                        toast("오류가 발생했습니다. 다시 시도해주세요.")
-                        throw RetrofitException("RetrofitException: response.isSuccessful is false")
-                    }
-                }
-            })
     }
 
     /**
@@ -150,5 +122,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         return super.dispatchTouchEvent(ev)
+    }
+
+    fun getUserId(): String {
+        Log.d("CommitManagerLog", id)
+        return id
     }
 }
