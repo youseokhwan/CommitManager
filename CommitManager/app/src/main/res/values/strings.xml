@@ -8,7 +8,7 @@
     <string name="button_welcome">Next</string>
     <string name="label_githubid">GitHub ID</string>
     <string name="button_initial">Start</string>
-    <string name="button_githubid">Check</string>
+    <string name="button_logout">logout</string>
     <string name="label_time">Push Notification</string>
     <string name="label_verify_yes">OK.</string>
     <string name="label_verify_no">This ID isn\'t valid.</string>
@@ -17,4 +17,7 @@
     <string name="label_verify_null">Please enter your ID.</string>
     <string name="label_verify_error">An error has occurred.</string>
     <string name="guide_time">If there is no commit then send push notification.</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

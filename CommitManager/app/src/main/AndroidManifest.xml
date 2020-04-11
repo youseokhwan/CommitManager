@@ -12,18 +12,24 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+
         <activity
             android:name=".SplashActivity"
-            android:theme="@style/SplashTheme"
-            android:screenOrientation="userPortrait">
+            android:screenOrientation="userPortrait"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".FirstRunActivity"
             android:screenOrientation="userPortrait" />
+        <activity
+            android:name=".OAuthActivity"
+            android:screenOrientation="userPortrait">
+        </activity>
         <activity
             android:name=".MainActivity"
             android:screenOrientation="userPortrait" />

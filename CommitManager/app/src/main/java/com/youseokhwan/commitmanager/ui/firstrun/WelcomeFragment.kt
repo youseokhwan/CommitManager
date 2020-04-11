@@ -1,4 +1,4 @@
-package com.youseokhwan.commitmanager.ui.welcome
+package com.youseokhwan.commitmanager.ui.firstrun
 
 import android.content.Context
 import android.os.Bundle

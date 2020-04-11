@@ -9,7 +9,7 @@
     <string name="button_welcome">다음</string>
     <string name="label_githubid">GitHub 아이디</string>
     <string name="button_initial">시작하기</string>
-    <string name="button_githubid">확인</string>
+    <string name="button_logout">로그아웃</string>
     <string name="label_time">푸시 알림</string>
     <string name="label_verify_yes">존재하는 아이디입니다.</string>
     <string name="label_verify_no">유효하지 않은 아이디입니다.</string>

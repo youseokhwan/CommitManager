@@ -1,4 +1,4 @@
-package com.youseokhwan.commitmanager.ui.initial
+package com.youseokhwan.commitmanager.ui.firstrun
 
 import android.app.TimePickerDialog
 import android.content.Context
@@ -11,11 +11,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
-import androidx.core.widget.doOnTextChanged
 import com.youseokhwan.commitmanager.FirstRunActivity
+import com.youseokhwan.commitmanager.OAuthActivity
 import com.youseokhwan.commitmanager.R
 import com.youseokhwan.commitmanager.exception.InvalidParameterNameException
 import com.youseokhwan.commitmanager.exception.RetrofitException
@@ -25,6 +24,7 @@ import com.youseokhwan.commitmanager.retrofit.UserRetrofit
 import kotlinx.android.synthetic.main.fragment_initial.*
 import kotlinx.android.synthetic.main.fragment_initial.view.*
 import kotlinx.android.synthetic.main.fragment_initial.view.InitialFragment_EditText_GithubId
+import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.toast
 import org.jetbrains.anko.textColor
 import retrofit2.Call
@@ -71,33 +71,39 @@ class InitialFragment : Fragment() {
         // FadeIn 애니메이션
         view.InitialFragment_TextView_GithubIdLabel.startAnimation(fadeIn0)
         view.InitialFragment_EditText_GithubId     .startAnimation(fadeIn1)
-        view.InitialFragment_Button_GitHubIdCheck  .startAnimation(fadeIn1)
+//        view.InitialFragment_Button_GitHubIdCheck  .startAnimation(fadeIn1)
 
         // EditText의 내용이 변경되면 하단 UI Invisible, Disabled 처리
-        view.InitialFragment_EditText_GithubId.doOnTextChanged { _, _, _, _ ->
-            InitialFragment_TextView_Verify.text = ""
-            changeBottomUiState("disabled")
-        }
+//        view.InitialFragment_EditText_GithubId.doOnTextChanged { _, _, _, _ ->
+//            InitialFragment_TextView_Verify.text = ""
+//            changeBottomUiState("disabled")
+//        }
 
         // EditText IME_ACTION 이벤트 발생 시 GitHubIdCheck 클릭 이벤트 발생
-        view.InitialFragment_EditText_GithubId.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_NEXT) {
-                view.InitialFragment_Button_GitHubIdCheck.performClick()
-                true
-            } else {
-                false
-            }
-        }
+//        view.InitialFragment_EditText_GithubId.setOnEditorActionListener { _, actionId, _ ->
+//            if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_NEXT) {
+//                view.InitialFragment_Button_GitHubIdCheck.performClick()
+//                true
+//            } else {
+//                false
+//            }
+//        }
 
         // 확인 버튼을 클릭하면 GitHub ID의 유효성을 검사
-        view.InitialFragment_Button_GitHubIdCheck.setOnClickListener {
-            Log.d("CommitManagerLog",
-                "입력된 GitHub ID: ${InitialFragment_EditText_GithubId.text}")
+//        view.InitialFragment_Button_GitHubIdCheck.setOnClickListener {
+//            Log.d("CommitManagerLog",
+//                "입력된 GitHub ID: ${InitialFragment_EditText_GithubId.text}")
+//
+//            InitialFragment_EditText_GithubId.clearFocus()
+//            InitialFragment_TextView_Verify.text = ""
+//            hideKeyboard()
+//            githubIdCheck()
+//        }
 
-            InitialFragment_EditText_GithubId.clearFocus()
-            InitialFragment_TextView_Verify.text = ""
-            hideKeyboard()
-            githubIdCheck()
+        // GitHub 로그인 버튼을 클릭하면 WebView 띄우기
+        view.InitialFragment_Button_GitHubLogin.setOnClickListener {
+            // OAuthActivity 호출
+            startActivity<OAuthActivity>()
         }
 
         // 알림 시간 팝업 다이얼로그(First)
@@ -204,24 +210,24 @@ class InitialFragment : Fragment() {
     private fun changeVerifyUi(status: String) {
         when (status) {
             "yes" -> {
-                InitialFragment_TextView_Verify.text      = getString(R.string.label_verify_yes)
-                InitialFragment_TextView_Verify.textColor = ContextCompat.getColor(context!!, R.color.limegreen)
+//                InitialFragment_TextView_Verify.text      = getString(R.string.label_verify_yes)
+//                InitialFragment_TextView_Verify.textColor = ContextCompat.getColor(context!!, R.color.limegreen)
                 changeBottomUiState("enabled")
             }
             "no" -> {
-                InitialFragment_TextView_Verify.startAnimation(shake)
-                InitialFragment_TextView_Verify.text      = getString(R.string.label_verify_no)
-                InitialFragment_TextView_Verify.textColor = Color.RED
+//                InitialFragment_TextView_Verify.startAnimation(shake)
+//                InitialFragment_TextView_Verify.text      = getString(R.string.label_verify_no)
+//                InitialFragment_TextView_Verify.textColor = Color.RED
             }
             "null" -> {
-                InitialFragment_TextView_Verify.startAnimation(shake)
-                InitialFragment_TextView_Verify.text      = getString(R.string.label_verify_null)
-                InitialFragment_TextView_Verify.textColor = Color.RED
+//                InitialFragment_TextView_Verify.startAnimation(shake)
+//                InitialFragment_TextView_Verify.text      = getString(R.string.label_verify_null)
+//                InitialFragment_TextView_Verify.textColor = Color.RED
             }
             "error" -> {
-                InitialFragment_TextView_Verify.startAnimation(shake)
-                InitialFragment_TextView_Verify.text      = getString(R.string.label_verify_error)
-                InitialFragment_TextView_Verify.textColor = Color.RED
+//                InitialFragment_TextView_Verify.startAnimation(shake)
+//                InitialFragment_TextView_Verify.text      = getString(R.string.label_verify_error)
+//                InitialFragment_TextView_Verify.textColor = Color.RED
             }
             else -> {
                 throw InvalidParameterNameException(
@@ -230,7 +236,7 @@ class InitialFragment : Fragment() {
             }
         }
 
-        InitialFragment_TextView_Verify.visibility = View.VISIBLE
+//        InitialFragment_TextView_Verify.visibility = View.VISIBLE
     }
 
     /**

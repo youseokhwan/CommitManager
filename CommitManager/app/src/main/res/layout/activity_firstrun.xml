@@ -18,7 +18,7 @@
 
         <!--        <fragment-->
         <!--            android:id="@+id/fragment"-->
-        <!--            android:name="com.youseokhwan.commitmanager.ui.welcome.WelcomeFragment"-->
+        <!--            android:name="com.youseokhwan.commitmanager.ui.initial.WelcomeFragment"-->
         <!--            android:layout_width="match_parent"-->
         <!--            android:layout_height="match_parent" />-->
     </FrameLayout>

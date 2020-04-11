@@ -28,38 +28,27 @@
         android:layout_marginEnd="16dp"
         android:autofillHints=""
         android:ems="10"
+        android:enabled="false"
         android:hint="@string/label_githubid"
         android:inputType="textPersonName"
         android:maxLength="39"
-        app:layout_constraintEnd_toStartOf="@+id/InitialFragment_Button_GitHubIdCheck"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toStartOf="@+id/InitialFragment_Button_Logout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/InitialFragment_TextView_GithubIdLabel" />
 
     <Button
-        android:id="@+id/InitialFragment_Button_GitHubIdCheck"
+        android:id="@+id/InitialFragment_Button_Logout"
         style="@style/ButtonTheme"
-        android:layout_width="50dp"
+        android:layout_width="60dp"
         android:layout_height="30dp"
         android:layout_marginEnd="32dp"
-        android:imeOptions="actionDone"
-        android:text="@string/button_githubid"
+        android:text="@string/button_logout"
         android:textSize="12sp"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/InitialFragment_EditText_GithubId"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/InitialFragment_EditText_GithubId" />
-
-    <TextView
-        android:id="@+id/InitialFragment_TextView_Verify"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:text="@string/label_verify_no"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        android:textColor="@android:color/holo_red_dark"
-        android:textSize="12sp"
-        android:visibility="invisible"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/InitialFragment_EditText_GithubId" />
 
     <TextView
         android:id="@+id/InitialFragment_TextView_Time"
@@ -71,7 +60,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/InitialFragment_TextView_Verify" />
+        app:layout_constraintTop_toBottomOf="@+id/InitialFragment_EditText_GithubId" />
 
     <TextView
         android:id="@+id/InitialFragment_TextView_First"
@@ -187,5 +176,17 @@
         android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/InitialFragment_EditText_Second" />
+
+    <Button
+        android:id="@+id/InitialFragment_Button_GitHubLogin"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:text="GitHub 로그인하기"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/InitialFragment_TextView_GithubIdLabel" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,11 +3,10 @@ package com.youseokhwan.commitmanager
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import com.youseokhwan.commitmanager.exception.InvalidParameterNameException
 import com.youseokhwan.commitmanager.retrofit.UserInfo
-import com.youseokhwan.commitmanager.ui.initial.InitialFragment
-import com.youseokhwan.commitmanager.ui.welcome.WelcomeFragment
+import com.youseokhwan.commitmanager.ui.firstrun.InitialFragment
+import com.youseokhwan.commitmanager.ui.firstrun.WelcomeFragment
 import kotlinx.android.synthetic.main.fragment_initial.*
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
@@ -55,7 +54,9 @@ class FirstRunActivity : AppCompatActivity() {
             // WelcomeFragment로 전환
             "welcome" -> {
                 supportFragmentManager.beginTransaction()
-                    .replace(R.id.FirstRunActivity_FrameLayout, WelcomeFragment()).commit()
+                    .replace(R.id.FirstRunActivity_FrameLayout,
+                        WelcomeFragment()
+                    ).commit()
             }
             // InitialFragment로 전환
             "initial" -> {
