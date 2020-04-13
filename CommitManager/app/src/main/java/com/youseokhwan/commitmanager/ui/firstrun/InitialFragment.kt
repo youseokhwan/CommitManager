@@ -70,7 +70,8 @@ class InitialFragment : Fragment() {
 
         // FadeIn 애니메이션
         view.InitialFragment_TextView_GithubIdLabel.startAnimation(fadeIn0)
-        view.InitialFragment_EditText_GithubId     .startAnimation(fadeIn1)
+        view.InitialFragment_Button_GitHubLogin    .startAnimation(fadeIn1)
+//        view.InitialFragment_EditText_GithubId     .startAnimation(fadeIn1)
 //        view.InitialFragment_Button_GitHubIdCheck  .startAnimation(fadeIn1)
 
         // EditText의 내용이 변경되면 하단 UI Invisible, Disabled 처리

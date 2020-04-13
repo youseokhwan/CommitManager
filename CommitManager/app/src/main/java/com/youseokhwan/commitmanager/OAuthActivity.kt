@@ -20,7 +20,7 @@ class OAuthActivity : AppCompatActivity() {
             settings.javaScriptEnabled = true
             webViewClient = WebViewClient()
         }
-        OAuthActivity_WebView.loadUrl("http://google.com")
+        OAuthActivity_WebView.loadUrl("http://ec2-18-223-112-230.us-east-2.compute.amazonaws.com:3001/login")
     }
 
     override fun onBackPressed() {
