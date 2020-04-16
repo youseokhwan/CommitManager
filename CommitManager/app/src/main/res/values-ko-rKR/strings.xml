@@ -5,17 +5,17 @@
     <string name="title_home">Home</string>
     <string name="title_statistics">Statistics</string>
     <string name="title_settings">Settings</string>
-    <string name="contents_welcome">Commit Manager와 함께\n잔디밭을 가꿔보세요!\n\n시작하기 전에 몇가지 설정이\n필요합니다.</string>
+    <string name="contents_welcome">Commit Manager와 함께\n잔디밭을 가꿔보세요!\n\n시작하기 전에 몇가지 설정이\n필요해요.</string>
     <string name="button_welcome">다음</string>
     <string name="label_githubid">GitHub 아이디</string>
     <string name="button_initial">시작하기</string>
     <string name="button_logout">로그아웃</string>
     <string name="label_time">푸시 알림</string>
-    <string name="label_verify_yes">존재하는 아이디입니다.</string>
-    <string name="label_verify_no">유효하지 않은 아이디입니다.</string>
+    <string name="label_verify_yes">존재하는 아이디에요.</string>
+    <string name="label_verify_no">유효하지 않은 아이디에요.</string>
     <string name="label_time_first">1차</string>
     <string name="label_time_second">2차</string>
     <string name="label_verify_null">아이디를 입력해주세요.</string>
-    <string name="label_verify_error">오류가 발생하였습니다.</string>
-    <string name="guide_time">그날 커밋 내역이 없으면 푸시 알림을 보냅니다.</string>
+    <string name="label_verify_error">오류가 발생했어요.</string>
+    <string name="guide_time">그날 커밋 내역이 없으면 푸시 알림을 보내드려요.</string>
 </resources>

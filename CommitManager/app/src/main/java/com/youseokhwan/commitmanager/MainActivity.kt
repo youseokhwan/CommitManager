@@ -94,7 +94,7 @@ class MainActivity : AppCompatActivity() {
             super.onBackPressed()
         } else {
             backPressedTime = tempTime
-            toast("한번 더 누르면 종료합니다.")
+            toast("종료하려면 한번 더 눌러주세요")
         }
     }
 

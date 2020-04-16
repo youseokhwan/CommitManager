@@ -23,11 +23,13 @@ class OAuthActivity : AppCompatActivity() {
         OAuthActivity_WebView.loadUrl("http://ec2-18-223-112-230.us-east-2.compute.amazonaws.com:3001/login")
     }
 
-    override fun onBackPressed() {
-        if (OAuthActivity_WebView.canGoBack()) {
-            OAuthActivity_WebView.goBack()
-        } else {
-            super.onBackPressed()
-        }
+    /**
+     * WebView가 종료될 때 정상 종료 여부 판단하여 유저 정보 저장
+     */
+    override fun onDestroy() {
+        // 정상 종료 여부 판단
+        // 유저 정보 저장
+
+        return super.onDestroy()
     }
 }
