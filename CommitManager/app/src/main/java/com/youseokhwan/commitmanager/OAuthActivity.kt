@@ -2,6 +2,7 @@ package com.youseokhwan.commitmanager
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import kotlinx.android.synthetic.main.activity_o_auth.*
@@ -21,15 +22,25 @@ class OAuthActivity : AppCompatActivity() {
             webViewClient = WebViewClient()
         }
         OAuthActivity_WebView.loadUrl("http://ec2-18-223-112-230.us-east-2.compute.amazonaws.com:3001/login")
+
+        // Bridge 설정
+        val bridge: AndroidBridge = AndroidBridge()
+        OAuthActivity_WebView.addJavascriptInterface(bridge, "Android")
     }
 
     /**
-     * WebView가 종료될 때 정상 종료 여부 판단하여 유저 정보 저장
+     * 로그인 성공
      */
-    override fun onDestroy() {
-        // 정상 종료 여부 판단
-        // 유저 정보 저장
+    fun loginSuccess() {
+        Log.d("CommitManagerLog", "로그인 성공")
+        finish()
+    }
 
-        return super.onDestroy()
+    /**
+     * 로그인 실패
+     */
+    fun loginFailure() {
+        Log.d("CommitManagerLog", "로그인 실패")
+        finish()
     }
 }
