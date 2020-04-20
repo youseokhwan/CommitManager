@@ -1,16 +1,22 @@
 package com.youseokhwan.commitmanager
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import kotlinx.android.synthetic.main.activity_o_auth.*
+import org.jetbrains.anko.toast
 
 /**
  * OAuthActivity
  */
 class OAuthActivity : AppCompatActivity() {
+
+    companion object {
+        var isSuccess: Boolean = false
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,18 +35,16 @@ class OAuthActivity : AppCompatActivity() {
     }
 
     /**
-     * 로그인 성공
+     * isSuccess 값에 따라 로직 진행하고 해당 Activity 종료
      */
-    fun loginSuccess() {
-        Log.d("CommitManagerLog", "로그인 성공")
-        finish()
-    }
+    override fun onDestroy() {
+        if (isSuccess) {
+            toast("OAuth 인증 성공!")
+            // 다음 UI Update 진행하는 코드 구현
+        } else {
+            toast("WebView가 강제 종료됨")
+        }
 
-    /**
-     * 로그인 실패
-     */
-    fun loginFailure() {
-        Log.d("CommitManagerLog", "로그인 실패")
-        finish()
+        super.onDestroy()
     }
 }

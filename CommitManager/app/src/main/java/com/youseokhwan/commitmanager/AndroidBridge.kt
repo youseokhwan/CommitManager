@@ -2,6 +2,7 @@ package com.youseokhwan.commitmanager
 
 import android.util.Log
 import android.webkit.JavascriptInterface
+import androidx.core.app.ActivityCompat
 
 /**
  * AndroidBridge
@@ -15,5 +16,9 @@ class AndroidBridge {
     fun getUserId(id: String, token: String) {
         Log.d("CommitManagerLog", "Login ID: $id")
         Log.d("CommitManagerLog", "Token: $token")
+
+        // Splash의 Companion Object에 받은 값 저장하기
+
+        OAuthActivity.isSuccess = true
     }
 }
