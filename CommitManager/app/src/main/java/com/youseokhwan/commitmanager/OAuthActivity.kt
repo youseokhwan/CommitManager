@@ -11,12 +11,11 @@ import org.jetbrains.anko.toast
 
 /**
  * OAuthActivity
+ * @property isSuccess 로그인 성공 여부 판단
  */
 class OAuthActivity : AppCompatActivity() {
 
-    companion object {
-        var isSuccess: Boolean = false
-    }
+    var isSuccess: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,21 +29,31 @@ class OAuthActivity : AppCompatActivity() {
         OAuthActivity_WebView.loadUrl("http://ec2-18-223-112-230.us-east-2.compute.amazonaws.com:3001/login")
 
         // Bridge 설정
-        val bridge: AndroidBridge = AndroidBridge()
+        val bridge: AndroidBridge = AndroidBridge(this)
         OAuthActivity_WebView.addJavascriptInterface(bridge, "Android")
     }
 
     /**
-     * isSuccess 값에 따라 로직 진행하고 해당 Activity 종료
+     * 유저 데이터를 Web에서 Android로 전송
      */
-    override fun onDestroy() {
+    fun transferUserData(id: String, token: String) {
+        Log.d("CommitManagerLog", "Login ID: $id")
+        Log.d("CommitManagerLog", "Token: $token")
+
+        // 데이터를 SplashActivity의 Companion Object로 초기화하는 코드 구현
+
+        isSuccess = true
+        finish()
+    }
+
+    override fun finish() {
         if (isSuccess) {
             toast("OAuth 인증 성공!")
-            // 다음 UI Update 진행하는 코드 구현
+            // 이후 진행하는 코드 구현
         } else {
             toast("WebView가 강제 종료됨")
         }
 
-        super.onDestroy()
+        super.finish()
     }
 }
