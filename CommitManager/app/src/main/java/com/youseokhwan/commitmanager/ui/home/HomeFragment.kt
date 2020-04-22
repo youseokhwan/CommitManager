@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.youseokhwan.commitmanager.MainActivity
 import com.youseokhwan.commitmanager.R
+import com.youseokhwan.commitmanager.SplashActivity
 import com.youseokhwan.commitmanager.exception.RetrofitException
 import com.youseokhwan.commitmanager.retrofit.Commit
 import com.youseokhwan.commitmanager.retrofit.UserRetrofit
@@ -25,7 +26,6 @@ import retrofit2.Response
  */
 class HomeFragment : Fragment() {
 
-    private val mainActivity = MainActivity()
     private lateinit var homeViewModel: HomeViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -38,7 +38,7 @@ class HomeFragment : Fragment() {
 
         // 오늘 날짜, 커밋 내역 등 업데이트
         // GET("/commit?id=${id}&token=${token}")
-        UserRetrofit.getService().getTodayCommit(id = mainActivity.getUserId(), token = "defaultToken")
+        UserRetrofit.getService().getTodayCommit(id = SplashActivity.id, token = SplashActivity.token)
             .enqueue(object : Callback<Commit> {
                 override fun onFailure(call: Call<Commit>?, t: Throwable?) {
                     toast("오류가 발생했습니다. 다시 시도해주세요.")

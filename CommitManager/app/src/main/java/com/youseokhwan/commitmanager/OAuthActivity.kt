@@ -40,7 +40,9 @@ class OAuthActivity : AppCompatActivity() {
         Log.d("CommitManagerLog", "Login ID: $id")
         Log.d("CommitManagerLog", "Token: $token")
 
-        // 데이터를 SplashActivity의 Companion Object로 초기화하는 코드 구현
+        // 데이터를 SplashActivity의 Companion Object 변수에 저장
+        SplashActivity.id = id
+        SplashActivity.token = token
 
         isSuccess = true
         finish()
@@ -49,7 +51,7 @@ class OAuthActivity : AppCompatActivity() {
     override fun finish() {
         if (isSuccess) {
             toast("OAuth 인증 성공!")
-            // 이후 진행하는 코드 구현
+            // 이후 진행하는 코드 구현(UI 변경 등)
         } else {
             toast("WebView가 강제 종료됨")
         }

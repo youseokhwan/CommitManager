@@ -35,7 +35,7 @@ import java.time.format.DateTimeFormatter
  */
 class MainActivity : AppCompatActivity() {
 
-    private var id: String = "DefaultID"
+//    private var id: String = "DefaultID"
 
     // 뒤로가기 2번 누르면 앱 종료
     private val FINISH_INTERVAL_TIME: Long = 3000
@@ -57,16 +57,16 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment)
         nav_view.setupWithNavController(navController)
 
-        // 사용자 설정을 저장하는 SharedPreferences
-        val settings: SharedPreferences = getSharedPreferences("settings", MODE_PRIVATE)
-        id = settings.getString("id", "null")!!
-        val name: String = settings.getString("name", "null")!!
-        val imgSrc: String = settings.getString("imgSrc", "null")!!
-        val follower: Int = settings.getInt("follower", 0)
-        val following: Int = settings.getInt("following", 0)
+//        // 사용자 설정을 저장하는 SharedPreferences
+//        val settings: SharedPreferences = getSharedPreferences("settings", MODE_PRIVATE)
+//        id = settings.getString("id", "null")!!
+//        val name: String = settings.getString("name", "null")!!
+//        val imgSrc: String = settings.getString("imgSrc", "null")!!
+//        val follower: Int = settings.getInt("follower", 0)
+//        val following: Int = settings.getInt("following", 0)
 
         // Toolbar Title 설정
-        MainActivity_Toolbar.title = name
+        MainActivity_Toolbar.title = SplashActivity.name
 
         // Toolbar 클릭하면 UserInfo 패널 Visible
         MainActivity_Toolbar.setOnClickListener {
@@ -77,10 +77,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         // UserInfo 패널 설정
-        Glide.with(this).load(imgSrc).into(MainActivity_ImageView_Avatar)
-        MainActivity_TextView_GitHubId.text = id
-        MainActivity_TextView_Follower.text = "follower: ${follower}명"
-        MainActivity_TextView_Following.text = "following: ${following}명"
+        Glide.with(this).load(SplashActivity.imgSrc).into(MainActivity_ImageView_Avatar)
+        MainActivity_TextView_GitHubId.text = SplashActivity.id
+        MainActivity_TextView_Follower.text = "follower: ${SplashActivity.follower}명"
+        MainActivity_TextView_Following.text = "following: ${SplashActivity.following}명"
     }
 
     /**
@@ -122,10 +122,5 @@ class MainActivity : AppCompatActivity() {
         }
 
         return super.dispatchTouchEvent(ev)
-    }
-
-    fun getUserId(): String {
-        Log.d("CommitManagerLog", id)
-        return id
     }
 }

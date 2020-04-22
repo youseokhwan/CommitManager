@@ -3,6 +3,7 @@ package com.youseokhwan.commitmanager
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import com.youseokhwan.commitmanager.exception.InvalidParameterNameException
 import com.youseokhwan.commitmanager.retrofit.UserInfo
 import com.youseokhwan.commitmanager.ui.firstrun.InitialFragment
@@ -54,9 +55,7 @@ class FirstRunActivity : AppCompatActivity() {
             // WelcomeFragment로 전환
             "welcome" -> {
                 supportFragmentManager.beginTransaction()
-                    .replace(R.id.FirstRunActivity_FrameLayout,
-                        WelcomeFragment()
-                    ).commit()
+                    .replace(R.id.FirstRunActivity_FrameLayout, WelcomeFragment()).commit()
             }
             // InitialFragment로 전환
             "initial" -> {
@@ -82,28 +81,34 @@ class FirstRunActivity : AppCompatActivity() {
         val settings: SharedPreferences = getSharedPreferences("settings", MODE_PRIVATE)
         val editor: SharedPreferences.Editor = settings.edit()
 
-//        Log.d("CommitManagerLog", "GitHub ID: ${InitialFragment_EditText_GithubId.text}, "
-//                + "First: ${InitialFragment_EditText_First.text}, "
-//                + "Second: ${InitialFragment_CheckBox_Second.isChecked}, "
-//                + "${InitialFragment_EditText_Second.text}")
+        Log.d("CommitManagerLog", "GitHub ID: ${InitialFragment_EditText_GithubId.text}, "
+                + "First: ${InitialFragment_EditText_First.text}, "
+                + "Second: ${InitialFragment_CheckBox_Second.isChecked}, "
+                + "${InitialFragment_EditText_Second.text}")
+
+        // 설정 값을 Companion Object에 저장
+        SplashActivity.id = InitialFragment_EditText_GithubId.text.toString()
+        SplashActivity.first = InitialFragment_EditText_First.text.toString()
+        SplashActivity.second = InitialFragment_EditText_Second.text.toString()
+        SplashActivity.isFirstRun = false
 
         // 설정 값을 settings에 저장
-        editor.putString("id", InitialFragment_EditText_GithubId.text.toString())
-        editor.putString("first", InitialFragment_EditText_First.text.toString())
-        editor.putString("second", InitialFragment_EditText_Second.text.toString())
-        editor.putBoolean("isFirstRun", false)
+        editor.putString("id", SplashActivity.id)
+        editor.putString("first", SplashActivity.first)
+        editor.putString("second", SplashActivity.second)
+        editor.putBoolean("isFirstRun", SplashActivity.isFirstRun)
 
-        // =========================================================================================
-        // UserInfo GET 호출로 받은 response를 settings에 저장
-        editor.putString("name", userInfo?.name.toString())
-        editor.putString("imgSrc", userInfo?.imgSrc.toString())
-        editor.putInt("follower", userInfo?.follower?:0)
-        editor.putInt("following", userInfo?.following?:0)
+        // response를 Companion Object에 저장
+        SplashActivity.name = userInfo?.name.toString()
+        SplashActivity.imgSrc = userInfo?.imgSrc.toString()
+        SplashActivity.follower = userInfo?.follower?:0
+        SplashActivity.following = userInfo?.following?:0
 
-        // 앱 실행중에 유저 정보가 바뀌는 경우 대처해야 함
-        // onCreate 때마다 updateUserInfo() 형식으로 갱신
-        // 혹은 상단 Action Bar를 터치할 때 유저 정보를 보여주고 확장하는 방식
-        // =========================================================================================
+        // response를 settings에 저장
+        editor.putString("name", SplashActivity.name)
+        editor.putString("imgSrc", SplashActivity.imgSrc)
+        editor.putInt("follower", SplashActivity.follower)
+        editor.putInt("following", SplashActivity.following)
 
         editor.apply()
 
