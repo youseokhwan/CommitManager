@@ -15,12 +15,14 @@ import kotlinx.android.synthetic.main.fragment_welcome.view.*
 /**
  * 환영 문구를 출력하는 Fragment
  * @property firstRunActivity
+ * @property fadeIn  FadeIn 애니메이션 (제자리)
  * @property fadeIn0 FadeIn 애니메이션 1
  * @property fadeIn1 FadeIn 애니메이션 2
  */
 class WelcomeFragment : Fragment() {
 
     private var firstRunActivity = FirstRunActivity()
+    private lateinit var fadeIn: Animation
     private lateinit var fadeIn0: Animation
     private lateinit var fadeIn1: Animation
 
@@ -28,6 +30,7 @@ class WelcomeFragment : Fragment() {
         super.onAttach(context)
 
         firstRunActivity = activity as FirstRunActivity
+        fadeIn  = AnimationUtils.loadAnimation(context, R.anim.fade_in)
         fadeIn0 = AnimationUtils.loadAnimation(context, R.anim.fade_in_0)
         fadeIn1 = AnimationUtils.loadAnimation(context, R.anim.fade_in_1)
     }
@@ -39,7 +42,7 @@ class WelcomeFragment : Fragment() {
         // FadeIn 애니메이션
         view.WelcomeFragment_TextView_Title   .startAnimation(fadeIn0)
         view.WelcomeFragment_TextView_Contents.startAnimation(fadeIn1)
-        view.WelcomeFragment_Button_Next      .startAnimation(fadeIn1)
+        view.WelcomeFragment_Button_Next      .startAnimation(fadeIn)
 
         // 다음 버튼을 클릭하면 InitialFragment로 전환
         view.WelcomeFragment_Button_Next.setOnClickListener {
