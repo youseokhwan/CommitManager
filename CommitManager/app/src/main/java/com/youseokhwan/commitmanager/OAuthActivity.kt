@@ -4,9 +4,12 @@ import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import com.youseokhwan.commitmanager.ui.firstrun.InitialFragment
 import kotlinx.android.synthetic.main.activity_o_auth.*
+import kotlinx.android.synthetic.main.fragment_initial.*
 import org.jetbrains.anko.toast
 
 /**
@@ -51,7 +54,6 @@ class OAuthActivity : AppCompatActivity() {
     override fun finish() {
         if (isSuccess) {
             toast("OAuth 인증 성공!")
-            // 이후 진행하는 코드 구현(UI 변경 등)
         } else {
             toast("WebView가 강제 종료됨")
         }

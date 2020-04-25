@@ -19,13 +19,25 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/InitialFragment_Button_GitHubLogin"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="32dp"
+        android:text="GitHub 로그인하기"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/InitialFragment_TextView_GithubIdLabel" />
+
     <EditText
         android:id="@+id/InitialFragment_EditText_GithubId"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="32dp"
         android:autofillHints=""
         android:ems="10"
         android:enabled="false"
@@ -33,22 +45,9 @@
         android:inputType="textPersonName"
         android:maxLength="39"
         android:visibility="invisible"
-        app:layout_constraintEnd_toStartOf="@+id/InitialFragment_Button_Logout"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/InitialFragment_TextView_GithubIdLabel" />
-
-    <Button
-        android:id="@+id/InitialFragment_Button_Logout"
-        style="@style/ButtonTheme"
-        android:layout_width="60dp"
-        android:layout_height="30dp"
-        android:layout_marginEnd="32dp"
-        android:text="@string/button_logout"
-        android:textSize="12sp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/InitialFragment_EditText_GithubId"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/InitialFragment_EditText_GithubId" />
 
     <TextView
         android:id="@+id/InitialFragment_TextView_Time"
@@ -176,17 +175,5 @@
         android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/InitialFragment_EditText_Second" />
-
-    <Button
-        android:id="@+id/InitialFragment_Button_GitHubLogin"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
-        android:text="GitHub 로그인하기"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/InitialFragment_TextView_GithubIdLabel" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

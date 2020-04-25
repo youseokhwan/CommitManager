@@ -16,6 +16,7 @@ import androidx.core.content.ContextCompat
 import com.youseokhwan.commitmanager.FirstRunActivity
 import com.youseokhwan.commitmanager.OAuthActivity
 import com.youseokhwan.commitmanager.R
+import com.youseokhwan.commitmanager.SplashActivity
 import com.youseokhwan.commitmanager.exception.InvalidParameterNameException
 import com.youseokhwan.commitmanager.exception.RetrofitException
 import com.youseokhwan.commitmanager.retrofit.User
@@ -371,5 +372,23 @@ class InitialFragment : Fragment() {
         // 문제되는 사항이 없으면 enable
         InitialFragment_Button_Start.textColor = ContextCompat.getColor(context!!, R.color.limegreen)
         InitialFragment_Button_Start.isEnabled = true
+    }
+
+    /**
+     * OAuth 인증에 성공하면 UI 변경
+     */
+    fun showBottomUi() {
+        InitialFragment_Button_GitHubLogin.visibility = View.INVISIBLE
+        InitialFragment_EditText_GithubId.visibility = View.VISIBLE
+        InitialFragment_EditText_GithubId.setText(SplashActivity.id)
+    }
+
+    override fun onStart() {
+        // OAuth 인증에 성공하여 저장된 id가 존재하는 경우
+        if (SplashActivity.id != "") {
+            showBottomUi()
+        }
+
+        super.onStart()
     }
 }
