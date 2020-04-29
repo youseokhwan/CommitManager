@@ -117,6 +117,7 @@ class InitialFragment : Fragment() {
         view.InitialFragment_CheckBox_First.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 InitialFragment_EditText_First.textColor = Color.BLACK
+                showTimePickerDialog(R.id.InitialFragment_EditText_First)
             } else {
                 InitialFragment_EditText_First.textColor = Color.GRAY
                 InitialFragment_EditText_First.setText("--:--")
@@ -134,6 +135,7 @@ class InitialFragment : Fragment() {
         view.InitialFragment_CheckBox_Second.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 InitialFragment_EditText_Second.textColor = Color.BLACK
+                showTimePickerDialog(R.id.InitialFragment_EditText_Second)
             } else {
                 InitialFragment_EditText_Second.textColor = Color.GRAY
                 InitialFragment_EditText_Second.setText("--:--")
