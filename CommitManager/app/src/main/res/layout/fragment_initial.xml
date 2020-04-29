@@ -148,20 +148,6 @@
         app:layout_constraintStart_toEndOf="@+id/InitialFragment_EditText_Second"
         app:layout_constraintTop_toBottomOf="@+id/InitialFragment_EditText_First" />
 
-    <Button
-        android:id="@+id/InitialFragment_Button_Start"
-        style="@style/ButtonTheme"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="32dp"
-        android:enabled="false"
-        android:imeOptions="actionDone"
-        android:text="@string/button_initial"
-        android:textColor="@color/gray"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
     <TextView
         android:id="@+id/InitialFragment_TextView_TimeGuide"
         android:layout_width="wrap_content"
@@ -175,5 +161,19 @@
         android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/InitialFragment_EditText_Second" />
+
+    <Button
+        android:id="@+id/InitialFragment_Button_Start"
+        style="@style/ButtonTheme"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"
+        android:enabled="false"
+        android:imeOptions="actionDone"
+        android:text="@string/button_initial"
+        android:textColor="@color/gray"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

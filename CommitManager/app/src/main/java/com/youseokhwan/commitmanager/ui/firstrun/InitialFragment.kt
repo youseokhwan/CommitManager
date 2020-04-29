@@ -381,6 +381,17 @@ class InitialFragment : Fragment() {
         InitialFragment_Button_GitHubLogin.visibility = View.INVISIBLE
         InitialFragment_EditText_GithubId.visibility = View.VISIBLE
         InitialFragment_EditText_GithubId.setText(SplashActivity.id)
+
+        InitialFragment_TextView_Time     .visibility = View.VISIBLE
+        InitialFragment_TextView_First    .visibility = View.VISIBLE
+        InitialFragment_TextView_Second   .visibility = View.VISIBLE
+        InitialFragment_EditText_First    .visibility = View.VISIBLE
+        InitialFragment_CheckBox_First    .visibility = View.VISIBLE
+        InitialFragment_EditText_Second   .visibility = View.VISIBLE
+        InitialFragment_CheckBox_Second   .visibility = View.VISIBLE
+        InitialFragment_TextView_TimeGuide.visibility = View.VISIBLE
+        InitialFragment_Button_Start      .textColor  = ContextCompat.getColor(context!!, R.color.limegreen)
+        InitialFragment_Button_Start      .isEnabled  = true
     }
 
     override fun onStart() {
