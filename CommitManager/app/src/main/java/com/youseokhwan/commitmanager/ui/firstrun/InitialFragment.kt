@@ -72,35 +72,6 @@ class InitialFragment : Fragment() {
         // FadeIn 애니메이션
         view.InitialFragment_TextView_GithubIdLabel.startAnimation(fadeIn0)
         view.InitialFragment_Button_GitHubLogin    .startAnimation(fadeIn1)
-//        view.InitialFragment_EditText_GithubId     .startAnimation(fadeIn1)
-//        view.InitialFragment_Button_GitHubIdCheck  .startAnimation(fadeIn1)
-
-        // EditText의 내용이 변경되면 하단 UI Invisible, Disabled 처리
-//        view.InitialFragment_EditText_GithubId.doOnTextChanged { _, _, _, _ ->
-//            InitialFragment_TextView_Verify.text = ""
-//            changeBottomUiState("disabled")
-//        }
-
-        // EditText IME_ACTION 이벤트 발생 시 GitHubIdCheck 클릭 이벤트 발생
-//        view.InitialFragment_EditText_GithubId.setOnEditorActionListener { _, actionId, _ ->
-//            if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_NEXT) {
-//                view.InitialFragment_Button_GitHubIdCheck.performClick()
-//                true
-//            } else {
-//                false
-//            }
-//        }
-
-        // 확인 버튼을 클릭하면 GitHub ID의 유효성을 검사
-//        view.InitialFragment_Button_GitHubIdCheck.setOnClickListener {
-//            Log.d("CommitManagerLog",
-//                "입력된 GitHub ID: ${InitialFragment_EditText_GithubId.text}")
-//
-//            InitialFragment_EditText_GithubId.clearFocus()
-//            InitialFragment_TextView_Verify.text = ""
-//            hideKeyboard()
-//            githubIdCheck()
-//        }
 
         // GitHub 로그인 버튼을 클릭하면 WebView 띄우기
         view.InitialFragment_Button_GitHubLogin.setOnClickListener {
@@ -111,37 +82,6 @@ class InitialFragment : Fragment() {
         // 알림 시간 팝업 다이얼로그(First)
         view.InitialFragment_EditText_First.setOnClickListener {
             showTimePickerDialog(it.id)
-        }
-
-        // 1차 알림 체크박스 변경 시 이벤트
-        view.InitialFragment_CheckBox_First.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                InitialFragment_EditText_First.textColor = Color.BLACK
-                showTimePickerDialog(R.id.InitialFragment_EditText_First)
-            } else {
-                InitialFragment_EditText_First.textColor = Color.GRAY
-                InitialFragment_EditText_First.setText("--:--")
-            }
-
-            checkStartButtonState()
-        }
-
-        // 알림 시간 팝업 다이얼로그(Second)
-        view.InitialFragment_EditText_Second.setOnClickListener {
-            showTimePickerDialog(it.id)
-        }
-
-        // 2차 알림 체크박스 변경 시 이벤트
-        view.InitialFragment_CheckBox_Second.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                InitialFragment_EditText_Second.textColor = Color.BLACK
-                showTimePickerDialog(R.id.InitialFragment_EditText_Second)
-            } else {
-                InitialFragment_EditText_Second.textColor = Color.GRAY
-                InitialFragment_EditText_Second.setText("--:--")
-            }
-
-            checkStartButtonState()
         }
 
         // 시작하기 버튼을 클릭하면 Username을 받아서 저장하고 초기 설정을 마침
@@ -211,11 +151,12 @@ class InitialFragment : Fragment() {
      * InitialFragment_TextView_Verify의 UI를 변경
      * @param status 상태 값
      */
+    // =============================================================================================
+    // 수정 필요
+    // =============================================================================================
     private fun changeVerifyUi(status: String) {
         when (status) {
             "yes" -> {
-//                InitialFragment_TextView_Verify.text      = getString(R.string.label_verify_yes)
-//                InitialFragment_TextView_Verify.textColor = ContextCompat.getColor(context!!, R.color.limegreen)
                 changeBottomUiState("enabled")
             }
             "no" -> {
@@ -252,23 +193,13 @@ class InitialFragment : Fragment() {
             "enabled" -> {
                 InitialFragment_TextView_Time     .visibility = View.VISIBLE
                 InitialFragment_TextView_First    .visibility = View.VISIBLE
-                InitialFragment_TextView_Second   .visibility = View.VISIBLE
                 InitialFragment_EditText_First    .visibility = View.VISIBLE
-                InitialFragment_CheckBox_First    .visibility = View.VISIBLE
-                InitialFragment_EditText_Second   .visibility = View.VISIBLE
-                InitialFragment_CheckBox_Second   .visibility = View.VISIBLE
-                InitialFragment_TextView_TimeGuide.visibility = View.VISIBLE
                 InitialFragment_Button_Start      .textColor  = ContextCompat.getColor(context!!, R.color.limegreen)
                 InitialFragment_Button_Start      .isEnabled  = true
 
                 InitialFragment_TextView_Time     .startAnimation(fadeIn0)
                 InitialFragment_TextView_First    .startAnimation(fadeIn1)
-                InitialFragment_TextView_Second   .startAnimation(fadeIn1)
                 InitialFragment_EditText_First    .startAnimation(fadeIn1)
-                InitialFragment_CheckBox_First    .startAnimation(fadeIn1)
-                InitialFragment_EditText_Second   .startAnimation(fadeIn1)
-                InitialFragment_CheckBox_Second   .startAnimation(fadeIn1)
-                InitialFragment_TextView_TimeGuide.startAnimation(fadeIn2)
 
                 checkStartButtonState()
             }
@@ -276,23 +207,13 @@ class InitialFragment : Fragment() {
                 if (InitialFragment_TextView_Time.visibility == View.VISIBLE) {
                     InitialFragment_TextView_Time     .visibility = View.INVISIBLE
                     InitialFragment_TextView_First    .visibility = View.INVISIBLE
-                    InitialFragment_TextView_Second   .visibility = View.INVISIBLE
                     InitialFragment_EditText_First    .visibility = View.INVISIBLE
-                    InitialFragment_CheckBox_First    .visibility = View.INVISIBLE
-                    InitialFragment_EditText_Second   .visibility = View.INVISIBLE
-                    InitialFragment_CheckBox_Second   .visibility = View.INVISIBLE
-                    InitialFragment_TextView_TimeGuide.visibility = View.INVISIBLE
                     InitialFragment_Button_Start      .textColor  = ContextCompat.getColor(context!!, R.color.gray)
                     InitialFragment_Button_Start      .isEnabled  = false
 
                     InitialFragment_TextView_Time     .startAnimation(fadeOut)
                     InitialFragment_TextView_First    .startAnimation(fadeOut)
-                    InitialFragment_TextView_Second   .startAnimation(fadeOut)
                     InitialFragment_EditText_First    .startAnimation(fadeOut)
-                    InitialFragment_CheckBox_First    .startAnimation(fadeOut)
-                    InitialFragment_EditText_Second   .startAnimation(fadeOut)
-                    InitialFragment_CheckBox_Second   .startAnimation(fadeOut)
-                    InitialFragment_TextView_TimeGuide.startAnimation(fadeOut)
                 }
             }
             else -> {
@@ -301,14 +222,6 @@ class InitialFragment : Fragment() {
                 )
             }
         }
-    }
-
-    /**
-     * 키보드 숨기기
-     */
-    private fun hideKeyboard() {
-        val inputMethodManager = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputMethodManager.hideSoftInputFromWindow(view?.windowToken, 0)
     }
 
     /**
@@ -330,19 +243,6 @@ class InitialFragment : Fragment() {
                 TimePickerDialog(context, timeSetListener, 18,0, true)
                     .show()
             }
-            R.id.InitialFragment_EditText_Second -> {
-                if (InitialFragment_CheckBox_Second.isChecked) {
-                    val timeSetListener = TimePickerDialog.OnTimeSetListener { _, hour, minute ->
-                        cal.set(Calendar.HOUR_OF_DAY, hour)
-                        cal.set(Calendar.MINUTE, minute)
-                        InitialFragment_EditText_Second
-                            .setText(SimpleDateFormat("HH:mm", Locale.getDefault()).format(cal.time))
-                        checkStartButtonState()
-                    }
-                    TimePickerDialog(context, timeSetListener, 22, 30, true)
-                        .show()
-                }
-            }
             else -> {
                 throw InvalidParameterNameException(
                     "InvalidParameterNameException: 유효하지 않은 TimePickerDialog 호출입니다."
@@ -354,23 +254,10 @@ class InitialFragment : Fragment() {
     /**
      * 입력 값 변경 시 Start 버튼의 유효성을 검사하고 상태 값 변경
      */
+    // =============================================================================================
+    // 수정 필요
+    // =============================================================================================
     private fun checkStartButtonState() {
-        if (InitialFragment_CheckBox_First.isChecked) {
-            if (InitialFragment_EditText_First.text.toString() == "--:--") {
-                InitialFragment_Button_Start.textColor = ContextCompat.getColor(context!!, R.color.gray)
-                InitialFragment_Button_Start.isEnabled = false
-                return
-            }
-        }
-
-        if (InitialFragment_CheckBox_Second.isChecked) {
-            if (InitialFragment_EditText_Second.text.toString() == "--:--") {
-                InitialFragment_Button_Start.textColor = ContextCompat.getColor(context!!, R.color.gray)
-                InitialFragment_Button_Start.isEnabled = false
-                return
-            }
-        }
-
         // 문제되는 사항이 없으면 enable
         InitialFragment_Button_Start.textColor = ContextCompat.getColor(context!!, R.color.limegreen)
         InitialFragment_Button_Start.isEnabled = true
@@ -386,12 +273,7 @@ class InitialFragment : Fragment() {
 
         InitialFragment_TextView_Time     .visibility = View.VISIBLE
         InitialFragment_TextView_First    .visibility = View.VISIBLE
-        InitialFragment_TextView_Second   .visibility = View.VISIBLE
         InitialFragment_EditText_First    .visibility = View.VISIBLE
-        InitialFragment_CheckBox_First    .visibility = View.VISIBLE
-        InitialFragment_EditText_Second   .visibility = View.VISIBLE
-        InitialFragment_CheckBox_Second   .visibility = View.VISIBLE
-        InitialFragment_TextView_TimeGuide.visibility = View.VISIBLE
         InitialFragment_Button_Start      .textColor  = ContextCompat.getColor(context!!, R.color.limegreen)
         InitialFragment_Button_Start      .isEnabled  = true
     }

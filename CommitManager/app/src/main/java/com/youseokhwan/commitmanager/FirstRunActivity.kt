@@ -81,15 +81,9 @@ class FirstRunActivity : AppCompatActivity() {
         val settings: SharedPreferences = getSharedPreferences("settings", MODE_PRIVATE)
         val editor: SharedPreferences.Editor = settings.edit()
 
-        Log.d("CommitManagerLog", "GitHub ID: ${InitialFragment_EditText_GithubId.text}, "
-                + "First: ${InitialFragment_EditText_First.text}, "
-                + "Second: ${InitialFragment_CheckBox_Second.isChecked}, "
-                + "${InitialFragment_EditText_Second.text}")
-
         // 설정 값을 Companion Object에 저장
         SplashActivity.id = InitialFragment_EditText_GithubId.text.toString()
         SplashActivity.first = InitialFragment_EditText_First.text.toString()
-        SplashActivity.second = InitialFragment_EditText_Second.text.toString()
         SplashActivity.isFirstRun = false
 
         // 설정 값을 settings에 저장
