@@ -188,29 +188,49 @@ class InitialFragment : Fragment() {
     private fun changeBottomUiState(status: String) {
         when (status) {
             "enabled" -> {
+                // 알림 여부
                 InitialFragment_TextView_NotificationLabel.visibility = View.VISIBLE
+                InitialFragment_RadioGroup_Notification   .visibility = View.VISIBLE
+
+                // 시간
                 InitialFragment_TextView_Time             .visibility = View.VISIBLE
                 InitialFragment_EditText_Time             .visibility = View.VISIBLE
+
+                // 진동
+                InitialFragment_TextView_Vibrate          .visibility = View.VISIBLE
+                InitialFragment_RadioGroup_Vibrate        .visibility = View.VISIBLE
+
+                // 시작하기 버튼
                 InitialFragment_Button_Start              .textColor  = ContextCompat.getColor(context!!, R.color.limegreen)
                 InitialFragment_Button_Start              .isEnabled  = true
 
-                InitialFragment_TextView_NotificationLabel.startAnimation(fadeIn0)
-                InitialFragment_TextView_Time             .startAnimation(fadeIn1)
-                InitialFragment_EditText_Time             .startAnimation(fadeIn1)
+//                InitialFragment_TextView_NotificationLabel.startAnimation(fadeIn0)
+//                InitialFragment_TextView_Time             .startAnimation(fadeIn1)
+//                InitialFragment_EditText_Time             .startAnimation(fadeIn1)
 
                 checkStartButtonState()
             }
             "disabled" -> {
                 if (InitialFragment_TextView_NotificationLabel.visibility == View.VISIBLE) {
+                    // 알림 여부
                     InitialFragment_TextView_NotificationLabel.visibility = View.INVISIBLE
+                    InitialFragment_RadioGroup_Notification   .visibility = View.INVISIBLE
+
+                    // 시간
                     InitialFragment_TextView_Time             .visibility = View.INVISIBLE
                     InitialFragment_EditText_Time             .visibility = View.INVISIBLE
+
+                    // 진동
+                    InitialFragment_TextView_Vibrate          .visibility = View.INVISIBLE
+                    InitialFragment_RadioGroup_Vibrate        .visibility = View.INVISIBLE
+
+                    // 시작하기 버튼
                     InitialFragment_Button_Start              .textColor  = ContextCompat.getColor(context!!, R.color.gray)
                     InitialFragment_Button_Start              .isEnabled  = false
 
-                    InitialFragment_TextView_NotificationLabel.startAnimation(fadeOut)
-                    InitialFragment_TextView_Time             .startAnimation(fadeOut)
-                    InitialFragment_EditText_Time             .startAnimation(fadeOut)
+//                    InitialFragment_TextView_NotificationLabel.startAnimation(fadeOut)
+//                    InitialFragment_TextView_Time             .startAnimation(fadeOut)
+//                    InitialFragment_EditText_Time             .startAnimation(fadeOut)
                 }
             }
             else -> {
@@ -264,13 +284,24 @@ class InitialFragment : Fragment() {
      * OAuth 인증에 성공하면 UI 변경
      */
     fun showBottomUi() {
+        // GitHub 로그인 버튼, ID EditText
         InitialFragment_Button_GitHubLogin.visibility = View.INVISIBLE
         InitialFragment_EditText_GithubId .visibility = View.VISIBLE
         InitialFragment_EditText_GithubId .setText(SplashActivity.id)
 
+        // 알림 여부
         InitialFragment_TextView_NotificationLabel.visibility = View.VISIBLE
+        InitialFragment_RadioGroup_Notification   .visibility = View.VISIBLE
+
+        // 시간
         InitialFragment_TextView_Time             .visibility = View.VISIBLE
         InitialFragment_EditText_Time             .visibility = View.VISIBLE
+
+        // 진동
+        InitialFragment_TextView_Vibrate          .visibility = View.VISIBLE
+        InitialFragment_RadioGroup_Vibrate        .visibility = View.VISIBLE
+
+        // 시작하기 버튼
         InitialFragment_Button_Start              .textColor  = ContextCompat.getColor(context!!, R.color.limegreen)
         InitialFragment_Button_Start              .isEnabled  = true
     }
