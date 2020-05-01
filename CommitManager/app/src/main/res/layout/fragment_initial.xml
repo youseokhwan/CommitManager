@@ -50,36 +50,78 @@
         app:layout_constraintTop_toBottomOf="@+id/InitialFragment_TextView_GithubIdLabel" />
 
     <TextView
-        android:id="@+id/InitialFragment_TextView_Time"
+        android:id="@+id/InitialFragment_TextView_NotificationLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="48dp"
-        android:text="알림 설정"
+        android:layout_marginTop="32dp"
+        android:text="알림 여부"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/black"
+        android:textSize="22sp"
         android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/InitialFragment_EditText_GithubId" />
 
+    <RadioGroup
+        android:id="@+id/InitialFragment_RadioGroup_Notification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/InitialFragment_TextView_NotificationLabel">
+
+        <RadioButton
+            android:id="@+id/InitialFragment_RadioButton_Noti01"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="알림 받지 않기"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/gray"
+            android:textSize="18sp" />
+
+        <RadioButton
+            android:id="@+id/InitialFragment_RadioButton_Noti02"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="커밋 안한 날만 받기"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/gray"
+            android:textSize="18sp" />
+
+        <RadioButton
+            android:id="@+id/InitialFragment_RadioButton_Noti03"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="커밋한 날도 알림 받기"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/gray"
+            android:textSize="18sp" />
+    </RadioGroup>
+
     <TextView
-        android:id="@+id/InitialFragment_TextView_First"
-        android:layout_width="35dp"
+        android:id="@+id/InitialFragment_TextView_Time"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:gravity="center_horizontal"
-        android:text="@string/label_time_first"
+        android:text="시간"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/black"
+        android:textSize="22sp"
         android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/InitialFragment_EditText_First"
+        app:layout_constraintBottom_toBottomOf="@+id/InitialFragment_EditText_Time"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/InitialFragment_EditText_First" />
+        app:layout_constraintTop_toTopOf="@+id/InitialFragment_EditText_Time" />
 
     <EditText
-        android:id="@+id/InitialFragment_EditText_First"
+        android:id="@+id/InitialFragment_EditText_Time"
         android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:clickable="true"
         android:cursorVisible="false"
         android:editable="false"
@@ -89,10 +131,56 @@
         android:hint="--:--"
         android:inputType="time"
         android:text="22:00"
-        android:textColor="@color/black"
+        android:textColor="@color/gray"
+        android:textSize="18sp"
         android:visibility="invisible"
-        app:layout_constraintStart_toEndOf="@+id/InitialFragment_TextView_First"
-        app:layout_constraintTop_toBottomOf="@+id/InitialFragment_TextView_Time" />
+        app:layout_constraintStart_toEndOf="@+id/InitialFragment_TextView_Time"
+        app:layout_constraintTop_toBottomOf="@+id/InitialFragment_RadioGroup_Notification" />
+
+    <TextView
+        android:id="@+id/InitialFragment_TextView_Vibrate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:gravity="center_horizontal"
+        android:text="진동"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/black"
+        android:textSize="22sp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/InitialFragment_RadioGroup_Vibrate"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/InitialFragment_RadioGroup_Vibrate" />
+
+    <RadioGroup
+        android:id="@+id/InitialFragment_RadioGroup_Vibrate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:orientation="horizontal"
+        android:visibility="invisible"
+        app:layout_constraintStart_toEndOf="@+id/InitialFragment_TextView_Vibrate"
+        app:layout_constraintTop_toBottomOf="@+id/InitialFragment_EditText_Time">
+
+        <RadioButton
+            android:id="@+id/InitialFragment_RadioButton_Vib01"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="진동"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/gray"
+            android:textSize="18sp" />
+
+        <RadioButton
+            android:id="@+id/InitialFragment_RadioButton_Vib02"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="무음"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/gray"
+            android:textSize="18sp" />
+    </RadioGroup>
 
     <Button
         android:id="@+id/InitialFragment_Button_Start"

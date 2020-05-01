@@ -3,7 +3,6 @@ package com.youseokhwan.commitmanager
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import com.youseokhwan.commitmanager.exception.InvalidParameterNameException
 import com.youseokhwan.commitmanager.retrofit.UserInfo
 import com.youseokhwan.commitmanager.ui.firstrun.InitialFragment
@@ -83,7 +82,7 @@ class FirstRunActivity : AppCompatActivity() {
 
         // 설정 값을 Companion Object에 저장
         SplashActivity.id = InitialFragment_EditText_GithubId.text.toString()
-        SplashActivity.first = InitialFragment_EditText_First.text.toString()
+        SplashActivity.first = InitialFragment_EditText_Time.text.toString()
         SplashActivity.isFirstRun = false
 
         // 설정 값을 settings에 저장

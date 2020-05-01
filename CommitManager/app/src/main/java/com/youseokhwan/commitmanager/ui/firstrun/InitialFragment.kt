@@ -2,7 +2,6 @@ package com.youseokhwan.commitmanager.ui.firstrun
 
 import android.app.TimePickerDialog
 import android.content.Context
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -11,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
 import com.youseokhwan.commitmanager.FirstRunActivity
 import com.youseokhwan.commitmanager.OAuthActivity
@@ -24,7 +22,6 @@ import com.youseokhwan.commitmanager.retrofit.UserInfo
 import com.youseokhwan.commitmanager.retrofit.UserRetrofit
 import kotlinx.android.synthetic.main.fragment_initial.*
 import kotlinx.android.synthetic.main.fragment_initial.view.*
-import kotlinx.android.synthetic.main.fragment_initial.view.InitialFragment_EditText_GithubId
 import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.toast
 import org.jetbrains.anko.textColor
@@ -80,7 +77,7 @@ class InitialFragment : Fragment() {
         }
 
         // 알림 시간 팝업 다이얼로그(First)
-        view.InitialFragment_EditText_First.setOnClickListener {
+        view.InitialFragment_EditText_Time.setOnClickListener {
             showTimePickerDialog(it.id)
         }
 
@@ -191,29 +188,29 @@ class InitialFragment : Fragment() {
     private fun changeBottomUiState(status: String) {
         when (status) {
             "enabled" -> {
-                InitialFragment_TextView_Time     .visibility = View.VISIBLE
-                InitialFragment_TextView_First    .visibility = View.VISIBLE
-                InitialFragment_EditText_First    .visibility = View.VISIBLE
-                InitialFragment_Button_Start      .textColor  = ContextCompat.getColor(context!!, R.color.limegreen)
-                InitialFragment_Button_Start      .isEnabled  = true
+                InitialFragment_TextView_NotificationLabel.visibility = View.VISIBLE
+                InitialFragment_TextView_Time             .visibility = View.VISIBLE
+                InitialFragment_EditText_Time             .visibility = View.VISIBLE
+                InitialFragment_Button_Start              .textColor  = ContextCompat.getColor(context!!, R.color.limegreen)
+                InitialFragment_Button_Start              .isEnabled  = true
 
-                InitialFragment_TextView_Time     .startAnimation(fadeIn0)
-                InitialFragment_TextView_First    .startAnimation(fadeIn1)
-                InitialFragment_EditText_First    .startAnimation(fadeIn1)
+                InitialFragment_TextView_NotificationLabel.startAnimation(fadeIn0)
+                InitialFragment_TextView_Time             .startAnimation(fadeIn1)
+                InitialFragment_EditText_Time             .startAnimation(fadeIn1)
 
                 checkStartButtonState()
             }
             "disabled" -> {
-                if (InitialFragment_TextView_Time.visibility == View.VISIBLE) {
-                    InitialFragment_TextView_Time     .visibility = View.INVISIBLE
-                    InitialFragment_TextView_First    .visibility = View.INVISIBLE
-                    InitialFragment_EditText_First    .visibility = View.INVISIBLE
-                    InitialFragment_Button_Start      .textColor  = ContextCompat.getColor(context!!, R.color.gray)
-                    InitialFragment_Button_Start      .isEnabled  = false
+                if (InitialFragment_TextView_NotificationLabel.visibility == View.VISIBLE) {
+                    InitialFragment_TextView_NotificationLabel.visibility = View.INVISIBLE
+                    InitialFragment_TextView_Time             .visibility = View.INVISIBLE
+                    InitialFragment_EditText_Time             .visibility = View.INVISIBLE
+                    InitialFragment_Button_Start              .textColor  = ContextCompat.getColor(context!!, R.color.gray)
+                    InitialFragment_Button_Start              .isEnabled  = false
 
-                    InitialFragment_TextView_Time     .startAnimation(fadeOut)
-                    InitialFragment_TextView_First    .startAnimation(fadeOut)
-                    InitialFragment_EditText_First    .startAnimation(fadeOut)
+                    InitialFragment_TextView_NotificationLabel.startAnimation(fadeOut)
+                    InitialFragment_TextView_Time             .startAnimation(fadeOut)
+                    InitialFragment_EditText_Time             .startAnimation(fadeOut)
                 }
             }
             else -> {
@@ -232,11 +229,11 @@ class InitialFragment : Fragment() {
         val cal = Calendar.getInstance()
 
         when (viewId) {
-            R.id.InitialFragment_EditText_First -> {
+            R.id.InitialFragment_EditText_Time -> {
                 val timeSetListener = TimePickerDialog.OnTimeSetListener { _, hour, minute ->
                     cal.set(Calendar.HOUR_OF_DAY, hour)
                     cal.set(Calendar.MINUTE, minute)
-                    InitialFragment_EditText_First
+                    InitialFragment_EditText_Time
                         .setText(SimpleDateFormat("HH:mm", Locale.getDefault()).format(cal.time))
                     checkStartButtonState()
                 }
@@ -268,14 +265,14 @@ class InitialFragment : Fragment() {
      */
     fun showBottomUi() {
         InitialFragment_Button_GitHubLogin.visibility = View.INVISIBLE
-        InitialFragment_EditText_GithubId.visibility = View.VISIBLE
-        InitialFragment_EditText_GithubId.setText(SplashActivity.id)
+        InitialFragment_EditText_GithubId .visibility = View.VISIBLE
+        InitialFragment_EditText_GithubId .setText(SplashActivity.id)
 
-        InitialFragment_TextView_Time     .visibility = View.VISIBLE
-        InitialFragment_TextView_First    .visibility = View.VISIBLE
-        InitialFragment_EditText_First    .visibility = View.VISIBLE
-        InitialFragment_Button_Start      .textColor  = ContextCompat.getColor(context!!, R.color.limegreen)
-        InitialFragment_Button_Start      .isEnabled  = true
+        InitialFragment_TextView_NotificationLabel.visibility = View.VISIBLE
+        InitialFragment_TextView_Time             .visibility = View.VISIBLE
+        InitialFragment_EditText_Time             .visibility = View.VISIBLE
+        InitialFragment_Button_Start              .textColor  = ContextCompat.getColor(context!!, R.color.limegreen)
+        InitialFragment_Button_Start              .isEnabled  = true
     }
 
     override fun onStart() {
