@@ -14,10 +14,10 @@ interface RetrofitService {
      * GitHub ID가 유효한 ID인지 확인
      */
 //    @Headers("")
-    @GET("/user")
-    fun idCheck(
-        @Query("id") id: String
-    ): Call<User>
+//    @GET("/user")
+//    fun idCheck(
+//        @Query("id") id: String
+//    ): Call<User>
 
     /**
      *
