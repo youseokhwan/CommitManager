@@ -69,6 +69,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
+        android:checkedButton="@id/InitialFragment_RadioButton_Noti02"
         android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/InitialFragment_TextView_NotificationLabel">
@@ -158,6 +159,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
+        android:checkedButton="@id/InitialFragment_RadioButton_Vib01"
         android:orientation="horizontal"
         android:visibility="invisible"
         app:layout_constraintStart_toEndOf="@+id/InitialFragment_TextView_Vibrate"

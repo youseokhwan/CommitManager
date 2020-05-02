@@ -75,6 +75,38 @@ class InitialFragment : Fragment() {
             startActivity<OAuthActivity>()
         }
 
+        // 알림 여부 RadioGroup
+        view.InitialFragment_RadioGroup_Notification.setOnCheckedChangeListener { _, checkedId ->
+            when (checkedId) {
+                // 알림 받지 않기 선택하면 UI 숨기기
+                R.id.InitialFragment_RadioButton_Noti01 -> {
+                    InitialFragment_TextView_Time     .visibility = View.INVISIBLE
+                    InitialFragment_EditText_Time     .visibility = View.INVISIBLE
+                    InitialFragment_TextView_Vibrate  .visibility = View.INVISIBLE
+                    InitialFragment_RadioGroup_Vibrate.visibility = View.INVISIBLE
+
+                    InitialFragment_TextView_Time     .startAnimation(fadeOut)
+                    InitialFragment_EditText_Time     .startAnimation(fadeOut)
+                    InitialFragment_TextView_Vibrate  .startAnimation(fadeOut)
+                    InitialFragment_RadioGroup_Vibrate.startAnimation(fadeOut)
+                }
+                // 그 외는 UI 표시
+                else -> {
+                    if (InitialFragment_TextView_Time.visibility == View.INVISIBLE) {
+                        InitialFragment_TextView_Time.visibility = View.VISIBLE
+                        InitialFragment_EditText_Time.visibility = View.VISIBLE
+                        InitialFragment_TextView_Vibrate.visibility = View.VISIBLE
+                        InitialFragment_RadioGroup_Vibrate.visibility = View.VISIBLE
+
+                        InitialFragment_TextView_Time.startAnimation(fadeIn0)
+                        InitialFragment_EditText_Time.startAnimation(fadeIn0)
+                        InitialFragment_TextView_Vibrate.startAnimation(fadeIn1)
+                        InitialFragment_RadioGroup_Vibrate.startAnimation(fadeIn1)
+                    }
+                }
+            }
+        }
+
         // 알림 시간 팝업 다이얼로그(First)
         view.InitialFragment_EditText_Time.setOnClickListener {
             showTimePickerDialog(it.id)
