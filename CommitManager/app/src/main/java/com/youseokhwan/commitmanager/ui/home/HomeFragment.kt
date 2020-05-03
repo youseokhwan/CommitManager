@@ -19,6 +19,8 @@ import org.jetbrains.anko.support.v4.toast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.time.LocalDate
+import java.util.*
 
 /**
  * 오늘 커밋이 있는지 알려주는 이미지와 이번 주 커밋 통계를 표시하는 메인 Fragment
@@ -36,7 +38,7 @@ class HomeFragment : Fragment() {
         homeViewModel.text.observe(viewLifecycleOwner, Observer {
         })
 
-        // 오늘 날짜, 커밋 내역 등 업데이트
+        // 오늘 커밋 여부 아이콘 업데이트
         // GET("/commit?id=${id}&token=${token}")
         UserRetrofit.getService().getTodayCommit(id = SplashActivity.id, token = SplashActivity.token)
             .enqueue(object : Callback<Commit> {
@@ -47,7 +49,11 @@ class HomeFragment : Fragment() {
 
                 override fun onResponse(call: Call<Commit>, response: Response<Commit>) {
                     if (response.isSuccessful) {
+                        // =========================================================================
+                        Log.d("CommitManagerLog", "id = ${SplashActivity.id}, token = ${SplashActivity.token}")
+                        Log.d("CommitManagerLog", "Response: ")
                         Log.d("CommitManagerLog", response.body().toString())
+                        // =========================================================================
 
                         // count가 0보다 크면 커밋이 완료된 것임
                         if (response.body()?.count?:0 > 0) {
@@ -65,5 +71,27 @@ class HomeFragment : Fragment() {
             })
 
         return root
+    }
+
+    override fun onStart() {
+        // 오늘 날짜로 초기화
+        setTodayDate()
+
+        super.onStart()
+    }
+
+    /**
+     * 화면 상단 TextView를 오늘 날짜로 초기화
+     */
+    private fun setTodayDate() {
+        val DAY_OF_WEEK_KOR = arrayOf("", "일", "월", "화", "수", "목", "금", "토")
+
+        val cal = Calendar.getInstance()
+        var today = cal.get(Calendar.YEAR).toString() + "년 "
+        today += (cal.get(Calendar.MONTH) + 1).toString() + "월 "
+        today += cal.get(Calendar.DATE).toString() + "일 ("
+        today += DAY_OF_WEEK_KOR[cal.get(Calendar.DAY_OF_WEEK)] + ")"
+
+        HomeFragment_TextView_Today.text = today
     }
 }

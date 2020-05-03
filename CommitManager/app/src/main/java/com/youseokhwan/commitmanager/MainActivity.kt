@@ -1,6 +1,5 @@
 package com.youseokhwan.commitmanager
 
-import android.content.SharedPreferences
 import android.graphics.Rect
 import android.os.Bundle
 import android.util.Log
@@ -12,19 +11,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.bumptech.glide.Glide
-import com.youseokhwan.commitmanager.exception.RetrofitException
-import com.youseokhwan.commitmanager.retrofit.Commit
-import com.youseokhwan.commitmanager.retrofit.UserRetrofit
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_home.*
-import org.jetbrains.anko.image
-import org.jetbrains.anko.support.v4.toast
 import org.jetbrains.anko.toast
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
+import java.time.LocalDate
 
 /**
  * MainActivity
@@ -42,7 +32,7 @@ class MainActivity : AppCompatActivity() {
     private var backPressedTime     : Long = 0
 
     // 에니메이션 변수 선언
-    private lateinit var fadeIn: Animation
+    private lateinit var fadeIn : Animation
     private lateinit var fadeOut: Animation
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // 애니메이션 변수 초기화
-        fadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in)
+        fadeIn  = AnimationUtils.loadAnimation(this, R.anim.fade_in)
         fadeOut = AnimationUtils.loadAnimation(this, R.anim.fade_out)
 
         // NavController 설정
@@ -78,8 +68,8 @@ class MainActivity : AppCompatActivity() {
 
         // UserInfo 패널 설정
         Glide.with(this).load(SplashActivity.imgSrc).into(MainActivity_ImageView_Avatar)
-        MainActivity_TextView_GitHubId.text = SplashActivity.id
-        MainActivity_TextView_Follower.text = "follower: ${SplashActivity.follower}명"
+        MainActivity_TextView_GitHubId .text = SplashActivity.id
+        MainActivity_TextView_Follower .text = "follower: ${SplashActivity.follower}명"
         MainActivity_TextView_Following.text = "following: ${SplashActivity.following}명"
     }
 
@@ -87,7 +77,7 @@ class MainActivity : AppCompatActivity() {
      * 뒤로가기 2번 누르면 앱 종료
      */
     override fun onBackPressed() {
-        val tempTime = System.currentTimeMillis()
+        val tempTime     = System.currentTimeMillis()
         val intervalTime = tempTime - backPressedTime
 
         if (intervalTime in 0..FINISH_INTERVAL_TIME) {
