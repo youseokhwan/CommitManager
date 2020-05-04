@@ -56,12 +56,34 @@ class HomeFragment : Fragment() {
                         // =========================================================================
 
                         // count가 0보다 크면 커밋이 완료된 것임
-                        if (response.body()?.count?:0 > 0) {
-                            // 변경 애니메이션 추가
+                        if (response.body()?.count?:"0" != "0") {
+                            // 변경 애니메이션 추가할 것
+                            // 커밋 내역이 있을 경우 V 이미지로 변경
                             HomeFragment_ImageView_Daily.setImageResource(R.drawable.ic_check_black_24dp)
+
+                            // =====================================================================
+                            Log.d("CommitManagerLog", "repository = ${response.body()?.repository}")
+                            Log.d("CommitManagerLog", "msg = ${response.body()?.msg}")
+                            // =====================================================================
+
+                            // 커밋 내역이 있을 경우 Repository 초기화
+                            HomeFragment_TextView_Repository.text = response.body()?.repository.toString()
+                            HomeFragment_TextView_Repository.visibility = View.VISIBLE
+
+                            // 커밋 내역이 있고 커밋 메시지도 있을 경우 Msg 초기화
+                            if (HomeFragment_TextView_Msg.text != null && HomeFragment_TextView_Msg.text != "") {
+                                HomeFragment_TextView_Msg.text = response.body()?.msg.toString()
+                                HomeFragment_TextView_Msg.visibility = View.VISIBLE
+                            }
+
                         } else {
-                            // 변경 애니메이션 추가
+                            // 변경 애니메이션 추가할 것
+                            // 커밋 내역이 없을 경우 X 이미지로 변경
                             HomeFragment_ImageView_Daily.setImageResource(R.drawable.ic_close_black_24dp)
+
+                            // 커밋 내역이 없을 경우 Repository, Msg 숨기기
+                            HomeFragment_TextView_Repository.visibility = View.GONE
+                            HomeFragment_TextView_Msg       .visibility = View.GONE
                         }
                     } else {
                         toast("오류가 발생했습니다. 다시 시도해주세요.")

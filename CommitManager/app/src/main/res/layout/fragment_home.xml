@@ -26,6 +26,7 @@
         android:layout_marginTop="16dp"
         android:text="오늘의 커밋"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/HomeFragment_TextView_Today" />
 
@@ -40,15 +41,29 @@
         app:srcCompat="?android:attr/actionModeWebSearchDrawable" />
 
     <TextView
-        android:id="@+id/HomeFragment_TextView_CountLabel"
+        android:id="@+id/HomeFragment_TextView_Repository"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="15일 연속 Commit!!"
+        android:text="Repository Name"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textSize="14sp"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/HomeFragment_ImageView_Daily" />
+
+    <TextView
+        android:id="@+id/HomeFragment_TextView_Msg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="Commit Massage"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textSize="14sp"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/HomeFragment_TextView_Repository" />
 
     <TextView
         android:id="@+id/HomeFragment_TextView_WeekLabel"
@@ -58,8 +73,9 @@
         android:layout_marginTop="16dp"
         android:text="이번주 커밋"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/HomeFragment_TextView_CountLabel" />
+        app:layout_constraintTop_toBottomOf="@+id/HomeFragment_TextView_Msg" />
 
     <TableLayout
         android:id="@+id/HomeFragment_TableLayout_Week"
