@@ -38,7 +38,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/HomeFragment_TextView_DailyLabel"
-        app:srcCompat="?android:attr/actionModeWebSearchDrawable" />
+        app:srcCompat="@drawable/ic_search_black_24dp" />
 
     <TextView
         android:id="@+id/HomeFragment_TextView_Repository"
@@ -82,29 +82,140 @@
         android:layout_width="0dp"
         android:layout_height="100dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:background="#673AB7"
+        android:background="@drawable/border"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/HomeFragment_TextView_WeekLabel">
 
         <TableRow
+            android:id="@+id/HomeFragment_TableRow_01"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/HomeFragment_TextView_Sun"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="일"
+                android:textColor="@android:color/holo_red_light" />
+
+            <TextView
+                android:id="@+id/HomeFragment_TextView_Mon"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="월"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/homeFragment_TextView_Tue"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="화"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/homeFragment_TextView_Wed"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="수"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/homeFragment_TextView_Thu"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="목"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/homeFragment_TextView_Fri"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="금"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/homeFragment_TextView_Sat"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="토"
+                android:textColor="@android:color/holo_blue_dark" />
+
+        </TableRow>
 
         <TableRow
+            android:id="@+id/HomeFragment_TableRow_02"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_weight="1">
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            <ImageView
+                android:id="@+id/HomeFragment_ImageView_Sun"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/ic_remove_black_24dp" />
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            <ImageView
+                android:id="@+id/homeFragment_ImageView_Mon"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/ic_remove_black_24dp" />
+
+            <ImageView
+                android:id="@+id/homeFragment_ImageView_Tue"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/ic_remove_black_24dp" />
+
+            <ImageView
+                android:id="@+id/homeFragment_ImageView_Wed"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/ic_remove_black_24dp" />
+
+            <ImageView
+                android:id="@+id/homeFragment_ImageView_Thu"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/ic_remove_black_24dp" />
+
+            <ImageView
+                android:id="@+id/homeFragment_ImageView_Fri"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/ic_remove_black_24dp" />
+
+            <ImageView
+                android:id="@+id/homeFragment_ImageView_Sat"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/ic_remove_black_24dp" />
+        </TableRow>
 
     </TableLayout>
 
