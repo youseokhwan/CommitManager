@@ -82,13 +82,12 @@ class FirstRunActivity : AppCompatActivity() {
 
         // 설정 값을 Companion Object에 저장
         SplashActivity.id = InitialFragment_EditText_GithubId.text.toString()
-        SplashActivity.first = InitialFragment_EditText_Time.text.toString()
+        SplashActivity.alarmTime = InitialFragment_EditText_Time.text.toString()
         SplashActivity.isFirstRun = false
 
         // 설정 값을 settings에 저장
         editor.putString("id", SplashActivity.id)
-        editor.putString("first", SplashActivity.first)
-        editor.putString("second", SplashActivity.second)
+        editor.putString("alarmTime", SplashActivity.alarmTime)
         editor.putBoolean("isFirstRun", SplashActivity.isFirstRun)
 
         // response를 Companion Object에 저장

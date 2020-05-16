@@ -2,7 +2,6 @@ package com.youseokhwan.commitmanager
 
 import android.graphics.Rect
 import android.os.Bundle
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.animation.Animation
@@ -12,13 +11,11 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_home.*
 import org.jetbrains.anko.toast
-import java.time.LocalDate
 
 /**
  * MainActivity
- * @property FINISH_INTERVAL_TIME
+ * @property finishIntervalTime
  * @property backPressedTime
  * @property fadeIn
  * @property fadeOut
@@ -28,8 +25,8 @@ class MainActivity : AppCompatActivity() {
 //    private var id: String = "DefaultID"
 
     // 뒤로가기 2번 누르면 앱 종료
-    private val FINISH_INTERVAL_TIME: Long = 3000
-    private var backPressedTime     : Long = 0
+    private val finishIntervalTime: Long = 3000
+    private var backPressedTime   : Long = 0
 
     // 에니메이션 변수 선언
     private lateinit var fadeIn : Animation
@@ -47,14 +44,6 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment)
         nav_view.setupWithNavController(navController)
 
-//        // 사용자 설정을 저장하는 SharedPreferences
-//        val settings: SharedPreferences = getSharedPreferences("settings", MODE_PRIVATE)
-//        id = settings.getString("id", "null")!!
-//        val name: String = settings.getString("name", "null")!!
-//        val imgSrc: String = settings.getString("imgSrc", "null")!!
-//        val follower: Int = settings.getInt("follower", 0)
-//        val following: Int = settings.getInt("following", 0)
-
         // Toolbar Title 설정
         MainActivity_Toolbar.title = SplashActivity.name
 
@@ -71,6 +60,11 @@ class MainActivity : AppCompatActivity() {
         MainActivity_TextView_GitHubId .text = SplashActivity.id
         MainActivity_TextView_Follower .text = "follower: ${SplashActivity.follower}명"
         MainActivity_TextView_Following.text = "following: ${SplashActivity.following}명"
+
+        // =========================================================================================
+        // 테스트 코드
+        toast("(테스트) 설정된 alarmTime: ${SplashActivity.alarmTime}")
+        // =========================================================================================
     }
 
     /**
@@ -80,7 +74,7 @@ class MainActivity : AppCompatActivity() {
         val tempTime     = System.currentTimeMillis()
         val intervalTime = tempTime - backPressedTime
 
-        if (intervalTime in 0..FINISH_INTERVAL_TIME) {
+        if (intervalTime in 0..finishIntervalTime) {
             super.onBackPressed()
         } else {
             backPressedTime = tempTime
@@ -104,8 +98,8 @@ class MainActivity : AppCompatActivity() {
 
                 /*
                  * UserInfo 패널이 Visible인 상태에서 Toolbar를 터치하면
-                 * 이 메소드에 의해 Invisible 처리된 후 Toolbar OnClick 이벤트에 의해 다시 Visible 처리됨
-                 * Toolbar의 OnClick 이벤트가 발생하지 않도록 true 리턴
+                 * 이 메소드에 의해 Invisible 처리된 후 Toolbar의 onClickEvent에 의해 다시 Visible 처리됨
+                 * Toolbar의 OnClick 이벤트가 발생하지 않도록 true를 리턴하는 것임
                  */
                 return true
             }

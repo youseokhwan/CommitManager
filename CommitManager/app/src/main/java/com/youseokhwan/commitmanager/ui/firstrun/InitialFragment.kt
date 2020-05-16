@@ -107,7 +107,7 @@ class InitialFragment : Fragment() {
             }
         }
 
-        // 알림 시간 팝업 다이얼로그(First)
+        // 알림 시간 팝업 다이얼로그
         view.InitialFragment_EditText_Time.setOnClickListener {
             showTimePickerDialog(it.id)
         }
@@ -139,140 +139,6 @@ class InitialFragment : Fragment() {
     }
 
     /**
-     * GitHub ID의 유효성 검사 후 UI 변경
-     */
-//    private fun githubIdCheck() {
-//        // EditText의 내용이 없을 경우
-//        if (InitialFragment_EditText_GithubId.text.isEmpty()) {
-//            changeVerifyUi("null")
-//            return
-//        }
-//
-//        // GET("/user?id=${id}")
-//        UserRetrofit.getService().idCheck(id = InitialFragment_EditText_GithubId.text.toString())
-//            .enqueue(object : Callback<User> {
-//                override fun onFailure(call: Call<User>?, t: Throwable?) {
-//                    changeVerifyUi("error")
-//                    throw RetrofitException("RetrofitException: onFailure()\n${t.toString()}")
-//                }
-//
-//                override fun onResponse(call: Call<User>, response: Response<User>) {
-//                    if (response.isSuccessful) {
-//                        Log.d("CommitManagerLog", response.body().toString())
-//
-//                        val user: User? = response.body()
-//
-//                        if (user?.isExist == true) {
-//                            changeVerifyUi("yes")
-//                        } else {
-//                            changeVerifyUi("no")
-//                        }
-//                    } else {
-//                        changeVerifyUi("error")
-//                        throw RetrofitException("RetrofitException: response.isSuccessful is false")
-//                    }
-//                }
-//            })
-//    }
-
-    /**
-     * InitialFragment_TextView_Verify의 UI를 변경
-     * @param status 상태 값
-     */
-    // =============================================================================================
-    // 수정 필요
-    // =============================================================================================
-//    private fun changeVerifyUi(status: String) {
-//        when (status) {
-//            "yes" -> {
-//                changeBottomUiState("enabled")
-//            }
-//            "no" -> {
-////                InitialFragment_TextView_Verify.startAnimation(shake)
-////                InitialFragment_TextView_Verify.text      = getString(R.string.label_verify_no)
-////                InitialFragment_TextView_Verify.textColor = Color.RED
-//            }
-//            "null" -> {
-////                InitialFragment_TextView_Verify.startAnimation(shake)
-////                InitialFragment_TextView_Verify.text      = getString(R.string.label_verify_null)
-////                InitialFragment_TextView_Verify.textColor = Color.RED
-//            }
-//            "error" -> {
-////                InitialFragment_TextView_Verify.startAnimation(shake)
-////                InitialFragment_TextView_Verify.text      = getString(R.string.label_verify_error)
-////                InitialFragment_TextView_Verify.textColor = Color.RED
-//            }
-//            else -> {
-//                throw InvalidParameterNameException(
-//                    "InvalidParameterNameException: ${status}은 유효하지 않은 VerifyStatus 입니다."
-//                )
-//            }
-//        }
-//
-////        InitialFragment_TextView_Verify.visibility = View.VISIBLE
-//    }
-
-    /**
-     * GitHub ID Check 시 Start 버튼 및 하단 UI의 상태 값 변경
-     * @param status 상태 값
-     */
-//    private fun changeBottomUiState(status: String) {
-//        when (status) {
-//            "enabled" -> {
-//                // 알림 여부
-//                InitialFragment_TextView_NotificationLabel.visibility = View.VISIBLE
-//                InitialFragment_RadioGroup_Notification   .visibility = View.VISIBLE
-//
-//                // 시간
-//                InitialFragment_TextView_Time             .visibility = View.VISIBLE
-//                InitialFragment_EditText_Time             .visibility = View.VISIBLE
-//
-//                // 진동
-//                InitialFragment_TextView_Vibrate          .visibility = View.VISIBLE
-//                InitialFragment_RadioGroup_Vibrate        .visibility = View.VISIBLE
-//
-//                // 시작하기 버튼
-//                InitialFragment_Button_Start              .textColor  = ContextCompat.getColor(context!!, R.color.limegreen)
-//                InitialFragment_Button_Start              .isEnabled  = true
-//
-////                InitialFragment_TextView_NotificationLabel.startAnimation(fadeIn0)
-////                InitialFragment_TextView_Time             .startAnimation(fadeIn1)
-////                InitialFragment_EditText_Time             .startAnimation(fadeIn1)
-//
-//                checkStartButtonState()
-//            }
-//            "disabled" -> {
-//                if (InitialFragment_TextView_NotificationLabel.visibility == View.VISIBLE) {
-//                    // 알림 여부
-//                    InitialFragment_TextView_NotificationLabel.visibility = View.INVISIBLE
-//                    InitialFragment_RadioGroup_Notification   .visibility = View.INVISIBLE
-//
-//                    // 시간
-//                    InitialFragment_TextView_Time             .visibility = View.INVISIBLE
-//                    InitialFragment_EditText_Time             .visibility = View.INVISIBLE
-//
-//                    // 진동
-//                    InitialFragment_TextView_Vibrate          .visibility = View.INVISIBLE
-//                    InitialFragment_RadioGroup_Vibrate        .visibility = View.INVISIBLE
-//
-//                    // 시작하기 버튼
-//                    InitialFragment_Button_Start              .textColor  = ContextCompat.getColor(context!!, R.color.gray)
-//                    InitialFragment_Button_Start              .isEnabled  = false
-//
-////                    InitialFragment_TextView_NotificationLabel.startAnimation(fadeOut)
-////                    InitialFragment_TextView_Time             .startAnimation(fadeOut)
-////                    InitialFragment_EditText_Time             .startAnimation(fadeOut)
-//                }
-//            }
-//            else -> {
-//                throw InvalidParameterNameException(
-//                    "InvalidParameterNameException: ${status}은 유효하지 않은 StartButtonState 입니다."
-//                )
-//            }
-//        }
-//    }
-
-    /**
      * showTimePickerDialog()
      * @param viewId
      */
@@ -286,7 +152,6 @@ class InitialFragment : Fragment() {
                     cal.set(Calendar.MINUTE, minute)
                     InitialFragment_EditText_Time
                         .setText(SimpleDateFormat("HH:mm", Locale.getDefault()).format(cal.time))
-                    checkStartButtonState()
                 }
                 TimePickerDialog(context, timeSetListener, 18,0, true)
                     .show()
@@ -300,21 +165,9 @@ class InitialFragment : Fragment() {
     }
 
     /**
-     * 입력 값 변경 시 Start 버튼의 유효성을 검사하고 상태 값 변경
-     */
-    // =============================================================================================
-    // 수정 필요
-    // =============================================================================================
-    private fun checkStartButtonState() {
-        // 문제되는 사항이 없으면 enable
-        InitialFragment_Button_Start.textColor = ContextCompat.getColor(context!!, R.color.limegreen)
-        InitialFragment_Button_Start.isEnabled = true
-    }
-
-    /**
      * OAuth 인증에 성공하면 UI 변경
      */
-    fun showBottomUi() {
+    private fun showBottomUi() {
         // GitHub 로그인 버튼, ID EditText
         InitialFragment_Button_GitHubLogin.visibility = View.INVISIBLE
         InitialFragment_EditText_GithubId .visibility = View.VISIBLE

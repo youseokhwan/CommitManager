@@ -15,8 +15,7 @@ class SplashActivity : AppCompatActivity() {
         var isFirstRun = true       // 최초 실행 여부
         var id         = ""         // User ID
         var token      = ""         // OAuth Token
-        var first      = ""         // 1차 알람 시간
-        var second     = ""         // 2차 알람 시간
+        var alarmTime  = ""         // 알람 시간
         var name       = ""         // Username
         var imgSrc     = ""         // Avartar 이미지 경로
         var follower   = 0          // follower 수
@@ -46,15 +45,21 @@ class SplashActivity : AppCompatActivity() {
             // =====================================================================================
 
             // SharedPreferences에 등록된 데이터를 Companion Object 변수들에 대입
-            // id = ""
-            // token = ""
+            id        = settings.getString("id", "error")!!
+            token     = settings.getString("token", "error")!!
+            alarmTime = settings.getString("alarmTime", "error")!!
+            name      = settings.getString("name", "error")!!
+            imgSrc    = settings.getString("imgSrc", "error")!!
+            follower  = settings.getInt("follower", -1)
+            following = settings.getInt("following", -1)
 
-            // MainActivity로 이동
-//            startActivity<MainActivity>()
             // =====================================================================================
             // 테스트 - 앱 실행할 때마다 초기 설정을 진행하도록 설정 (개발 완료 후 삭제)
-            startActivity<FirstRunActivity>()
+//            startActivity<FirstRunActivity>()
             // =====================================================================================
+
+            // MainActivity로 이동
+            startActivity<MainActivity>()
             finish()
         }
     }
