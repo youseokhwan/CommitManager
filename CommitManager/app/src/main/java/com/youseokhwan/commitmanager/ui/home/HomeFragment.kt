@@ -5,21 +5,19 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.youseokhwan.commitmanager.MainActivity
 import com.youseokhwan.commitmanager.R
 import com.youseokhwan.commitmanager.SplashActivity
 import com.youseokhwan.commitmanager.exception.RetrofitException
 import com.youseokhwan.commitmanager.retrofit.Commit
 import com.youseokhwan.commitmanager.retrofit.UserRetrofit
 import kotlinx.android.synthetic.main.fragment_home.*
-import org.jetbrains.anko.support.v4.toast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.time.LocalDate
 import java.util.*
 
 /**
@@ -43,7 +41,7 @@ class HomeFragment : Fragment() {
         UserRetrofit.getService().getTodayCommit(id = SplashActivity.id, token = SplashActivity.token)
             .enqueue(object : Callback<Commit> {
                 override fun onFailure(call: Call<Commit>?, t: Throwable?) {
-                    toast("오류가 발생했습니다. 다시 시도해주세요.")
+                    Toast.makeText(context, "오류가 발생했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
                     throw RetrofitException("RetrofitException: onFailure()\n${t.toString()}")
                 }
 
@@ -86,7 +84,7 @@ class HomeFragment : Fragment() {
                             HomeFragment_TextView_Msg       .visibility = View.GONE
                         }
                     } else {
-                        toast("오류가 발생했습니다. 다시 시도해주세요.")
+                        Toast.makeText(context, "오류가 발생했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
                         throw RetrofitException("RetrofitException: response.isSuccessful is false")
                     }
                 }

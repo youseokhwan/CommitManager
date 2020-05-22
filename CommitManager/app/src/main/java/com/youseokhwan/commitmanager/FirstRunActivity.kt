@@ -1,15 +1,15 @@
 package com.youseokhwan.commitmanager
 
+import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import com.youseokhwan.commitmanager.exception.InvalidParameterNameException
 import com.youseokhwan.commitmanager.retrofit.UserInfo
 import com.youseokhwan.commitmanager.ui.firstrun.InitialFragment
 import com.youseokhwan.commitmanager.ui.firstrun.WelcomeFragment
 import kotlinx.android.synthetic.main.fragment_initial.*
-import org.jetbrains.anko.startActivity
-import org.jetbrains.anko.toast
 
 /**
  * 최초 실행 시 초기 설정을 진행하는 Activity
@@ -41,7 +41,7 @@ class FirstRunActivity : AppCompatActivity() {
             super.onBackPressed()
         } else {
             backPressedTime = tempTime
-            toast("종료하려면 한번 더 눌러주세요")
+            Toast.makeText(applicationContext, "종료하려면 한번 더 눌러주세요", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -105,7 +105,7 @@ class FirstRunActivity : AppCompatActivity() {
         editor.apply()
 
         // MainActivity로 이동
-        startActivity<MainActivity>()
+        startActivity(Intent(this, MainActivity::class.java))
         finish()
     }
 }

@@ -1,10 +1,10 @@
 package com.youseokhwan.commitmanager
 
+import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import org.jetbrains.anko.startActivity
 
 /**
  * SplashActivity
@@ -34,7 +34,7 @@ class SplashActivity : AppCompatActivity() {
             Log.d("CommitManagerLog", "isFirstRun: true")
 
             // FirstRunActivity로 이동
-            startActivity<FirstRunActivity>()
+            startActivity(Intent(this, FirstRunActivity::class.java))
             finish()
         } else {
             Log.d("CommitManagerLog", "isFirstRun: false")
@@ -55,11 +55,11 @@ class SplashActivity : AppCompatActivity() {
 
             // =====================================================================================
             // 테스트 - 앱 실행할 때마다 초기 설정을 진행하도록 설정 (개발 완료 후 삭제)
-//            startActivity<FirstRunActivity>()
+//            startActivity(Intent(this, FirstRunActivity::class.java))
             // =====================================================================================
 
             // MainActivity로 이동
-            startActivity<MainActivity>()
+            startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
     }

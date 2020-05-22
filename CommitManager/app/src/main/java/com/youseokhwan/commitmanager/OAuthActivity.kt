@@ -1,16 +1,11 @@
 package com.youseokhwan.commitmanager
 
-import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
-import android.webkit.WebView
 import android.webkit.WebViewClient
-import com.youseokhwan.commitmanager.ui.firstrun.InitialFragment
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_o_auth.*
-import kotlinx.android.synthetic.main.fragment_initial.*
-import org.jetbrains.anko.toast
 
 /**
  * OAuthActivity
@@ -53,9 +48,9 @@ class OAuthActivity : AppCompatActivity() {
 
     override fun finish() {
         if (isSuccess) {
-            toast("OAuth 인증 성공!")
+            Toast.makeText(applicationContext, "OAuth 인증 성공!", Toast.LENGTH_SHORT).show()
         } else {
-            toast("WebView가 강제 종료됨")
+            Toast.makeText(applicationContext, "WebView가 강제 종료됨", Toast.LENGTH_SHORT).show()
         }
 
         super.finish()

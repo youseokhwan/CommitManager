@@ -6,12 +6,12 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_main.*
-import org.jetbrains.anko.toast
 
 /**
  * MainActivity
@@ -63,7 +63,8 @@ class MainActivity : AppCompatActivity() {
 
         // =========================================================================================
         // 테스트 코드
-        toast("(테스트) 설정된 alarmTime: ${SplashActivity.alarmTime}")
+        Toast.makeText(applicationContext, "(테스트) 설정된 alarmTime: ${SplashActivity.alarmTime}"
+            , Toast.LENGTH_SHORT).show()
         // =========================================================================================
     }
 
@@ -78,7 +79,7 @@ class MainActivity : AppCompatActivity() {
             super.onBackPressed()
         } else {
             backPressedTime = tempTime
-            toast("종료하려면 한번 더 눌러주세요")
+            Toast.makeText(applicationContext, "종료하려면 한번 더 눌러주세요", Toast.LENGTH_SHORT).show()
         }
     }
 

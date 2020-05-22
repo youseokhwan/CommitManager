@@ -2,6 +2,7 @@ package com.youseokhwan.commitmanager.ui.firstrun
 
 import android.app.TimePickerDialog
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -10,20 +11,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.Toast
 import androidx.core.content.ContextCompat
-import com.youseokhwan.commitmanager.FirstRunActivity
-import com.youseokhwan.commitmanager.OAuthActivity
-import com.youseokhwan.commitmanager.R
-import com.youseokhwan.commitmanager.SplashActivity
+import com.youseokhwan.commitmanager.*
 import com.youseokhwan.commitmanager.exception.InvalidParameterNameException
 import com.youseokhwan.commitmanager.exception.RetrofitException
 import com.youseokhwan.commitmanager.retrofit.UserInfo
 import com.youseokhwan.commitmanager.retrofit.UserRetrofit
 import kotlinx.android.synthetic.main.fragment_initial.*
 import kotlinx.android.synthetic.main.fragment_initial.view.*
-import org.jetbrains.anko.support.v4.startActivity
-import org.jetbrains.anko.support.v4.toast
-import org.jetbrains.anko.textColor
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -72,7 +68,7 @@ class InitialFragment : Fragment() {
         // GitHub 로그인 버튼을 클릭하면 WebView 띄우기
         view.InitialFragment_Button_GitHubLogin.setOnClickListener {
             // OAuthActivity 호출
-            startActivity<OAuthActivity>()
+            startActivity(Intent(activity, OAuthActivity::class.java))
         }
 
         // 알림 여부 RadioGroup
@@ -118,7 +114,7 @@ class InitialFragment : Fragment() {
             UserRetrofit.getService().getUserInfo(id = InitialFragment_EditText_GithubId.text.toString())
                 .enqueue(object : Callback<UserInfo> {
                     override fun onFailure(call: Call<UserInfo>?, t: Throwable?) {
-                        toast("오류가 발생했습니다. 다시 시도해주세요.")
+                        Toast.makeText(context, "오류가 발생했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
                         throw RetrofitException("RetrofitException: onFailure()\n${t.toString()}")
                     }
 
@@ -128,7 +124,7 @@ class InitialFragment : Fragment() {
 
                             firstRunActivity.finishInitialSettings(response.body())
                         } else {
-                            toast("오류가 발생했습니다. 다시 시도해주세요.")
+                            Toast.makeText(context, "오류가 발생했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
                             throw RetrofitException("RetrofitException: response.isSuccessful is false")
                         }
                     }
@@ -186,7 +182,7 @@ class InitialFragment : Fragment() {
         InitialFragment_RadioGroup_Vibrate.visibility = View.VISIBLE
 
         // 시작하기 버튼
-        InitialFragment_Button_Start.textColor  = ContextCompat.getColor(context!!, R.color.limegreen)
+        InitialFragment_Button_Start.setTextColor(ContextCompat.getColor(context!!, R.color.limegreen))
         InitialFragment_Button_Start.isEnabled  = true
     }
 
