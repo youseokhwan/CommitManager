@@ -2,6 +2,7 @@ package com.youseokhwan.commitmanager
 
 import android.graphics.Rect
 import android.os.Bundle
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.animation.Animation
@@ -63,6 +64,7 @@ class MainActivity : AppCompatActivity() {
 
         // =========================================================================================
         // 테스트 코드
+        Log.d("CommitManagerLog", "alarmOption: ${SplashActivity.alarmOption}")
         Toast.makeText(applicationContext, "(테스트) 설정된 alarmTime: ${SplashActivity.alarmTime}"
             , Toast.LENGTH_SHORT).show()
         // =========================================================================================

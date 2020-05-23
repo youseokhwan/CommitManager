@@ -81,26 +81,32 @@ class FirstRunActivity : AppCompatActivity() {
         val editor: SharedPreferences.Editor = settings.edit()
 
         // 설정 값을 Companion Object에 저장
-        SplashActivity.id = InitialFragment_EditText_GithubId.text.toString()
-        SplashActivity.alarmTime = InitialFragment_EditText_Time.text.toString()
-        SplashActivity.isFirstRun = false
+        SplashActivity.id          = InitialFragment_EditText_GithubId.text.toString()
+        SplashActivity.alarmTime   = InitialFragment_EditText_Time    .text.toString()
+        when (InitialFragment_RadioGroup_Notification.checkedRadioButtonId) {
+            R.id.InitialFragment_RadioButton_Noti01 -> SplashActivity.alarmOption = 0  // 알람 받지 않기
+            R.id.InitialFragment_RadioButton_Noti02 -> SplashActivity.alarmOption = 1  // 커밋 안한 날만 받기
+            R.id.InitialFragment_RadioButton_Noti03 -> SplashActivity.alarmOption = 2  // 커밋한 날도 알림 받기
+        }
+        SplashActivity.isFirstRun  = false
 
         // 설정 값을 settings에 저장
-        editor.putString("id", SplashActivity.id)
-        editor.putString("alarmTime", SplashActivity.alarmTime)
-        editor.putBoolean("isFirstRun", SplashActivity.isFirstRun)
+        editor.putString ("id"         , SplashActivity.id)
+        editor.putInt    ("alarmOption", SplashActivity.alarmOption)
+        editor.putString ("alarmTime"  , SplashActivity.alarmTime)
+        editor.putBoolean("isFirstRun" , SplashActivity.isFirstRun)
 
         // response를 Companion Object에 저장
-        SplashActivity.name = userInfo?.name.toString()
-        SplashActivity.imgSrc = userInfo?.imgSrc.toString()
-        SplashActivity.follower = userInfo?.follower?:0
+        SplashActivity.name      = userInfo?.name  .toString()
+        SplashActivity.imgSrc    = userInfo?.imgSrc.toString()
+        SplashActivity.follower  = userInfo?.follower ?:0
         SplashActivity.following = userInfo?.following?:0
 
         // response를 settings에 저장
-        editor.putString("name", SplashActivity.name)
-        editor.putString("imgSrc", SplashActivity.imgSrc)
-        editor.putInt("follower", SplashActivity.follower)
-        editor.putInt("following", SplashActivity.following)
+        editor.putString("name"     , SplashActivity.name)
+        editor.putString("imgSrc"   , SplashActivity.imgSrc)
+        editor.putInt   ("follower" , SplashActivity.follower)
+        editor.putInt   ("following", SplashActivity.following)
 
         editor.apply()
 
