@@ -18,6 +18,7 @@ import com.youseokhwan.commitmanager.exception.InvalidParameterNameException
 import com.youseokhwan.commitmanager.exception.RetrofitException
 import com.youseokhwan.commitmanager.retrofit.UserInfo
 import com.youseokhwan.commitmanager.retrofit.UserRetrofit
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_initial.*
 import kotlinx.android.synthetic.main.fragment_initial.view.*
 import retrofit2.Call
@@ -89,14 +90,14 @@ class InitialFragment : Fragment() {
                 // 그 외는 UI 표시
                 else -> {
                     if (InitialFragment_TextView_Time.visibility == View.INVISIBLE) {
-                        InitialFragment_TextView_Time.visibility = View.VISIBLE
-                        InitialFragment_EditText_Time.visibility = View.VISIBLE
-                        InitialFragment_TextView_Vibrate.visibility = View.VISIBLE
+                        InitialFragment_TextView_Time     .visibility = View.VISIBLE
+                        InitialFragment_EditText_Time     .visibility = View.VISIBLE
+                        InitialFragment_TextView_Vibrate  .visibility = View.VISIBLE
                         InitialFragment_RadioGroup_Vibrate.visibility = View.VISIBLE
 
-                        InitialFragment_TextView_Time.startAnimation(fadeIn0)
-                        InitialFragment_EditText_Time.startAnimation(fadeIn0)
-                        InitialFragment_TextView_Vibrate.startAnimation(fadeIn1)
+                        InitialFragment_TextView_Time     .startAnimation(fadeIn0)
+                        InitialFragment_EditText_Time     .startAnimation(fadeIn0)
+                        InitialFragment_TextView_Vibrate  .startAnimation(fadeIn1)
                         InitialFragment_RadioGroup_Vibrate.startAnimation(fadeIn1)
                     }
                 }
@@ -178,7 +179,7 @@ class InitialFragment : Fragment() {
         InitialFragment_EditText_Time.visibility = View.VISIBLE
 
         // 진동
-        InitialFragment_TextView_Vibrate.visibility = View.VISIBLE
+        InitialFragment_TextView_Vibrate  .visibility = View.VISIBLE
         InitialFragment_RadioGroup_Vibrate.visibility = View.VISIBLE
 
         // 시작하기 버튼

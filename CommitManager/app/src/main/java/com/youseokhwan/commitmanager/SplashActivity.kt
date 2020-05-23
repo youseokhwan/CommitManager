@@ -31,15 +31,13 @@ class SplashActivity : AppCompatActivity() {
 
         // 최초 실행일 경우(초기 설정이 진행되지 않았을 경우) FirstRunActivity로 이동하여 초기 설정 진행
         isFirstRun = settings.getBoolean("isFirstRun", true)
-        if (isFirstRun) {
-            Log.d("CommitManagerLog", "isFirstRun: true")
+        Log.d("CommitManagerLog", "isFirstRun: $isFirstRun")
 
+        if (isFirstRun) {
             // FirstRunActivity로 이동
             startActivity(Intent(this, FirstRunActivity::class.java))
             finish()
         } else {
-            Log.d("CommitManagerLog", "isFirstRun: false")
-
             // =====================================================================================
             // 앱을 사용하는 중간에 GitHub OAuth를 Revoke 할 경우를 대비하여
             // 이 부분에서 API를 통해 OAuth 호출을 고려해야 함
@@ -57,6 +55,7 @@ class SplashActivity : AppCompatActivity() {
 
             // =====================================================================================
             // 테스트 - 앱 실행할 때마다 초기 설정을 진행하도록 설정 (개발 완료 후 삭제)
+            id = ""
             startActivity(Intent(this, FirstRunActivity::class.java))
             // =====================================================================================
 
