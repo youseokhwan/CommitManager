@@ -5,6 +5,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -28,10 +30,16 @@ class HomeFragment : Fragment() {
 
     private lateinit var homeViewModel: HomeViewModel
 
+    // 에니메이션 변수 선언
+    private lateinit var fadeIn : Animation
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         homeViewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
 
         val root = inflater.inflate(R.layout.fragment_home, container, false)
+
+        // 애니메이션 변수 초기화
+        fadeIn  = AnimationUtils.loadAnimation(context, R.anim.fade_in)
 
         homeViewModel.text.observe(viewLifecycleOwner, Observer {
         })
@@ -55,9 +63,9 @@ class HomeFragment : Fragment() {
 
                         // count가 0보다 크면 커밋이 완료된 것임
                         if (response.body()?.count?:"0" != "0") {
-                            // 변경 애니메이션 추가할 것
                             // 커밋 내역이 있을 경우 V 이미지로 변경
                             HomeFragment_ImageView_Daily.setImageResource(R.drawable.ic_check_black_24dp)
+                            HomeFragment_ImageView_Daily.startAnimation(fadeIn)
 
                             // =====================================================================
                             Log.d("CommitManagerLog", "repository = ${response.body()?.repository}")
@@ -73,11 +81,10 @@ class HomeFragment : Fragment() {
                                 HomeFragment_TextView_Msg.text = response.body()?.msg.toString()
                                 HomeFragment_TextView_Msg.visibility = View.VISIBLE
                             }
-
                         } else {
-                            // 변경 애니메이션 추가할 것
                             // 커밋 내역이 없을 경우 X 이미지로 변경
                             HomeFragment_ImageView_Daily.setImageResource(R.drawable.ic_close_black_24dp)
+                            HomeFragment_ImageView_Daily.startAnimation(fadeIn)
 
                             // 커밋 내역이 없을 경우 Repository, Msg 숨기기
                             HomeFragment_TextView_Repository.visibility = View.GONE
