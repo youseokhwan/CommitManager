@@ -1,4 +1,4 @@
-package com.youseokhwan.commitmanager
+package com.youseokhwan.commitmanager.alarm
 
 /**
  * 알람 설정

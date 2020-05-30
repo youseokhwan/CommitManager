@@ -1,5 +1,7 @@
 package com.youseokhwan.commitmanager.ui.firstrun
 
+import android.app.AlarmManager
+import android.app.PendingIntent
 import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
@@ -14,11 +16,12 @@ import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.youseokhwan.commitmanager.*
+import com.youseokhwan.commitmanager.alarm.AlarmOption
+import com.youseokhwan.commitmanager.alarm.AlarmReceiver
 import com.youseokhwan.commitmanager.exception.InvalidParameterNameException
 import com.youseokhwan.commitmanager.exception.RetrofitException
 import com.youseokhwan.commitmanager.retrofit.UserInfo
 import com.youseokhwan.commitmanager.retrofit.UserRetrofit
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_initial.*
 import kotlinx.android.synthetic.main.fragment_initial.view.*
 import retrofit2.Call
@@ -123,6 +126,7 @@ class InitialFragment : Fragment() {
                         if (response.isSuccessful) {
                             Log.d("CommitManagerLog", response.body().toString())
 
+                            // 데이터 저장 후 MainActivity로 전환
                             firstRunActivity.finishInitialSettings(response.body())
                         } else {
                             Toast.makeText(context, "오류가 발생했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show()

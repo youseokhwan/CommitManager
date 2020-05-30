@@ -34,15 +34,13 @@ class HomeFragment : Fragment() {
     private lateinit var fadeIn : Animation
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        homeViewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
-
         val root = inflater.inflate(R.layout.fragment_home, container, false)
+
+        homeViewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
+        homeViewModel.text.observe(viewLifecycleOwner, Observer { })
 
         // 애니메이션 변수 초기화
         fadeIn  = AnimationUtils.loadAnimation(context, R.anim.fade_in)
-
-        homeViewModel.text.observe(viewLifecycleOwner, Observer {
-        })
 
         // 오늘 커밋 여부 아이콘 업데이트
         // GET("/commit?id=${id}&token=${token}")
@@ -81,6 +79,10 @@ class HomeFragment : Fragment() {
                                 HomeFragment_TextView_Msg.text = response.body()?.msg.toString()
                                 HomeFragment_TextView_Msg.visibility = View.VISIBLE
                             }
+
+                            // =====================================================================
+                            // 커밋 내역과 메시지를 띄울 때 애니메이션 추가해야 함
+                            // =====================================================================
                         } else {
                             // 커밋 내역이 없을 경우 X 이미지로 변경
                             HomeFragment_ImageView_Daily.setImageResource(R.drawable.ic_close_black_24dp)
@@ -89,6 +91,10 @@ class HomeFragment : Fragment() {
                             // 커밋 내역이 없을 경우 Repository, Msg 숨기기
                             HomeFragment_TextView_Repository.visibility = View.GONE
                             HomeFragment_TextView_Msg       .visibility = View.GONE
+
+                            // =====================================================================
+                            // 커밋 내역과 메시지를 지울 때 애니메이션 추가해야 함
+                            // =====================================================================
                         }
                     } else {
                         Toast.makeText(context, "오류가 발생했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
@@ -103,7 +109,6 @@ class HomeFragment : Fragment() {
     override fun onStart() {
         // 오늘 날짜로 초기화
         setTodayDate()
-
         super.onStart()
     }
 
