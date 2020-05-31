@@ -136,7 +136,6 @@ class FirstRunActivity : AppCompatActivity() {
         if (SplashActivity.alarmOption != AlarmOption.NONE.value) {
             val packageManager = this.packageManager
             val receiver = ComponentName(this, DeviceBootReceiver::class.java)
-
             val alarmManager = this.getSystemService(Context.ALARM_SERVICE)
                     as AlarmManager
             val pendingIntent = PendingIntent.getBroadcast(applicationContext,
@@ -159,9 +158,9 @@ class FirstRunActivity : AppCompatActivity() {
                 AlarmManager.INTERVAL_DAY, pendingIntent)
 
             // 부팅 후 Receiver 사용가능하도록 설정
-            packageManager.setComponentEnabledSetting(receiver,
-                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-                PackageManager.DONT_KILL_APP)
+//            packageManager.setComponentEnabledSetting(receiver,
+//                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+//                PackageManager.DONT_KILL_APP)
         }
     }
 
