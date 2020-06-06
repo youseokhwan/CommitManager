@@ -1,5 +1,11 @@
 package com.youseokhwan.commitmanager
 
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.ComponentName
+import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Rect
 import android.os.Bundle
 import android.util.Log
@@ -12,7 +18,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.bumptech.glide.Glide
+import com.youseokhwan.commitmanager.alarm.AlarmOption
+import com.youseokhwan.commitmanager.alarm.AlarmReceiver
+import com.youseokhwan.commitmanager.alarm.DeviceBootReceiver
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
 
 /**
  * MainActivity
@@ -44,6 +54,9 @@ class MainActivity : AppCompatActivity() {
         // NavController 설정
         val navController = findNavController(R.id.nav_host_fragment)
         nav_view.setupWithNavController(navController)
+
+        // AlarmManager 실행
+        startAlarmManager()
 
         // Toolbar Title 설정
         MainActivity_Toolbar.title = SplashActivity.name
@@ -102,12 +115,58 @@ class MainActivity : AppCompatActivity() {
                 /*
                  * UserInfo 패널이 Visible인 상태에서 Toolbar를 터치하면
                  * 이 메소드에 의해 Invisible 처리된 후 Toolbar의 onClickEvent에 의해 다시 Visible 처리됨
-                 * Toolbar의 OnClick 이벤트가 발생하지 않도록 true를 리턴하는 것임
+                 * Toolbar의 OnClick 이벤트가 발생하지 않도록 true를 리턴
                  */
                 return true
             }
         }
 
         return super.dispatchTouchEvent(ev)
+    }
+
+    /**
+     * AlarmManager 시작
+     */
+    private fun startAlarmManager() {
+        // AlarmOption 값이 NONE이 아닐 때 AlarmManager 시작
+        if (SplashActivity.alarmOption != AlarmOption.NONE.value) {
+            val packageManager = this.packageManager
+            val receiver = ComponentName(this, DeviceBootReceiver::class.java)
+            val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            val pendingIntent = PendingIntent.getBroadcast(applicationContext,
+                0, Intent(applicationContext, AlarmReceiver::class.java), 0)
+
+            // String 타입인 SplashActivity.alarmTime 값을 Calendar 타입으로 변환
+            val time = Calendar.getInstance()
+            time.timeInMillis = System.currentTimeMillis()
+            time.set(Calendar.HOUR_OF_DAY, SplashActivity.alarmTime.substring(0..1).toInt())
+            time.set(Calendar.MINUTE, SplashActivity.alarmTime.substring(3..4).toInt())
+            time.set(Calendar.SECOND, 0)
+
+            // 설정한 시간이 현재 시간을 지났으면 DAY + 1
+            if (time.before(Calendar.getInstance())) {
+                time.add(Calendar.DATE, 1)
+            }
+
+            // 반복 설정
+            alarmManager.setRepeating(
+                AlarmManager.RTC_WAKEUP, time.timeInMillis, AlarmManager.INTERVAL_DAY, pendingIntent)
+
+            alarmManager.setExactAndAllowWhileIdle(
+                AlarmManager.RTC_WAKEUP, time.timeInMillis, pendingIntent)
+
+            // 부팅 후 Receiver 사용가능하도록 설정
+            packageManager.setComponentEnabledSetting(
+                receiver, PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP)
+        }
+    }
+
+    /**
+     * AlarmManager 종료
+     * 설정이 변경되면 stop 후 start
+     * (만약 로직상 필요없다면 삭제)
+     */
+    private fun stopAlarmManager() {
+
     }
 }

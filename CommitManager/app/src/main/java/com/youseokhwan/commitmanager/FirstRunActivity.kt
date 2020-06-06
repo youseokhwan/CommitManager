@@ -120,56 +120,8 @@ class FirstRunActivity : AppCompatActivity() {
 
         editor.apply()
 
-        // AlarmManager 실행
-        startAlarmManager()
-
         // MainActivity로 이동
         startActivity(Intent(this, MainActivity::class.java))
         finish()
-    }
-
-    /**
-     * AlarmManager 시작
-     */
-    private fun startAlarmManager() {
-        // AlarmOption 값이 NONE이 아닐 때 AlarmManager 시작
-        if (SplashActivity.alarmOption != AlarmOption.NONE.value) {
-            val packageManager = this.packageManager
-            val receiver = ComponentName(this, DeviceBootReceiver::class.java)
-            val alarmManager = this.getSystemService(Context.ALARM_SERVICE)
-                    as AlarmManager
-            val pendingIntent = PendingIntent.getBroadcast(applicationContext,
-                0, Intent(applicationContext, AlarmReceiver::class.java), 0)
-
-            // String 타입인 SplashActivity.alarmTime 값을 Calendar 타입으로 변환
-            val time = Calendar.getInstance()
-            time.set(Calendar.HOUR, SplashActivity.alarmTime.substring(0..1).toInt())
-            time.set(Calendar.MINUTE, SplashActivity.alarmTime.substring(3..4).toInt())
-
-            // 현재 시간
-            val now = Calendar.getInstance()
-
-            // 설정한 시간이 현재 시간을 지났으면 DAY + 1
-            if (time.after(now)) {
-                time.add(Calendar.DATE, 1)
-            }
-
-            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time.timeInMillis,
-                AlarmManager.INTERVAL_DAY, pendingIntent)
-
-            // 부팅 후 Receiver 사용가능하도록 설정
-//            packageManager.setComponentEnabledSetting(receiver,
-//                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-//                PackageManager.DONT_KILL_APP)
-        }
-    }
-
-    /**
-     * AlarmManager 종료
-     * 설정이 변경되면 stop 후 start
-     * (만약 로직상 필요없다면 삭제)
-     */
-    private fun stopAlarmManager() {
-
     }
 }

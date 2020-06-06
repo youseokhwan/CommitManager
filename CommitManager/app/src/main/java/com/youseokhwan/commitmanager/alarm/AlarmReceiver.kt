@@ -25,18 +25,17 @@ class AlarmReceiver : BroadcastReceiver() {
         builder.setSmallIcon(R.drawable.ic_launcher_foreground)
 
         val channelName = "Daily Commit"
-//        val description = "1일 1커밋 알람"
-        val importance = NotificationManager.IMPORTANCE_DEFAULT
+        val description = "1일 1커밋 알람"
+        val importance = NotificationManager.IMPORTANCE_HIGH
 
         val channel = NotificationChannel("dailyCommit", channelName, importance)
-//        channel.description(description)
+        channel.description = description
 
         notificationManager.createNotificationChannel(channel)
 
         builder.setAutoCancel(true)
             .setDefaults(NotificationCompat.DEFAULT_ALL)
             .setWhen(System.currentTimeMillis())
-            .setTicker("{Time to watch some cool stuff!}")  // 무슨 뜻?
             .setContentTitle("Title")
             .setContentText("SubTitle")
             .setContentInfo("INFO")
