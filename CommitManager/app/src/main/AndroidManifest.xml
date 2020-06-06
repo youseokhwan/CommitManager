@@ -22,7 +22,6 @@
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -31,11 +30,19 @@
             android:screenOrientation="userPortrait" />
         <activity
             android:name=".OAuthActivity"
-            android:screenOrientation="userPortrait">
-        </activity>
+            android:screenOrientation="userPortrait" />
         <activity
             android:name=".MainActivity"
             android:screenOrientation="userPortrait" />
-    </application>
 
+        <receiver
+            android:name=".alarm.DeviceBootReceiver"
+            android:enabled="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name=".alarm.AlarmReceiver" />
+    </application>
 </manifest>
