@@ -38,7 +38,7 @@
     </ScrollView>
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/MainActivity_Toolbar"
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:background="?attr/colorPrimary"
@@ -50,7 +50,7 @@
         app:titleTextColor="@color/white" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/MainActivity_ConstraintLayout_UserInfo"
+        android:id="@+id/cstLyUserInfo"
         android:layout_width="match_parent"
         android:layout_height="160dp"
         android:layout_marginStart="4dp"
@@ -62,10 +62,10 @@
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/MainActivity_Toolbar">
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
         <ImageView
-            android:id="@+id/MainActivity_ImageView_Avatar"
+            android:id="@+id/ImgAvatar"
             android:layout_width="144dp"
             android:layout_height="144dp"
             android:layout_marginStart="8dp"
@@ -78,7 +78,7 @@
             app:srcCompat="@drawable/splash_sample" />
 
         <TextView
-            android:id="@+id/MainActivity_TextView_GitHubId"
+            android:id="@+id/txtGitHubId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -87,33 +87,33 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="@color/white"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/MainActivity_ImageView_Avatar"
+            app:layout_constraintStart_toEndOf="@+id/ImgAvatar"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/MainActivity_TextView_Follower"
+            android:id="@+id/txtFollower"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="Follower"
             android:textColor="@color/white"
-            app:layout_constraintStart_toEndOf="@+id/MainActivity_ImageView_Avatar"
-            app:layout_constraintTop_toBottomOf="@+id/MainActivity_TextView_GitHubId" />
+            app:layout_constraintStart_toEndOf="@+id/ImgAvatar"
+            app:layout_constraintTop_toBottomOf="@+id/txtGitHubId" />
 
         <TextView
-            android:id="@+id/MainActivity_TextView_Following"
+            android:id="@+id/txtFollowing"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="4dp"
             android:text="Following"
             android:textColor="@color/white"
-            app:layout_constraintStart_toEndOf="@+id/MainActivity_ImageView_Avatar"
-            app:layout_constraintTop_toBottomOf="@+id/MainActivity_TextView_Follower" />
+            app:layout_constraintStart_toEndOf="@+id/ImgAvatar"
+            app:layout_constraintTop_toBottomOf="@+id/txtFollower" />
 
         <Button
-            android:id="@+id/MainActivity_Button_GitHubPage"
+            android:id="@+id/btnGitHubPage"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_marginStart="16dp"
@@ -123,7 +123,7 @@
             android:textSize="10sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/MainActivity_ImageView_Avatar" />
+            app:layout_constraintStart_toEndOf="@+id/ImgAvatar" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

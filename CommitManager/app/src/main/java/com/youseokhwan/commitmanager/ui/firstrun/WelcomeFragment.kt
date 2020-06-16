@@ -40,12 +40,12 @@ class WelcomeFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_welcome, null)
 
         // FadeIn 애니메이션
-        view.WelcomeFragment_TextView_Title   .startAnimation(fadeIn0)
-        view.WelcomeFragment_TextView_Contents.startAnimation(fadeIn1)
-        view.WelcomeFragment_Button_Next      .startAnimation(fadeIn)
+        view.txtTitle   .startAnimation(fadeIn0)
+        view.txtContents.startAnimation(fadeIn1)
+        view.btnNext      .startAnimation(fadeIn)
 
         // 다음 버튼을 클릭하면 InitialFragment로 전환
-        view.WelcomeFragment_Button_Next.setOnClickListener {
+        view.btnNext.setOnClickListener {
             firstRunActivity.onFragmentChange("initial")
         }
 

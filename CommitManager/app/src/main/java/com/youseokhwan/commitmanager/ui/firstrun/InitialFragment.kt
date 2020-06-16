@@ -1,7 +1,5 @@
 package com.youseokhwan.commitmanager.ui.firstrun
 
-import android.app.AlarmManager
-import android.app.PendingIntent
 import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
@@ -16,8 +14,6 @@ import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.youseokhwan.commitmanager.*
-import com.youseokhwan.commitmanager.alarm.AlarmOption
-import com.youseokhwan.commitmanager.alarm.AlarmReceiver
 import com.youseokhwan.commitmanager.exception.InvalidParameterNameException
 import com.youseokhwan.commitmanager.exception.RetrofitException
 import com.youseokhwan.commitmanager.retrofit.UserInfo
@@ -66,56 +62,56 @@ class InitialFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_initial, null)
 
         // FadeIn 애니메이션
-        view.InitialFragment_TextView_GithubIdLabel.startAnimation(fadeIn0)
-        view.InitialFragment_Button_GitHubLogin    .startAnimation(fadeIn1)
+        view.txtGithubIdLabel.startAnimation(fadeIn0)
+        view.btnGitHubLogin    .startAnimation(fadeIn1)
 
         // GitHub 로그인 버튼을 클릭하면 WebView 띄우기
-        view.InitialFragment_Button_GitHubLogin.setOnClickListener {
+        view.btnGitHubLogin.setOnClickListener {
             // OAuthActivity 호출
             startActivity(Intent(activity, OAuthActivity::class.java))
         }
 
         // 알림 여부 RadioGroup
-        view.InitialFragment_RadioGroup_Notification.setOnCheckedChangeListener { _, checkedId ->
+        view.rgNotification.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
                 // 알림 받지 않기 선택하면 UI 숨기기
-                R.id.InitialFragment_RadioButton_Noti01 -> {
-                    InitialFragment_TextView_Time     .visibility = View.INVISIBLE
-                    InitialFragment_EditText_Time     .visibility = View.INVISIBLE
-                    InitialFragment_TextView_Vibrate  .visibility = View.INVISIBLE
-                    InitialFragment_RadioGroup_Vibrate.visibility = View.INVISIBLE
+                R.id.rbNoti01 -> {
+                    txtTime     .visibility = View.INVISIBLE
+                    edtTime     .visibility = View.INVISIBLE
+                    txtVibrate  .visibility = View.INVISIBLE
+                    rgVibrate.visibility = View.INVISIBLE
 
-                    InitialFragment_TextView_Time     .startAnimation(fadeOut)
-                    InitialFragment_EditText_Time     .startAnimation(fadeOut)
-                    InitialFragment_TextView_Vibrate  .startAnimation(fadeOut)
-                    InitialFragment_RadioGroup_Vibrate.startAnimation(fadeOut)
+                    txtTime     .startAnimation(fadeOut)
+                    edtTime     .startAnimation(fadeOut)
+                    txtVibrate  .startAnimation(fadeOut)
+                    rgVibrate.startAnimation(fadeOut)
                 }
                 // 그 외는 UI 표시
                 else -> {
-                    if (InitialFragment_TextView_Time.visibility == View.INVISIBLE) {
-                        InitialFragment_TextView_Time     .visibility = View.VISIBLE
-                        InitialFragment_EditText_Time     .visibility = View.VISIBLE
-                        InitialFragment_TextView_Vibrate  .visibility = View.VISIBLE
-                        InitialFragment_RadioGroup_Vibrate.visibility = View.VISIBLE
+                    if (txtTime.visibility == View.INVISIBLE) {
+                        txtTime     .visibility = View.VISIBLE
+                        edtTime     .visibility = View.VISIBLE
+                        txtVibrate  .visibility = View.VISIBLE
+                        rgVibrate.visibility = View.VISIBLE
 
-                        InitialFragment_TextView_Time     .startAnimation(fadeIn0)
-                        InitialFragment_EditText_Time     .startAnimation(fadeIn0)
-                        InitialFragment_TextView_Vibrate  .startAnimation(fadeIn1)
-                        InitialFragment_RadioGroup_Vibrate.startAnimation(fadeIn1)
+                        txtTime     .startAnimation(fadeIn0)
+                        edtTime     .startAnimation(fadeIn0)
+                        txtVibrate  .startAnimation(fadeIn1)
+                        rgVibrate.startAnimation(fadeIn1)
                     }
                 }
             }
         }
 
         // 알림 시간 팝업 다이얼로그
-        view.InitialFragment_EditText_Time.setOnClickListener {
+        view.edtTime.setOnClickListener {
             showTimePickerDialog(it.id)
         }
 
         // 시작하기 버튼을 클릭하면 Username을 받아서 저장하고 초기 설정을 마침
-        view.InitialFragment_Button_Start.setOnClickListener {
+        view.btnStart.setOnClickListener {
             // GET("/userinfo?id=${id}")
-            UserRetrofit.getService().getUserInfo(id = InitialFragment_EditText_GithubId.text.toString())
+            UserRetrofit.getService().getUserInfo(id = edtGithubId.text.toString())
                 .enqueue(object : Callback<UserInfo> {
                     override fun onFailure(call: Call<UserInfo>?, t: Throwable?) {
                         Toast.makeText(context, "오류가 발생했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
@@ -147,11 +143,11 @@ class InitialFragment : Fragment() {
         val cal = Calendar.getInstance()
 
         when (viewId) {
-            R.id.InitialFragment_EditText_Time -> {
+            R.id.edtTime -> {
                 val timeSetListener = TimePickerDialog.OnTimeSetListener { _, hour, minute ->
                     cal.set(Calendar.HOUR_OF_DAY, hour)
                     cal.set(Calendar.MINUTE, minute)
-                    InitialFragment_EditText_Time
+                    edtTime
                         .setText(SimpleDateFormat("HH:mm", Locale.getDefault()).format(cal.time))
                 }
                 TimePickerDialog(context, timeSetListener, 18,0, true)
@@ -170,25 +166,25 @@ class InitialFragment : Fragment() {
      */
     private fun showBottomUi() {
         // GitHub 로그인 버튼, ID EditText
-        InitialFragment_Button_GitHubLogin.visibility = View.INVISIBLE
-        InitialFragment_EditText_GithubId .visibility = View.VISIBLE
-        InitialFragment_EditText_GithubId .setText(SplashActivity.id)
+        btnGitHubLogin.visibility = View.INVISIBLE
+        edtGithubId .visibility = View.VISIBLE
+        edtGithubId .setText(SplashActivity.id)
 
         // 알림 여부
-        InitialFragment_TextView_NotificationLabel.visibility = View.VISIBLE
-        InitialFragment_RadioGroup_Notification   .visibility = View.VISIBLE
+        txtNotificationLabel.visibility = View.VISIBLE
+        rgNotification   .visibility = View.VISIBLE
 
         // 시간
-        InitialFragment_TextView_Time.visibility = View.VISIBLE
-        InitialFragment_EditText_Time.visibility = View.VISIBLE
+        txtTime.visibility = View.VISIBLE
+        edtTime.visibility = View.VISIBLE
 
         // 진동
-        InitialFragment_TextView_Vibrate  .visibility = View.VISIBLE
-        InitialFragment_RadioGroup_Vibrate.visibility = View.VISIBLE
+        txtVibrate  .visibility = View.VISIBLE
+        rgVibrate.visibility = View.VISIBLE
 
         // 시작하기 버튼
-        InitialFragment_Button_Start.setTextColor(ContextCompat.getColor(context!!, R.color.limegreen))
-        InitialFragment_Button_Start.isEnabled  = true
+        btnStart.setTextColor(ContextCompat.getColor(context!!, R.color.limegreen))
+        btnStart.isEnabled  = true
     }
 
     override fun onStart() {

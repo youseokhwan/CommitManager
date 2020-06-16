@@ -2,13 +2,13 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/StatisticsFragment_ConstraintLayout"
+    android:id="@+id/cstLyStatistics"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.statistics.StatisticsFragment">
 
     <TextView
-        android:id="@+id/StatisticsFragment_TextView_Temp"
+        android:id="@+id/txtTemp02"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"

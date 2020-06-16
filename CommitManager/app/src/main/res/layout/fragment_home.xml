@@ -2,13 +2,13 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/HomeFragment_ConstraintLayout_Outer"
+    android:id="@+id/cstLyHome"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeFragment">
 
     <TextView
-        android:id="@+id/HomeFragment_TextView_Today"
+        android:id="@+id/txtToday"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/HomeFragment_TextView_DailyLabel"
+        android:id="@+id/txtDailyLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -28,19 +28,19 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/HomeFragment_TextView_Today" />
+        app:layout_constraintTop_toBottomOf="@+id/txtToday" />
 
     <ImageView
-        android:id="@+id/HomeFragment_ImageView_Daily"
+        android:id="@+id/imgDaily"
         android:layout_width="150dp"
         android:layout_height="150dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/HomeFragment_TextView_DailyLabel"
+        app:layout_constraintTop_toBottomOf="@+id/txtDailyLabel"
         app:srcCompat="@drawable/ic_search_black_24dp" />
 
     <TextView
-        android:id="@+id/HomeFragment_TextView_Repository"
+        android:id="@+id/txtRepository"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -50,10 +50,10 @@
         android:textSize="14sp"
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/HomeFragment_ImageView_Daily" />
+        app:layout_constraintTop_toBottomOf="@+id/imgDaily" />
 
     <TextView
-        android:id="@+id/HomeFragment_TextView_Msg"
+        android:id="@+id/txtMsg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -62,10 +62,10 @@
         android:textSize="14sp"
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/HomeFragment_TextView_Repository" />
+        app:layout_constraintTop_toBottomOf="@+id/txtRepository" />
 
     <TextView
-        android:id="@+id/HomeFragment_TextView_WeekLabel"
+        android:id="@+id/txtWeekLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -74,10 +74,10 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/HomeFragment_TextView_Msg" />
+        app:layout_constraintTop_toBottomOf="@+id/txtMsg" />
 
     <TableLayout
-        android:id="@+id/HomeFragment_TableLayout_Week"
+        android:id="@+id/tbLyWeek"
         android:layout_width="0dp"
         android:layout_height="100dp"
         android:layout_marginStart="16dp"
@@ -87,16 +87,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/HomeFragment_TextView_WeekLabel">
+        app:layout_constraintTop_toBottomOf="@+id/txtWeekLabel">
 
         <TableRow
-            android:id="@+id/HomeFragment_TableRow_01"
+            android:id="@+id/row01"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1">
 
             <TextView
-                android:id="@+id/HomeFragment_TextView_Sun"
+                android:id="@+id/txtSun"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -105,7 +105,7 @@
                 android:textColor="@android:color/holo_red_light" />
 
             <TextView
-                android:id="@+id/HomeFragment_TextView_Mon"
+                android:id="@+id/txtMon"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -114,7 +114,7 @@
                 android:textColor="@color/black" />
 
             <TextView
-                android:id="@+id/homeFragment_TextView_Tue"
+                android:id="@+id/txtTue"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -123,7 +123,7 @@
                 android:textColor="@color/black" />
 
             <TextView
-                android:id="@+id/homeFragment_TextView_Wed"
+                android:id="@+id/txtWed"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -132,7 +132,7 @@
                 android:textColor="@color/black" />
 
             <TextView
-                android:id="@+id/homeFragment_TextView_Thu"
+                android:id="@+id/txtThu"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -141,7 +141,7 @@
                 android:textColor="@color/black" />
 
             <TextView
-                android:id="@+id/homeFragment_TextView_Fri"
+                android:id="@+id/txtFri"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -150,7 +150,7 @@
                 android:textColor="@color/black" />
 
             <TextView
-                android:id="@+id/homeFragment_TextView_Sat"
+                android:id="@+id/txtSat"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -161,55 +161,55 @@
         </TableRow>
 
         <TableRow
-            android:id="@+id/HomeFragment_TableRow_02"
+            android:id="@+id/row02"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1">
 
             <ImageView
-                android:id="@+id/HomeFragment_ImageView_Sun"
+                android:id="@+id/imgSun"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:src="@drawable/ic_remove_black_24dp" />
 
             <ImageView
-                android:id="@+id/homeFragment_ImageView_Mon"
+                android:id="@+id/imgMon"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:src="@drawable/ic_remove_black_24dp" />
 
             <ImageView
-                android:id="@+id/homeFragment_ImageView_Tue"
+                android:id="@+id/imgTue"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:src="@drawable/ic_remove_black_24dp" />
 
             <ImageView
-                android:id="@+id/homeFragment_ImageView_Wed"
+                android:id="@+id/imgWed"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:src="@drawable/ic_remove_black_24dp" />
 
             <ImageView
-                android:id="@+id/homeFragment_ImageView_Thu"
+                android:id="@+id/imgThu"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:src="@drawable/ic_remove_black_24dp" />
 
             <ImageView
-                android:id="@+id/homeFragment_ImageView_Fri"
+                android:id="@+id/imgFri"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:src="@drawable/ic_remove_black_24dp" />
 
             <ImageView
-                android:id="@+id/homeFragment_ImageView_Sat"
+                android:id="@+id/imgSat"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"

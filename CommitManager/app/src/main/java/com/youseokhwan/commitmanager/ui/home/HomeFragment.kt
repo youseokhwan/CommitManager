@@ -62,8 +62,8 @@ class HomeFragment : Fragment() {
                         // count가 0보다 크면 커밋이 완료된 것임
                         if (response.body()?.count?:"0" != "0") {
                             // 커밋 내역이 있을 경우 V 이미지로 변경
-                            HomeFragment_ImageView_Daily.setImageResource(R.drawable.ic_check_black_24dp)
-                            HomeFragment_ImageView_Daily.startAnimation(fadeIn)
+                            imgDaily.setImageResource(R.drawable.ic_check_black_24dp)
+                            imgDaily.startAnimation(fadeIn)
 
                             // =====================================================================
                             Log.d("CommitManagerLog", "repository = ${response.body()?.repository}")
@@ -71,13 +71,13 @@ class HomeFragment : Fragment() {
                             // =====================================================================
 
                             // 커밋 내역이 있을 경우 Repository 초기화
-                            HomeFragment_TextView_Repository.text = response.body()?.repository.toString()
-                            HomeFragment_TextView_Repository.visibility = View.VISIBLE
+                            txtRepository.text = response.body()?.repository.toString()
+                            txtRepository.visibility = View.VISIBLE
 
                             // 커밋 내역이 있고 커밋 메시지도 있을 경우 Msg 초기화
-                            if (HomeFragment_TextView_Msg.text != null && HomeFragment_TextView_Msg.text != "") {
-                                HomeFragment_TextView_Msg.text = response.body()?.msg.toString()
-                                HomeFragment_TextView_Msg.visibility = View.VISIBLE
+                            if (txtMsg.text != null && txtMsg.text != "") {
+                                txtMsg.text = response.body()?.msg.toString()
+                                txtMsg.visibility = View.VISIBLE
                             }
 
                             // =====================================================================
@@ -85,12 +85,12 @@ class HomeFragment : Fragment() {
                             // =====================================================================
                         } else {
                             // 커밋 내역이 없을 경우 X 이미지로 변경
-                            HomeFragment_ImageView_Daily.setImageResource(R.drawable.ic_close_black_24dp)
-                            HomeFragment_ImageView_Daily.startAnimation(fadeIn)
+                            imgDaily.setImageResource(R.drawable.ic_close_black_24dp)
+                            imgDaily.startAnimation(fadeIn)
 
                             // 커밋 내역이 없을 경우 Repository, Msg 숨기기
-                            HomeFragment_TextView_Repository.visibility = View.GONE
-                            HomeFragment_TextView_Msg       .visibility = View.GONE
+                            txtRepository.visibility = View.GONE
+                            txtMsg       .visibility = View.GONE
 
                             // =====================================================================
                             // 커밋 내역과 메시지를 지울 때 애니메이션 추가해야 함
@@ -124,6 +124,6 @@ class HomeFragment : Fragment() {
         today += cal.get(Calendar.DATE).toString() + "일 ("
         today += DAY_OF_WEEK_KOR[cal.get(Calendar.DAY_OF_WEEK)] + ")"
 
-        HomeFragment_TextView_Today.text = today
+        txtToday.text = today
     }
 }

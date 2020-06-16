@@ -2,13 +2,13 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/InitialLayout_ConstraintLayout"
+    android:id="@+id/cstLyInitial"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeFragment">
 
     <TextView
-        android:id="@+id/InitialFragment_TextView_GithubIdLabel"
+        android:id="@+id/txtGithubIdLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/InitialFragment_Button_GitHubLogin"
+        android:id="@+id/btnGitHubLogin"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -29,10 +29,10 @@
         android:text="GitHub 로그인하기"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/InitialFragment_TextView_GithubIdLabel" />
+        app:layout_constraintTop_toBottomOf="@+id/txtGithubIdLabel" />
 
     <EditText
-        android:id="@+id/InitialFragment_EditText_GithubId"
+        android:id="@+id/edtGithubId"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -47,10 +47,10 @@
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/InitialFragment_TextView_GithubIdLabel" />
+        app:layout_constraintTop_toBottomOf="@+id/txtGithubIdLabel" />
 
     <TextView
-        android:id="@+id/InitialFragment_TextView_NotificationLabel"
+        android:id="@+id/txtNotificationLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -61,21 +61,21 @@
         android:textSize="22sp"
         android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/InitialFragment_EditText_GithubId" />
+        app:layout_constraintTop_toBottomOf="@+id/edtGithubId" />
 
     <RadioGroup
-        android:id="@+id/InitialFragment_RadioGroup_Notification"
+        android:id="@+id/rgNotification"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
-        android:checkedButton="@id/InitialFragment_RadioButton_Noti02"
+        android:checkedButton="@id/rbNoti02"
         android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/InitialFragment_TextView_NotificationLabel">
+        app:layout_constraintTop_toBottomOf="@+id/txtNotificationLabel">
 
         <RadioButton
-            android:id="@+id/InitialFragment_RadioButton_Noti01"
+            android:id="@+id/rbNoti01"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="알림 받지 않기"
@@ -84,7 +84,7 @@
             android:textSize="18sp" />
 
         <RadioButton
-            android:id="@+id/InitialFragment_RadioButton_Noti02"
+            android:id="@+id/rbNoti02"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="커밋 안한 날만 받기"
@@ -93,7 +93,7 @@
             android:textSize="18sp" />
 
         <RadioButton
-            android:id="@+id/InitialFragment_RadioButton_Noti03"
+            android:id="@+id/rbNoti03"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="커밋한 날도 알림 받기"
@@ -103,7 +103,7 @@
     </RadioGroup>
 
     <TextView
-        android:id="@+id/InitialFragment_TextView_Time"
+        android:id="@+id/txtTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -113,12 +113,12 @@
         android:textColor="@color/black"
         android:textSize="22sp"
         android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/InitialFragment_EditText_Time"
+        app:layout_constraintBottom_toBottomOf="@+id/edtTime"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/InitialFragment_EditText_Time" />
+        app:layout_constraintTop_toTopOf="@+id/edtTime" />
 
     <EditText
-        android:id="@+id/InitialFragment_EditText_Time"
+        android:id="@+id/edtTime"
         android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -135,11 +135,11 @@
         android:textColor="@color/gray"
         android:textSize="18sp"
         android:visibility="invisible"
-        app:layout_constraintStart_toEndOf="@+id/InitialFragment_TextView_Time"
-        app:layout_constraintTop_toBottomOf="@+id/InitialFragment_RadioGroup_Notification" />
+        app:layout_constraintStart_toEndOf="@+id/txtTime"
+        app:layout_constraintTop_toBottomOf="@+id/rgNotification" />
 
     <TextView
-        android:id="@+id/InitialFragment_TextView_Vibrate"
+        android:id="@+id/txtVibrate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -149,24 +149,24 @@
         android:textColor="@color/black"
         android:textSize="22sp"
         android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/InitialFragment_RadioGroup_Vibrate"
+        app:layout_constraintBottom_toBottomOf="@+id/rgVibrate"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/InitialFragment_RadioGroup_Vibrate" />
+        app:layout_constraintTop_toTopOf="@+id/rgVibrate" />
 
     <RadioGroup
-        android:id="@+id/InitialFragment_RadioGroup_Vibrate"
+        android:id="@+id/rgVibrate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
-        android:checkedButton="@id/InitialFragment_RadioButton_Vib01"
+        android:checkedButton="@id/rbVib01"
         android:orientation="horizontal"
         android:visibility="invisible"
-        app:layout_constraintStart_toEndOf="@+id/InitialFragment_TextView_Vibrate"
-        app:layout_constraintTop_toBottomOf="@+id/InitialFragment_EditText_Time">
+        app:layout_constraintStart_toEndOf="@+id/txtVibrate"
+        app:layout_constraintTop_toBottomOf="@+id/edtTime">
 
         <RadioButton
-            android:id="@+id/InitialFragment_RadioButton_Vib01"
+            android:id="@+id/rbVib01"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="진동"
@@ -175,7 +175,7 @@
             android:textSize="18sp" />
 
         <RadioButton
-            android:id="@+id/InitialFragment_RadioButton_Vib02"
+            android:id="@+id/rbVib02"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="무음"
@@ -185,7 +185,7 @@
     </RadioGroup>
 
     <Button
-        android:id="@+id/InitialFragment_Button_Start"
+        android:id="@+id/btnStart"
         style="@style/ButtonTheme"
         android:layout_width="100dp"
         android:layout_height="wrap_content"

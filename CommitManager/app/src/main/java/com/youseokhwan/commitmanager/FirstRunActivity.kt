@@ -1,25 +1,15 @@
 package com.youseokhwan.commitmanager
 
-import android.app.AlarmManager
-import android.app.PendingIntent
-import android.content.ComponentName
-import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
-import com.youseokhwan.commitmanager.alarm.AlarmOption
-import com.youseokhwan.commitmanager.alarm.AlarmReceiver
-import com.youseokhwan.commitmanager.alarm.DeviceBootReceiver
 import com.youseokhwan.commitmanager.exception.InvalidParameterNameException
 import com.youseokhwan.commitmanager.retrofit.UserInfo
 import com.youseokhwan.commitmanager.ui.firstrun.InitialFragment
 import com.youseokhwan.commitmanager.ui.firstrun.WelcomeFragment
 import kotlinx.android.synthetic.main.fragment_initial.*
-import java.util.*
 
 /**
  * 최초 실행 시 초기 설정을 진행하는 Activity
@@ -64,12 +54,12 @@ class FirstRunActivity : AppCompatActivity() {
             // WelcomeFragment로 전환
             "welcome" -> {
                 supportFragmentManager.beginTransaction()
-                    .replace(R.id.FirstRunActivity_FrameLayout, WelcomeFragment()).commit()
+                    .replace(R.id.frLy, WelcomeFragment()).commit()
             }
             // InitialFragment로 전환
             "initial" -> {
                 supportFragmentManager.beginTransaction()
-                    .replace(R.id.FirstRunActivity_FrameLayout, InitialFragment()).commit()
+                    .replace(R.id.frLy, InitialFragment()).commit()
             }
             // 유효한 Fragment 이름이 아닐 경우
             else -> {
@@ -91,12 +81,12 @@ class FirstRunActivity : AppCompatActivity() {
         val editor: SharedPreferences.Editor = settings.edit()
 
         // 설정 값을 Companion Object에 저장
-        SplashActivity.id          = InitialFragment_EditText_GithubId.text.toString()
-        SplashActivity.alarmTime   = InitialFragment_EditText_Time    .text.toString()
-        when (InitialFragment_RadioGroup_Notification.checkedRadioButtonId) {
-            R.id.InitialFragment_RadioButton_Noti01 -> SplashActivity.alarmOption = 0  // 알람 받지 않기
-            R.id.InitialFragment_RadioButton_Noti02 -> SplashActivity.alarmOption = 1  // 커밋 안한 날만 받기
-            R.id.InitialFragment_RadioButton_Noti03 -> SplashActivity.alarmOption = 2  // 커밋한 날도 알림 받기
+        SplashActivity.id          = edtGithubId.text.toString()
+        SplashActivity.alarmTime   = edtTime    .text.toString()
+        when (rgNotification.checkedRadioButtonId) {
+            R.id.rbNoti01 -> SplashActivity.alarmOption = 0  // 알람 받지 않기
+            R.id.rbNoti02 -> SplashActivity.alarmOption = 1  // 커밋 안한 날만 받기
+            R.id.rbNoti03 -> SplashActivity.alarmOption = 2  // 커밋한 날도 알림 받기
         }
         SplashActivity.isFirstRun  = false
 

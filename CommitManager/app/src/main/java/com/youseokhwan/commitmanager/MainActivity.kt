@@ -59,21 +59,21 @@ class MainActivity : AppCompatActivity() {
         startAlarmManager()
 
         // Toolbar Title 설정
-        MainActivity_Toolbar.title = SplashActivity.name
+        toolbar.title = SplashActivity.name
 
         // Toolbar 클릭하면 UserInfo 패널 Visible
-        MainActivity_Toolbar.setOnClickListener {
-            if (MainActivity_ConstraintLayout_UserInfo.visibility == View.INVISIBLE) {
-                MainActivity_ConstraintLayout_UserInfo.startAnimation(fadeIn)
-                MainActivity_ConstraintLayout_UserInfo.visibility = View.VISIBLE
+        toolbar.setOnClickListener {
+            if (cstLyUserInfo.visibility == View.INVISIBLE) {
+                cstLyUserInfo.startAnimation(fadeIn)
+                cstLyUserInfo.visibility = View.VISIBLE
             }
         }
 
         // UserInfo 패널 설정
-        Glide.with(this).load(SplashActivity.imgSrc).into(MainActivity_ImageView_Avatar)
-        MainActivity_TextView_GitHubId .text = SplashActivity.id
-        MainActivity_TextView_Follower .text = "follower: ${SplashActivity.follower}명"
-        MainActivity_TextView_Following.text = "following: ${SplashActivity.following}명"
+        Glide.with(this).load(SplashActivity.imgSrc).into(ImgAvatar)
+        txtGitHubId .text = SplashActivity.id
+        txtFollower .text = "follower: ${SplashActivity.follower}명"
+        txtFollowing.text = "following: ${SplashActivity.following}명"
 
         // =========================================================================================
         // 테스트 코드
@@ -103,14 +103,14 @@ class MainActivity : AppCompatActivity() {
      */
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
         // UserInfo 패널이 Visible 상태일 때
-        if (MainActivity_ConstraintLayout_UserInfo.visibility == View.VISIBLE) {
+        if (cstLyUserInfo.visibility == View.VISIBLE) {
             val rect = Rect()
-            MainActivity_ConstraintLayout_UserInfo.getGlobalVisibleRect(rect)
+            cstLyUserInfo.getGlobalVisibleRect(rect)
 
             // Touch Point가 UserInfo 패널 범위 바깥이라면 Invisible
             if (!rect.contains(ev?.x?.toInt() ?: 0, ev?.y?.toInt() ?: 0)) {
-                MainActivity_ConstraintLayout_UserInfo.startAnimation(fadeOut)
-                MainActivity_ConstraintLayout_UserInfo.visibility = View.INVISIBLE
+                cstLyUserInfo.startAnimation(fadeOut)
+                cstLyUserInfo.visibility = View.INVISIBLE
 
                 /*
                  * UserInfo 패널이 Visible인 상태에서 Toolbar를 터치하면
