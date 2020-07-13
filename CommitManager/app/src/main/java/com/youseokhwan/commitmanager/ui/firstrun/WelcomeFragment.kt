@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.fragment_welcome.view.*
 class WelcomeFragment : Fragment() {
 
     private var firstRunActivity = FirstRunActivity()
-    private lateinit var fadeIn: Animation
+    private lateinit var fadeIn : Animation
     private lateinit var fadeIn0: Animation
     private lateinit var fadeIn1: Animation
 
@@ -42,7 +42,7 @@ class WelcomeFragment : Fragment() {
         // FadeIn 애니메이션
         view.txtTitle   .startAnimation(fadeIn0)
         view.txtContents.startAnimation(fadeIn1)
-        view.btnNext      .startAnimation(fadeIn)
+        view.btnNext    .startAnimation(fadeIn)
 
         // 다음 버튼을 클릭하면 InitialFragment로 전환
         view.btnNext.setOnClickListener {

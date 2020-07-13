@@ -63,7 +63,7 @@ class InitialFragment : Fragment() {
 
         // FadeIn 애니메이션
         view.txtGithubIdLabel.startAnimation(fadeIn0)
-        view.btnGitHubLogin    .startAnimation(fadeIn1)
+        view.btnGitHubLogin  .startAnimation(fadeIn1)
 
         // GitHub 로그인 버튼을 클릭하면 WebView 띄우기
         view.btnGitHubLogin.setOnClickListener {
@@ -76,28 +76,28 @@ class InitialFragment : Fragment() {
             when (checkedId) {
                 // 알림 받지 않기 선택하면 UI 숨기기
                 R.id.rbNoti01 -> {
-                    txtTime     .visibility = View.INVISIBLE
-                    edtTime     .visibility = View.INVISIBLE
-                    txtVibrate  .visibility = View.INVISIBLE
-                    rgVibrate.visibility = View.INVISIBLE
+                    txtTime   .visibility = View.INVISIBLE
+                    edtTime   .visibility = View.INVISIBLE
+                    txtVibrate.visibility = View.INVISIBLE
+                    rgVibrate .visibility = View.INVISIBLE
 
-                    txtTime     .startAnimation(fadeOut)
-                    edtTime     .startAnimation(fadeOut)
-                    txtVibrate  .startAnimation(fadeOut)
-                    rgVibrate.startAnimation(fadeOut)
+                    txtTime   .startAnimation(fadeOut)
+                    edtTime   .startAnimation(fadeOut)
+                    txtVibrate.startAnimation(fadeOut)
+                    rgVibrate .startAnimation(fadeOut)
                 }
                 // 그 외는 UI 표시
                 else -> {
                     if (txtTime.visibility == View.INVISIBLE) {
-                        txtTime     .visibility = View.VISIBLE
-                        edtTime     .visibility = View.VISIBLE
-                        txtVibrate  .visibility = View.VISIBLE
-                        rgVibrate.visibility = View.VISIBLE
+                        txtTime   .visibility = View.VISIBLE
+                        edtTime   .visibility = View.VISIBLE
+                        txtVibrate.visibility = View.VISIBLE
+                        rgVibrate .visibility = View.VISIBLE
 
-                        txtTime     .startAnimation(fadeIn0)
-                        edtTime     .startAnimation(fadeIn0)
-                        txtVibrate  .startAnimation(fadeIn1)
-                        rgVibrate.startAnimation(fadeIn1)
+                        txtTime   .startAnimation(fadeIn0)
+                        edtTime   .startAnimation(fadeIn0)
+                        txtVibrate.startAnimation(fadeIn1)
+                        rgVibrate .startAnimation(fadeIn1)
                     }
                 }
             }
@@ -146,7 +146,7 @@ class InitialFragment : Fragment() {
             R.id.edtTime -> {
                 val timeSetListener = TimePickerDialog.OnTimeSetListener { _, hour, minute ->
                     cal.set(Calendar.HOUR_OF_DAY, hour)
-                    cal.set(Calendar.MINUTE, minute)
+                    cal.set(Calendar.MINUTE     , minute)
                     edtTime
                         .setText(SimpleDateFormat("HH:mm", Locale.getDefault()).format(cal.time))
                 }
@@ -167,20 +167,20 @@ class InitialFragment : Fragment() {
     private fun showBottomUi() {
         // GitHub 로그인 버튼, ID EditText
         btnGitHubLogin.visibility = View.INVISIBLE
-        edtGithubId .visibility = View.VISIBLE
-        edtGithubId .setText(SplashActivity.id)
+        edtGithubId   .visibility = View.VISIBLE
+        edtGithubId   .setText(SplashActivity.id)
 
         // 알림 여부
         txtNotificationLabel.visibility = View.VISIBLE
-        rgNotification   .visibility = View.VISIBLE
+        rgNotification      .visibility = View.VISIBLE
 
         // 시간
         txtTime.visibility = View.VISIBLE
         edtTime.visibility = View.VISIBLE
 
         // 진동
-        txtVibrate  .visibility = View.VISIBLE
-        rgVibrate.visibility = View.VISIBLE
+        txtVibrate.visibility = View.VISIBLE
+        rgVibrate .visibility = View.VISIBLE
 
         // 시작하기 버튼
         btnStart.setTextColor(ContextCompat.getColor(context!!, R.color.limegreen))

@@ -39,7 +39,7 @@ class OAuthActivity : AppCompatActivity() {
         Log.d("CommitManagerLog", "Token: $token")
 
         // 데이터를 SplashActivity의 Companion Object 변수에 저장
-        SplashActivity.id = id
+        SplashActivity.id    = id
         SplashActivity.token = token
 
         isSuccess = true
