@@ -2,22 +2,171 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/cstLySetting"
+    android:id="@+id/cstLySettings"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.settings.SettingsFragment">
 
     <TextView
-        android:id="@+id/txtTemp01"
-        android:layout_width="match_parent"
+        android:id="@+id/txtSetNotificationLabel"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="80dp"
+        android:text="알림 여부"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/black"
+        android:textSize="22sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <RadioGroup
+        android:id="@+id/rgSetNotification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtSetNotificationLabel">
+
+        <RadioButton
+            android:id="@+id/rbSetNoti01"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="알림 받지 않기"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/gray"
+            android:textSize="18sp" />
+
+        <RadioButton
+            android:id="@+id/rbSetNoti02"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="커밋 안한 날만 받기"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/gray"
+            android:textSize="18sp" />
+
+        <RadioButton
+            android:id="@+id/rbSetNoti03"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="커밋한 날도 알림 받기"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/gray"
+            android:textSize="18sp" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/txtSetTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:text="시간"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/black"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="@+id/edtSetTime"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/edtSetTime" />
+
+    <EditText
+        android:id="@+id/edtSetTime"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:clickable="true"
+        android:cursorVisible="false"
+        android:editable="false"
+        android:ems="10"
+        android:focusable="false"
+        android:gravity="center_horizontal"
+        android:hint="--:--"
+        android:inputType="time"
+        android:text="22:00"
+        android:textColor="@color/gray"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@+id/txtSetTime"
+        app:layout_constraintTop_toBottomOf="@+id/rgSetNotification" />
+
+    <TextView
+        android:id="@+id/txtSetVibrate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:gravity="center_horizontal"
+        android:text="진동"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/black"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="@+id/rgSetVibrate"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/rgSetVibrate" />
+
+    <RadioGroup
+        android:id="@+id/rgSetVibrate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toEndOf="@+id/txtSetVibrate"
+        app:layout_constraintTop_toBottomOf="@+id/edtSetTime">
+
+        <RadioButton
+            android:id="@+id/rbSetVib01"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="진동"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/gray"
+            android:textSize="18sp" />
+
+        <RadioButton
+            android:id="@+id/rbSetVib02"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="무음"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/gray"
+            android:textSize="18sp" />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/btnSave"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:text="적용하기"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rgSetVibrate" />
+
+    <Button
+        android:id="@+id/btnDevList"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:text="개발자 소개"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnSave" />
+
+    <Button
+        android:id="@+id/btnSetGitHubLogout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:text="GitHub 로그아웃"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnDevList" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

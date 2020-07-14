@@ -12,7 +12,7 @@ import com.youseokhwan.commitmanager.R
 
 class AlarmReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
-        val notificationManager = context!!.getSystemService(Context.NOTIFICATION_SERVICE)
+        val notificationManager = context?.getSystemService(Context.NOTIFICATION_SERVICE)
                 as NotificationManager
 
         val notificationIntent = Intent(context, MainActivity::class.java)
@@ -24,7 +24,7 @@ class AlarmReceiver : BroadcastReceiver() {
         val builder = NotificationCompat.Builder(context, "default")
         builder.setSmallIcon(R.drawable.ic_launcher_foreground)
 
-        val channelName = "Daily Commit"
+        val channelName = "DailyCommit"
         val description = "1일 1커밋 알람"
         val importance = NotificationManager.IMPORTANCE_HIGH
 

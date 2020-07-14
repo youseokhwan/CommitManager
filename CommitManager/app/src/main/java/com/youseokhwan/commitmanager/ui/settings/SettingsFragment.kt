@@ -18,18 +18,12 @@ class SettingsFragment : Fragment() {
 
     private lateinit var settingsViewModel: SettingsViewModel
 
-    override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
-    ): View? {
-        settingsViewModel =
-                ViewModelProviders.of(this).get(SettingsViewModel::class.java)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val root = inflater.inflate(R.layout.fragment_settings, container, false)
-        val textView: TextView = root.findViewById(R.id.txtTemp01)
-        settingsViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
+
+        settingsViewModel = ViewModelProviders.of(this).get(SettingsViewModel::class.java)
+        settingsViewModel.text.observe(viewLifecycleOwner, Observer { })
+
         return root
     }
 }
