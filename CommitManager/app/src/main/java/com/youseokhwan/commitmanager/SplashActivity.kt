@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import com.youseokhwan.commitmanager.alarm.AlarmOption
+import com.youseokhwan.commitmanager.alarm.VibOption
 
 /**
  * SplashActivity
@@ -18,6 +19,7 @@ class SplashActivity : AppCompatActivity() {
         var token       = ""    // OAuth Token
         var alarmOption = AlarmOption.NONE.value  // 알람 옵션
         var alarmTime   = ""    // 알람 시간
+        var vibOption   = VibOption.VIB.value // 진동 옵션
         var name        = ""    // Username
         var imgSrc      = ""    // Avartar 이미지 경로
         var follower    = 0     // Follower 수
@@ -49,6 +51,7 @@ class SplashActivity : AppCompatActivity() {
             token       = settings.getString("token"      , "error")!!
             alarmOption = settings.getInt   ("alarmOption", AlarmOption.NONE.value)
             alarmTime   = settings.getString("alarmTime"  , "error")!!
+            vibOption   = settings.getInt   ("vibOption"  , VibOption.VIB.value)
             name        = settings.getString("name"       , "error")!!
             imgSrc      = settings.getString("imgSrc"     , "error")!!
             follower    = settings.getInt   ("follower"   , -1)

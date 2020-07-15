@@ -82,11 +82,15 @@ class FirstRunActivity : AppCompatActivity() {
 
         // 설정 값을 Companion Object에 저장
         SplashActivity.id          = edtGithubId.text.toString()
-        SplashActivity.alarmTime   = edtTime    .text.toString()
         when (rgNotification.checkedRadioButtonId) {
             R.id.rbNoti01 -> SplashActivity.alarmOption = 0  // 알람 받지 않기
             R.id.rbNoti02 -> SplashActivity.alarmOption = 1  // 커밋 안한 날만 받기
             R.id.rbNoti03 -> SplashActivity.alarmOption = 2  // 커밋한 날도 알림 받기
+        }
+        SplashActivity.alarmTime   = edtTime    .text.toString()
+        when (rgVibrate.checkedRadioButtonId) {
+            R.id.rbVib01 -> SplashActivity.vibOption = 0  // 진동
+            R.id.rbVib02 -> SplashActivity.vibOption = 1  // 무음
         }
         SplashActivity.isFirstRun  = false
 
@@ -94,6 +98,7 @@ class FirstRunActivity : AppCompatActivity() {
         editor.putString ("id"         , SplashActivity.id)
         editor.putInt    ("alarmOption", SplashActivity.alarmOption)
         editor.putString ("alarmTime"  , SplashActivity.alarmTime)
+        editor.putInt    ("vibOption"  , SplashActivity.vibOption)
         editor.putBoolean("isFirstRun" , SplashActivity.isFirstRun)
 
         // response를 Companion Object에 저장
