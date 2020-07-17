@@ -5,6 +5,7 @@ import android.app.PendingIntent
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.graphics.Rect
 import android.os.Bundle
@@ -22,6 +23,7 @@ import com.youseokhwan.commitmanager.alarm.AlarmOption
 import com.youseokhwan.commitmanager.alarm.AlarmReceiver
 import com.youseokhwan.commitmanager.alarm.DeviceBootReceiver
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_settings.*
 import java.util.*
 
 /**
@@ -163,5 +165,33 @@ class MainActivity : AppCompatActivity() {
             packageManager.setComponentEnabledSetting(
                 receiver, PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP)
         }
+    }
+
+    /**
+     * Settings Fragment의 적용하기 버튼 클릭 시 변경된 설정 저장
+     */
+    fun updateSettings() {
+        // 사용자 설정을 저장하는 SharedPreferences
+        val settings: SharedPreferences = getSharedPreferences("settings", MODE_PRIVATE)
+        val editor: SharedPreferences.Editor = settings.edit()
+
+        // 설정 값을 Companion Object에 저장
+        when (rgSetNotification.checkedRadioButtonId) {
+            R.id.rbSetNoti01 -> SplashActivity.alarmOption = 0  // 알람 받지 않기
+            R.id.rbSetNoti02 -> SplashActivity.alarmOption = 1  // 커밋 안한 날만 받기
+            R.id.rbSetNoti03 -> SplashActivity.alarmOption = 2  // 커밋한 날도 알림 받기
+        }
+        SplashActivity.alarmTime   = edtSetTime.text.toString()
+        when (rgSetVibrate.checkedRadioButtonId) {
+            R.id.rbSetVib01 -> SplashActivity.vibOption = 0  // 진동
+            R.id.rbSetVib02 -> SplashActivity.vibOption = 1  // 무음
+        }
+
+        // 설정 값을 settings에 저장
+        editor.putInt    ("alarmOption", SplashActivity.alarmOption)
+        editor.putString ("alarmTime"  , SplashActivity.alarmTime)
+        editor.putInt    ("vibOption"  , SplashActivity.vibOption)
+
+        editor.apply()
     }
 }
