@@ -1,4 +1,4 @@
-package com.youseokhwan.commitmanager.ui.firstrun
+package com.youseokhwan.commitmanager.fragment
 
 import android.app.TimePickerDialog
 import android.content.Context
@@ -18,6 +18,7 @@ import com.youseokhwan.commitmanager.exception.InvalidParameterNameException
 import com.youseokhwan.commitmanager.exception.RetrofitException
 import com.youseokhwan.commitmanager.retrofit.UserInfo
 import com.youseokhwan.commitmanager.retrofit.UserRetrofit
+import com.youseokhwan.commitmanager.webview.OAuthActivity
 import kotlinx.android.synthetic.main.fragment_initial.*
 import kotlinx.android.synthetic.main.fragment_initial.view.*
 import retrofit2.Call
@@ -57,9 +58,8 @@ class InitialFragment : Fragment() {
         fadeOut = AnimationUtils.loadAnimation(context, R.anim.fade_out)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_initial, null)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val view = inflater.inflate(R.layout.fragment_initial, container, false)
 
         // FadeIn 애니메이션
         view.txtGithubIdLabel.startAnimation(fadeIn0)

@@ -2,11 +2,9 @@ package com.youseokhwan.commitmanager
 
 import android.app.AlarmManager
 import android.app.PendingIntent
-import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.content.pm.PackageManager
 import android.graphics.Rect
 import android.os.Bundle
 import android.util.Log
@@ -21,7 +19,6 @@ import androidx.navigation.ui.setupWithNavController
 import com.bumptech.glide.Glide
 import com.youseokhwan.commitmanager.alarm.AlarmOption
 import com.youseokhwan.commitmanager.alarm.AlarmReceiver
-import com.youseokhwan.commitmanager.alarm.DeviceBootReceiver
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_settings.*
 import java.util.*
@@ -65,6 +62,7 @@ class MainActivity : AppCompatActivity() {
             if (cstLyUserInfo.visibility == View.INVISIBLE) {
                 cstLyUserInfo.startAnimation(fadeIn)
                 cstLyUserInfo.visibility = View.VISIBLE
+                toolbar.title = getString(R.string.app_name)
             }
         }
 
@@ -77,7 +75,15 @@ class MainActivity : AppCompatActivity() {
         // 최초 실행이면 AlarmManager 실행
         if (SplashActivity.isFirstRun) {
             startAlarmManager()
-            SplashActivity.isFirstRun = false
+
+            // isFirstRun false로 변경하고 SharedPreferences에 적용
+            val settings = applicationContext.getSharedPreferences("settings", Context.MODE_PRIVATE)
+            with (settings.edit()) {
+                SplashActivity.isFirstRun = false
+
+                putBoolean("isFirstRun" , SplashActivity.isFirstRun)
+                apply()
+            }
         }
     }
 
@@ -99,16 +105,17 @@ class MainActivity : AppCompatActivity() {
     /**
      * UserInfo 패널 바깥 영역을 터치하면 Invisible 처리
      */
-    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+    override fun dispatchTouchEvent(event: MotionEvent?): Boolean {
         // UserInfo 패널이 Visible 상태일 때
         if (cstLyUserInfo.visibility == View.VISIBLE) {
             val rect = Rect()
             cstLyUserInfo.getGlobalVisibleRect(rect)
 
             // Touch Point가 UserInfo 패널 범위 바깥이라면 Invisible
-            if (!rect.contains(ev?.x?.toInt() ?: 0, ev?.y?.toInt() ?: 0)) {
+            if (!rect.contains(event?.x?.toInt() ?: 0, event?.y?.toInt() ?: 0)) {
                 cstLyUserInfo.startAnimation(fadeOut)
                 cstLyUserInfo.visibility = View.INVISIBLE
+                toolbar.title = SplashActivity.id
 
                 /*
                  * UserInfo 패널이 Visible인 상태에서 Toolbar를 터치하면
@@ -119,7 +126,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        return super.dispatchTouchEvent(ev)
+        return super.dispatchTouchEvent(event)
     }
 
     /**
@@ -128,13 +135,13 @@ class MainActivity : AppCompatActivity() {
     private fun startAlarmManager() {
         Log.d("CommitManagerLog", "startAlarmManager() 호출됨")
 
+        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val alarmIntent = Intent(applicationContext, AlarmReceiver::class.java).let {
+            PendingIntent.getBroadcast(applicationContext, 0, it, 0)
+        }
+
         // AlarmOption 값이 NONE이 아닐 때 AlarmManager 시작
         if (SplashActivity.alarmOption != AlarmOption.NONE.value) {
-            val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-            val alarmIntent = Intent(applicationContext, AlarmReceiver::class.java).let {
-                PendingIntent.getBroadcast(applicationContext, 0, it, 0)
-            }
-
             val hour = SplashActivity.alarmTime.substring(0..1).toInt()
             val min  = SplashActivity.alarmTime.substring(3..4).toInt()
 
@@ -155,34 +162,9 @@ class MainActivity : AppCompatActivity() {
             )
 
             Toast.makeText(applicationContext, "매일 ${hour}시 ${min}분에 커밋 여부를 알려드려요", Toast.LENGTH_LONG).show()
+        } else {
+            // AlarmOption이 NONE인 경우 반복 작업 취소
+            alarmManager.cancel(alarmIntent)
         }
-    }
-
-    /**
-     * Settings Fragment의 적용하기 버튼 클릭 시 변경된 설정 저장
-     */
-    fun updateSettings() {
-        // 사용자 설정을 저장하는 SharedPreferences
-        val settings: SharedPreferences = getSharedPreferences("settings", MODE_PRIVATE)
-        val editor: SharedPreferences.Editor = settings.edit()
-
-        // 설정 값을 Companion Object에 저장
-        when (rgSetNotification.checkedRadioButtonId) {
-            R.id.rbSetNoti01 -> SplashActivity.alarmOption = 0  // 알람 받지 않기
-            R.id.rbSetNoti02 -> SplashActivity.alarmOption = 1  // 커밋 안한 날만 받기
-            R.id.rbSetNoti03 -> SplashActivity.alarmOption = 2  // 커밋한 날도 알림 받기
-        }
-        SplashActivity.alarmTime   = edtSetTime.text.toString()
-        when (rgSetVibrate.checkedRadioButtonId) {
-            R.id.rbSetVib01 -> SplashActivity.vibOption = 0  // 진동
-            R.id.rbSetVib02 -> SplashActivity.vibOption = 1  // 무음
-        }
-
-        // 설정 값을 settings에 저장
-        editor.putInt    ("alarmOption", SplashActivity.alarmOption)
-        editor.putString ("alarmTime"  , SplashActivity.alarmTime)
-        editor.putInt    ("vibOption"  , SplashActivity.vibOption)
-
-        editor.apply()
     }
 }

@@ -1,4 +1,4 @@
-package com.youseokhwan.commitmanager.ui.firstrun
+package com.youseokhwan.commitmanager.fragment
 
 import android.content.Context
 import android.os.Bundle
@@ -35,9 +35,8 @@ class WelcomeFragment : Fragment() {
         fadeIn1 = AnimationUtils.loadAnimation(context, R.anim.fade_in_1)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_welcome, null)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val view = inflater.inflate(R.layout.fragment_welcome, container, false)
 
         // FadeIn 애니메이션
         view.txtTitle   .startAnimation(fadeIn0)

@@ -1,4 +1,4 @@
-package com.youseokhwan.commitmanager
+package com.youseokhwan.commitmanager.webview
 
 import android.content.Context
 import android.webkit.JavascriptInterface

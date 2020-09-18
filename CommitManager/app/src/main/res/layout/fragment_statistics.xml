@@ -5,7 +5,7 @@
     android:id="@+id/cstLyStatistics"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.statistics.StatisticsFragment">
+    tools:context=".fragment.StatisticsFragment">
 
     <TextView
         android:id="@+id/txtTemp02"

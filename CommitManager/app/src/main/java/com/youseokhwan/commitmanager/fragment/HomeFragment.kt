@@ -1,4 +1,4 @@
-package com.youseokhwan.commitmanager.ui.home
+package com.youseokhwan.commitmanager.fragment
 
 import android.os.Bundle
 import android.util.Log
@@ -9,8 +9,6 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import com.youseokhwan.commitmanager.R
 import com.youseokhwan.commitmanager.SplashActivity
 import com.youseokhwan.commitmanager.exception.RetrofitException
@@ -24,20 +22,14 @@ import java.util.*
 
 /**
  * 오늘 커밋이 있는지 알려주는 이미지와 이번 주 커밋 통계를 표시하는 메인 Fragment
- * @property homeViewModel
  */
 class HomeFragment : Fragment() {
-
-    private lateinit var homeViewModel: HomeViewModel
 
     // 에니메이션 변수 선언
     private lateinit var fadeIn : Animation
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val root = inflater.inflate(R.layout.fragment_home, container, false)
-
-        homeViewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
-        homeViewModel.text.observe(viewLifecycleOwner, Observer { })
 
         // 애니메이션 변수 초기화
         fadeIn  = AnimationUtils.loadAnimation(context, R.anim.fade_in)

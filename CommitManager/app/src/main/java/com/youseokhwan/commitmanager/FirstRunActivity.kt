@@ -1,14 +1,14 @@
 package com.youseokhwan.commitmanager
 
+import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import com.youseokhwan.commitmanager.exception.InvalidParameterNameException
 import com.youseokhwan.commitmanager.retrofit.UserInfo
-import com.youseokhwan.commitmanager.ui.firstrun.InitialFragment
-import com.youseokhwan.commitmanager.ui.firstrun.WelcomeFragment
+import com.youseokhwan.commitmanager.fragment.InitialFragment
+import com.youseokhwan.commitmanager.fragment.WelcomeFragment
 import kotlinx.android.synthetic.main.fragment_initial.*
 
 /**
@@ -77,42 +77,41 @@ class FirstRunActivity : AppCompatActivity() {
      */
     fun finishInitialSettings(userInfo: UserInfo?) {
         // 사용자 설정을 저장하는 SharedPreferences
-        val settings: SharedPreferences = getSharedPreferences("settings", MODE_PRIVATE)
-        val editor: SharedPreferences.Editor = settings.edit()
+        val settings = applicationContext.getSharedPreferences("settings", Context.MODE_PRIVATE)
+        with (settings.edit()) {
+            // 설정 값을 Companion Object에 저장
+            SplashActivity.id = edtGithubId.text.toString()
+            when (rgNotification.checkedRadioButtonId) {
+                R.id.rbNoti01 -> SplashActivity.alarmOption = 0  // 알람 받지 않기
+                R.id.rbNoti02 -> SplashActivity.alarmOption = 1  // 커밋 안한 날만 받기
+                R.id.rbNoti03 -> SplashActivity.alarmOption = 2  // 커밋한 날도 알림 받기
+            }
+            SplashActivity.alarmTime = edtTime.text.toString()
+            when (rgVibrate.checkedRadioButtonId) {
+                R.id.rbVib01 -> SplashActivity.vibOption = 0  // 진동
+                R.id.rbVib02 -> SplashActivity.vibOption = 1  // 무음
+            }
 
-        // 설정 값을 Companion Object에 저장
-        SplashActivity.id          = edtGithubId.text.toString()
-        when (rgNotification.checkedRadioButtonId) {
-            R.id.rbNoti01 -> SplashActivity.alarmOption = 0  // 알람 받지 않기
-            R.id.rbNoti02 -> SplashActivity.alarmOption = 1  // 커밋 안한 날만 받기
-            R.id.rbNoti03 -> SplashActivity.alarmOption = 2  // 커밋한 날도 알림 받기
+            // 설정 값을 settings에 저장
+            putString("id"         , SplashActivity.id)
+            putInt   ("alarmOption", SplashActivity.alarmOption)
+            putString("alarmTime"  , SplashActivity.alarmTime)
+            putInt   ("vibOption"  , SplashActivity.vibOption)
+
+            // response를 Companion Object에 저장
+            SplashActivity.name      = userInfo?.name.toString()
+            SplashActivity.imgSrc    = userInfo?.imgSrc.toString()
+            SplashActivity.follower  = userInfo?.follower ?: 0
+            SplashActivity.following = userInfo?.following ?: 0
+
+            // response를 settings에 저장
+            putString("name"     , SplashActivity.name)
+            putString("imgSrc"   , SplashActivity.imgSrc)
+            putInt   ("follower" , SplashActivity.follower)
+            putInt   ("following", SplashActivity.following)
+
+            apply()
         }
-        SplashActivity.alarmTime   = edtTime    .text.toString()
-        when (rgVibrate.checkedRadioButtonId) {
-            R.id.rbVib01 -> SplashActivity.vibOption = 0  // 진동
-            R.id.rbVib02 -> SplashActivity.vibOption = 1  // 무음
-        }
-
-        // 설정 값을 settings에 저장
-        editor.putString ("id"         , SplashActivity.id)
-        editor.putInt    ("alarmOption", SplashActivity.alarmOption)
-        editor.putString ("alarmTime"  , SplashActivity.alarmTime)
-        editor.putInt    ("vibOption"  , SplashActivity.vibOption)
-        editor.putBoolean("isFirstRun" , SplashActivity.isFirstRun)
-
-        // response를 Companion Object에 저장
-        SplashActivity.name      = userInfo?.name  .toString()
-        SplashActivity.imgSrc    = userInfo?.imgSrc.toString()
-        SplashActivity.follower  = userInfo?.follower ?:0
-        SplashActivity.following = userInfo?.following?:0
-
-        // response를 settings에 저장
-        editor.putString("name"     , SplashActivity.name)
-        editor.putString("imgSrc"   , SplashActivity.imgSrc)
-        editor.putInt   ("follower" , SplashActivity.follower)
-        editor.putInt   ("following", SplashActivity.following)
-
-        editor.apply()
 
         // MainActivity로 이동
         startActivity(Intent(this, MainActivity::class.java))

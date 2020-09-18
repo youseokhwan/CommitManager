@@ -57,14 +57,8 @@ class SplashActivity : AppCompatActivity() {
             follower    = settings.getInt   ("follower"   , -1)
             following   = settings.getInt   ("following"  , -1)
 
-            // =====================================================================================
-            // 테스트 - 앱 실행할 때마다 초기 설정을 진행하도록 설정 (개발 완료 후 삭제)
-            id = ""
-            startActivity(Intent(this, FirstRunActivity::class.java))
-            // =====================================================================================
-
             // MainActivity로 이동
-//            startActivity(Intent(this, MainActivity::class.java))
+            startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
     }

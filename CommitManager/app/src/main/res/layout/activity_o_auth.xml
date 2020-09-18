@@ -5,7 +5,7 @@
     android:id="@+id/cstLyOAuth"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".OAuthActivity">
+    tools:context=".webview.OAuthActivity">
 
     <WebView
         android:id="@+id/wv"

@@ -1,10 +1,12 @@
-package com.youseokhwan.commitmanager
+package com.youseokhwan.commitmanager.webview
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.webkit.WebViewClient
 import android.widget.Toast
+import com.youseokhwan.commitmanager.R
+import com.youseokhwan.commitmanager.SplashActivity
 import kotlinx.android.synthetic.main.activity_o_auth.*
 
 /**
@@ -13,7 +15,7 @@ import kotlinx.android.synthetic.main.activity_o_auth.*
  */
 class OAuthActivity : AppCompatActivity() {
 
-    var isSuccess: Boolean = false
+    private var isSuccess: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +41,7 @@ class OAuthActivity : AppCompatActivity() {
         Log.d("CommitManagerLog", "Token: $token")
 
         // 데이터를 SplashActivity의 Companion Object 변수에 저장
-        SplashActivity.id    = id
+        SplashActivity.id = id
         SplashActivity.token = token
 
         isSuccess = true

@@ -10,7 +10,6 @@ import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import com.youseokhwan.commitmanager.MainActivity
 import com.youseokhwan.commitmanager.R
 import com.youseokhwan.commitmanager.SplashActivity
 import com.youseokhwan.commitmanager.exception.RetrofitException
@@ -51,18 +50,28 @@ class AlarmReceiver : BroadcastReceiver() {
 
                 override fun onResponse(call: Call<Commit>, response: Response<Commit>) {
                     if (response.isSuccessful) {
-                        // 커밋 내역이 존재할 경우
-                        if (response.body()?.count?:"0" != "0") {
+                        if (response.body()?.count?:"0" != "0") { // 커밋 내역이 존재할 경우
                             title += " 완료!"
                             text = response.body()?.msg.toString()
-                        } else {
+
+                            if (SplashActivity.alarmOption == 2) { // '커밋한 날도 받기'를 선택한 경우
+                                createNotification(context)
+                            }
+                            // =====================================================================
+                            // 테스트 - 정상적으로 실행됐는지 확인하기 위한 코드
+                            else {
+                                Log.d("CommitManagerLog", "정상적으로 호출됐으나 AlarmOption에 의해 알람 생성하지 않음")
+                            }
+                            // =====================================================================
+                        } else { // 커밋 내역이 없을 경우
                             title += " 내역이 없어요"
                             text = "이대로 포기하실 건가요?"
+                            createNotification(context)
                         }
-                        createNotification(context)
                     } else {
                         text = "커밋 내역을 불러오는 중 오류가 발생하였습니다."
                         createNotification(context)
+
                         throw RetrofitException("RetrofitException: response.isSuccessful is false")
                     }
                 }

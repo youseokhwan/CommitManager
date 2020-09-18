@@ -29,7 +29,7 @@
             android:name=".FirstRunActivity"
             android:screenOrientation="userPortrait" />
         <activity
-            android:name=".OAuthActivity"
+            android:name=".webview.OAuthActivity"
             android:screenOrientation="userPortrait" />
         <activity
             android:name=".MainActivity"
