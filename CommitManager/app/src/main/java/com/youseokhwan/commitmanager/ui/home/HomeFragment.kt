@@ -116,13 +116,13 @@ class HomeFragment : Fragment() {
      * 화면 상단 TextView를 오늘 날짜로 초기화
      */
     private fun setTodayDate() {
-        val DAY_OF_WEEK_KOR = arrayOf("", "일", "월", "화", "수", "목", "금", "토")
+        val dayOfWeekKorean = arrayOf("", "일", "월", "화", "수", "목", "금", "토")
 
         val cal = Calendar.getInstance()
         var today = cal.get(Calendar.YEAR).toString() + "년 "
         today += (cal.get(Calendar.MONTH) + 1).toString() + "월 "
         today += cal.get(Calendar.DATE).toString() + "일 ("
-        today += DAY_OF_WEEK_KOR[cal.get(Calendar.DAY_OF_WEEK)] + ")"
+        today += dayOfWeekKorean[cal.get(Calendar.DAY_OF_WEEK)] + ")"
 
         txtToday.text = today
     }

@@ -92,7 +92,6 @@ class FirstRunActivity : AppCompatActivity() {
             R.id.rbVib01 -> SplashActivity.vibOption = 0  // 진동
             R.id.rbVib02 -> SplashActivity.vibOption = 1  // 무음
         }
-        SplashActivity.isFirstRun  = false
 
         // 설정 값을 settings에 저장
         editor.putString ("id"         , SplashActivity.id)

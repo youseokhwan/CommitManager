@@ -6,41 +6,112 @@ import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.os.Build
+import android.util.Log
 import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import com.youseokhwan.commitmanager.MainActivity
 import com.youseokhwan.commitmanager.R
+import com.youseokhwan.commitmanager.SplashActivity
+import com.youseokhwan.commitmanager.exception.RetrofitException
+import com.youseokhwan.commitmanager.retrofit.Commit
+import com.youseokhwan.commitmanager.retrofit.UserRetrofit
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.util.*
 
 class AlarmReceiver : BroadcastReceiver() {
+
+    private lateinit var notificationManager: NotificationManager
+    private lateinit var title: String
+    private lateinit var text: String
+
     override fun onReceive(context: Context?, intent: Intent?) {
-        val notificationManager = context?.getSystemService(Context.NOTIFICATION_SERVICE)
-                as NotificationManager
+        Log.d("CommitManagerLog", "AlarmReceiver, onReceive() 호출됨")
 
-        val notificationIntent = Intent(context, MainActivity::class.java)
-        notificationIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+        notificationManager = context?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        val pendingIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0)
+        // title 오늘 날짜로 초기화
+        val today = Calendar.getInstance()
+        title = (today.get(Calendar.MONTH) + 1).toString() + "월 " + today.get(Calendar.DATE).toString() + "일 커밋"
 
-        // Oreo 이후 버전 기준으로 작성함
-        val builder = NotificationCompat.Builder(context, "default")
-        builder.setSmallIcon(R.drawable.ic_launcher_foreground)
+        // Notification 채널 생성
+        createNotificationChannel()
 
-        val channelName = "DailyCommit"
-        val description = "1일 1커밋 알람"
-        val importance = NotificationManager.IMPORTANCE_HIGH
+        // 오늘 Commit 여부 확인
+        // GET("/commit?id=${id}&token=${token}")
+        UserRetrofit.getService().getTodayCommit(id = SplashActivity.id, token = SplashActivity.token)
+            .enqueue(object : Callback<Commit> {
+                override fun onFailure(call: Call<Commit>?, t: Throwable?) {
+                    text = "커밋 내역을 불러오는 중 오류가 발생하였습니다."
+                    createNotification(context)
+                    throw RetrofitException("RetrofitException: onFailure()\n${t.toString()}")
+                }
 
-        val channel = NotificationChannel("dailyCommit", channelName, importance)
-        channel.description = description
+                override fun onResponse(call: Call<Commit>, response: Response<Commit>) {
+                    if (response.isSuccessful) {
+                        // 커밋 내역이 존재할 경우
+                        if (response.body()?.count?:"0" != "0") {
+                            title += " 완료!"
+                            text = response.body()?.msg.toString()
+                        } else {
+                            title += " 내역이 없어요"
+                            text = "이대로 포기하실 건가요?"
+                        }
+                        createNotification(context)
+                    } else {
+                        text = "커밋 내역을 불러오는 중 오류가 발생하였습니다."
+                        createNotification(context)
+                        throw RetrofitException("RetrofitException: response.isSuccessful is false")
+                    }
+                }
+            })
+    }
 
-        notificationManager.createNotificationChannel(channel)
+    /**
+     * Notification Channel 생성
+     */
+    private fun createNotificationChannel() {
+        // Oreo 이상
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(
+                "TodayCommit",
+                "Today Commit",
+                NotificationManager.IMPORTANCE_DEFAULT
+            ).apply {
+                description = "1일 1커밋 알람"
+            }
 
-        builder.setAutoCancel(true)
-            .setDefaults(NotificationCompat.DEFAULT_ALL)
-            .setWhen(System.currentTimeMillis())
-            .setContentTitle("Title")
-            .setContentText("SubTitle")
-            .setContentInfo("INFO")
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
+
+    /**
+     * Notification 생성
+     */
+    private fun createNotification(context: Context) {
+        // Notification 클릭 시 SplashActivity 실행되도록 설정
+        val pendingIntent = PendingIntent.getActivity(
+            context,
+            1,
+            Intent(context, SplashActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            },
+            0
+        )
+
+        // Notification 생성
+        val builder = NotificationCompat.Builder(context, "TodayCommit")
+            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setContentTitle(title)
+            .setContentText(text)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setContentIntent(pendingIntent)
+            .setAutoCancel(true)
 
-        notificationManager.notify(1001, builder.build())
+        with(NotificationManagerCompat.from(context)) {
+            notify(0, builder.build())
+        }
     }
 }

@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
     private val finishIntervalTime: Long = 3000
     private var backPressedTime   : Long = 0
 
-    // 에니메이션 변수 선언
+    // 애니메이션 변수 선언
     private lateinit var fadeIn : Animation
     private lateinit var fadeOut: Animation
 
@@ -56,9 +56,6 @@ class MainActivity : AppCompatActivity() {
         // NavController 설정
         val navController = findNavController(R.id.nav_host_fragment)
         nav_view.setupWithNavController(navController)
-
-        // AlarmManager 실행
-        startAlarmManager()
 
         // Toolbar Title 설정
         toolbar.title = SplashActivity.name
@@ -77,12 +74,11 @@ class MainActivity : AppCompatActivity() {
         txtFollower .text = "follower: ${SplashActivity.follower}명"
         txtFollowing.text = "following: ${SplashActivity.following}명"
 
-        // =========================================================================================
-        // 테스트 코드
-        Log.d("CommitManagerLog", "alarmOption: ${SplashActivity.alarmOption}")
-        Toast.makeText(applicationContext, "(테스트) 설정된 alarmTime: ${SplashActivity.alarmTime}"
-            , Toast.LENGTH_SHORT).show()
-        // =========================================================================================
+        // 최초 실행이면 AlarmManager 실행
+        if (SplashActivity.isFirstRun) {
+            startAlarmManager()
+            SplashActivity.isFirstRun = false
+        }
     }
 
     /**
@@ -130,40 +126,35 @@ class MainActivity : AppCompatActivity() {
      * AlarmManager 시작
      */
     private fun startAlarmManager() {
-//        Log.d("CommitManagerLog", "startAlarmManager() 진입")
+        Log.d("CommitManagerLog", "startAlarmManager() 호출됨")
 
         // AlarmOption 값이 NONE이 아닐 때 AlarmManager 시작
         if (SplashActivity.alarmOption != AlarmOption.NONE.value) {
-            val packageManager = this.packageManager
-            val receiver = ComponentName(this, DeviceBootReceiver::class.java)
-            val alarmIntent = Intent(this, AlarmReceiver::class.java)
-            val pendingIntent = PendingIntent.getBroadcast(this, 0, alarmIntent, 0)
             val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-
-            // String 타입인 SplashActivity.alarmTime 값을 Calendar 타입으로 변환
-            val time = Calendar.getInstance()
-            time.timeInMillis = System.currentTimeMillis()
-            time.set(Calendar.HOUR_OF_DAY, SplashActivity.alarmTime.substring(0..1).toInt())
-            time.set(Calendar.MINUTE, SplashActivity.alarmTime.substring(3..4).toInt())
-            time.set(Calendar.SECOND, 0)
-
-            // 설정한 시간이 현재 시간을 지났으면 DAY + 1
-            if (time.before(Calendar.getInstance())) {
-                time.add(Calendar.DATE, 1)
+            val alarmIntent = Intent(applicationContext, AlarmReceiver::class.java).let {
+                PendingIntent.getBroadcast(applicationContext, 0, it, 0)
             }
 
-//            Log.d("CommitManagerLog", "time: $time")
+            val hour = SplashActivity.alarmTime.substring(0..1).toInt()
+            val min  = SplashActivity.alarmTime.substring(3..4).toInt()
 
-            // 반복 설정
-            alarmManager.setRepeating(
-                AlarmManager.RTC_WAKEUP, time.timeInMillis, AlarmManager.INTERVAL_DAY, pendingIntent)
+            // 알림 시간 설정
+            val calendar = Calendar.getInstance().apply {
+                timeInMillis = System.currentTimeMillis()
+                set(Calendar.HOUR_OF_DAY, hour)
+                set(Calendar.MINUTE     , min )
+                set(Calendar.SECOND     , 0   )
+            }
 
-            alarmManager.setExactAndAllowWhileIdle(
-                AlarmManager.RTC_WAKEUP, time.timeInMillis, pendingIntent)
+            // 알림 시작
+            alarmManager.setInexactRepeating(
+                AlarmManager.RTC_WAKEUP,
+                calendar.timeInMillis,
+                AlarmManager.INTERVAL_DAY, // 매일 반복
+                alarmIntent
+            )
 
-            // 부팅 후 Receiver 사용가능하도록 설정
-            packageManager.setComponentEnabledSetting(
-                receiver, PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP)
+            Toast.makeText(applicationContext, "매일 ${hour}시 ${min}분에 커밋 여부를 알려드려요", Toast.LENGTH_LONG).show()
         }
     }
 

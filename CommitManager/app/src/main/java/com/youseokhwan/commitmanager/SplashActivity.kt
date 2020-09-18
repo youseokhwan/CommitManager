@@ -14,16 +14,16 @@ import com.youseokhwan.commitmanager.alarm.VibOption
 class SplashActivity : AppCompatActivity() {
 
     companion object {
-        var isFirstRun  = true  // 최초 실행 여부
-        var id          = ""    // User ID
-        var token       = ""    // OAuth Token
-        var alarmOption = AlarmOption.NONE.value  // 알람 옵션
-        var alarmTime   = ""    // 알람 시간
-        var vibOption   = VibOption.VIB.value // 진동 옵션
-        var name        = ""    // Username
-        var imgSrc      = ""    // Avartar 이미지 경로
-        var follower    = 0     // Follower 수
-        var following   = 0     // Following 수
+        var isFirstRun  = true                        // 최초 실행 여부
+        var id          = ""                          // User ID
+        var token       = ""                          // OAuth Token
+        var alarmOption = AlarmOption.NONE.value // 알람 옵션
+        var alarmTime   = ""                          // 알람 시간
+        var vibOption   = VibOption.VIB.value    // 진동 옵션
+        var name        = ""                          // Username
+        var imgSrc      = ""                          // Avartar 이미지 경로
+        var follower    = 0                           // Follower 수
+        var following   = 0                           // Following 수
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
