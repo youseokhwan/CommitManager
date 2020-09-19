@@ -19,6 +19,8 @@ import com.youseokhwan.commitmanager.SplashActivity
 import com.youseokhwan.commitmanager.alarm.AlarmOption
 import com.youseokhwan.commitmanager.alarm.AlarmReceiver
 import com.youseokhwan.commitmanager.alarm.DeviceBootReceiver
+import com.youseokhwan.commitmanager.dialog.ContactUsDialogFragment
+import com.youseokhwan.commitmanager.dialog.LogoutDialogFragment
 import com.youseokhwan.commitmanager.exception.InvalidParameterNameException
 import kotlinx.android.synthetic.main.fragment_settings.*
 import kotlinx.android.synthetic.main.fragment_settings.view.*
@@ -84,14 +86,14 @@ class SettingsFragment : Fragment() {
             updateAlarmManager()
         }
 
-        // 개발자 소개 버튼 클릭
-        view.btnDevList.setOnClickListener {
-            Log.d("CommitManagerLog", "개발자 소개 버튼 클릭됨")
+        // Contact Us 버튼 클릭
+        view.btnContactUs.setOnClickListener {
+            ContactUsDialogFragment().show(parentFragmentManager, "contactUs")
         }
 
         // GitHub 로그아웃 버튼 클릭
-        view.btnSetGitHubLogout.setOnClickListener {
-            Log.d("CommitManagerLog", "GitHub 로그아웃 버튼 클릭됨")
+        view.btnLogout.setOnClickListener {
+            LogoutDialogFragment().show(parentFragmentManager, "logout")
         }
 
         return view

@@ -146,19 +146,19 @@
         app:layout_constraintTop_toBottomOf="@+id/rgSetVibrate" />
 
     <Button
-        android:id="@+id/btnDevList"
+        android:id="@+id/btnContactUs"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
-        android:text="개발자 소개"
+        android:text="Contact Us"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnSave" />
 
     <Button
-        android:id="@+id/btnSetGitHubLogout"
+        android:id="@+id/btnLogout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -167,6 +167,6 @@
         android:text="GitHub 로그아웃"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnDevList" />
+        app:layout_constraintTop_toBottomOf="@+id/btnContactUs" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
