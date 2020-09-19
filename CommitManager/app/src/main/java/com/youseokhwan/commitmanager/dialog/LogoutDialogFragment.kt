@@ -1,14 +1,20 @@
 package com.youseokhwan.commitmanager.dialog
 
+import android.app.AlarmManager
 import android.app.AlertDialog
 import android.app.Dialog
+import android.app.PendingIntent
+import android.content.ComponentName
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
 import com.youseokhwan.commitmanager.SplashActivity
 import com.youseokhwan.commitmanager.alarm.AlarmOption
+import com.youseokhwan.commitmanager.alarm.AlarmReceiver
+import com.youseokhwan.commitmanager.alarm.DeviceBootReceiver
 import com.youseokhwan.commitmanager.alarm.VibOption
 import java.lang.IllegalStateException
 
@@ -24,7 +30,25 @@ class LogoutDialogFragment : DialogFragment() {
             builder.setMessage("로그아웃 후 앱이 재시작됩니다.")
                 .setPositiveButton("OK",
                     DialogInterface.OnClickListener { _, _ ->
-                        // SharedPreferences 초기화
+                        // AlarmManager 반복 작업 취소
+                        val alarmManager = activity?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+                        val alarmIntent = Intent(context, AlarmReceiver::class.java).let { intent ->
+                            PendingIntent.getBroadcast(context, 0, intent, 0)
+                        }
+                        alarmManager.cancel(alarmIntent)
+
+                        // 디바이스 재시작 대응 취소
+                        if (context != null) {
+                            val bootReceiver = ComponentName(context!!, DeviceBootReceiver::class.java)
+
+                            context!!.packageManager.setComponentEnabledSetting(
+                                bootReceiver,
+                                PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                                PackageManager.DONT_KILL_APP
+                            )
+                        }
+
+                        // 데이터 초기화
                         val settings = activity?.getSharedPreferences("settings", Context.MODE_PRIVATE) ?: return@OnClickListener
                         with (settings.edit()) {
                             // Companion Object 값 초기화

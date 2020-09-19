@@ -22,13 +22,18 @@ class DeviceBootReceiver : BroadcastReceiver() {
         if (intent.action == "android.intent.action.BOOT_COMPLETED") {
             val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
             val alarmIntent = Intent(context, AlarmReceiver::class.java).let {
-                PendingIntent.getBroadcast(context, 2, it, 0)
+                PendingIntent.getBroadcast(context, 0, it, 0)
             }
 
+            // SharedPreferences에서 데이터 가져오기
+            val settings = context.getSharedPreferences("settings", Context.MODE_PRIVATE)
+            val alarmOption = settings.getInt("alarmOption", AlarmOption.NONE.value)
+            val alarmTime = settings.getString("alarmTime", "error")!!
+
             // AlarmOption 값이 NONE이 아닐 때 AlarmManager 시작
-            if (SplashActivity.alarmOption != AlarmOption.NONE.value) {
-                val hour = SplashActivity.alarmTime.substring(0..1).toInt()
-                val min  = SplashActivity.alarmTime.substring(3..4).toInt()
+            if (alarmOption != AlarmOption.NONE.value) {
+                val hour = alarmTime.substring(0..1).toInt()
+                val min  = alarmTime.substring(3..4).toInt()
 
                 // 알림 시간 설정
                 val calendar = Calendar.getInstance().apply {
@@ -46,11 +51,13 @@ class DeviceBootReceiver : BroadcastReceiver() {
                     alarmIntent
                 )
 
-                Toast.makeText(context, "1일 1커밋 알림을 다시 시작하는 중...", Toast.LENGTH_LONG).show()
+                Toast.makeText(context, "CommitManager 앱을 실행하면 다시 알람이 시작됩니다", Toast.LENGTH_LONG).show()
             } else {
                 // AlarmOption이 NONE인 경우 반복 작업 취소
                 alarmManager.cancel(alarmIntent)
             }
+        } else {
+            Log.d("CommitManagerLog", "intent.action == ${intent.action}")
         }
     }
 }
