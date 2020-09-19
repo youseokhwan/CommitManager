@@ -3,8 +3,10 @@ package com.youseokhwan.commitmanager.fragment
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.app.TimePickerDialog
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -16,6 +18,7 @@ import com.youseokhwan.commitmanager.R
 import com.youseokhwan.commitmanager.SplashActivity
 import com.youseokhwan.commitmanager.alarm.AlarmOption
 import com.youseokhwan.commitmanager.alarm.AlarmReceiver
+import com.youseokhwan.commitmanager.alarm.DeviceBootReceiver
 import com.youseokhwan.commitmanager.exception.InvalidParameterNameException
 import kotlinx.android.synthetic.main.fragment_settings.*
 import kotlinx.android.synthetic.main.fragment_settings.view.*
@@ -153,9 +156,31 @@ class SettingsFragment : Fragment() {
                 AlarmManager.INTERVAL_DAY, // 매일 반복
                 alarmIntent
             )
+
+            // 디바이스 재시작 대응
+            if (activity != null) {
+                val bootReceiver = ComponentName(activity!!, DeviceBootReceiver::class.java)
+
+                activity!!.packageManager.setComponentEnabledSetting(
+                    bootReceiver,
+                    PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                    PackageManager.DONT_KILL_APP
+                )
+            }
         } else {
             // AlarmOption이 NONE인 경우 반복 작업 취소
             alarmManager.cancel(alarmIntent)
+
+            // 디바이스 재시작 대응 취소
+            if (activity != null) {
+                val bootReceiver = ComponentName(activity!!, DeviceBootReceiver::class.java)
+
+                activity!!.packageManager.setComponentEnabledSetting(
+                    bootReceiver,
+                    PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                    PackageManager.DONT_KILL_APP
+                )
+            }
         }
     }
 }

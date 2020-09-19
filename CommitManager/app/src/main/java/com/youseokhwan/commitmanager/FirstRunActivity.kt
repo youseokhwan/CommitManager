@@ -13,14 +13,14 @@ import kotlinx.android.synthetic.main.fragment_initial.*
 
 /**
  * 최초 실행 시 초기 설정을 진행하는 Activity
- * @property FINISH_INTERVAL_TIME
+ * @property finishIntervalTime
  * @property backPressedTime
  */
 class FirstRunActivity : AppCompatActivity() {
 
     // 뒤로가기 2번 누르면 앱 종료
-    private val FINISH_INTERVAL_TIME: Long = 3000
-    private var backPressedTime     : Long = 0
+    private val finishIntervalTime: Long = 3000
+    private var backPressedTime: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +37,7 @@ class FirstRunActivity : AppCompatActivity() {
         val tempTime = System.currentTimeMillis()
         val intervalTime = tempTime - backPressedTime
 
-        if (intervalTime in 0..FINISH_INTERVAL_TIME) {
+        if (intervalTime in 0..finishIntervalTime) {
             super.onBackPressed()
         } else {
             backPressedTime = tempTime

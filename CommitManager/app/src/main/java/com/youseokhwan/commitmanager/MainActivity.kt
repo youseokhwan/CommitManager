@@ -2,9 +2,11 @@ package com.youseokhwan.commitmanager
 
 import android.app.AlarmManager
 import android.app.PendingIntent
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
 import android.graphics.Rect
 import android.os.Bundle
 import android.util.Log
@@ -19,6 +21,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.bumptech.glide.Glide
 import com.youseokhwan.commitmanager.alarm.AlarmOption
 import com.youseokhwan.commitmanager.alarm.AlarmReceiver
+import com.youseokhwan.commitmanager.alarm.DeviceBootReceiver
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_settings.*
 import java.util.*
@@ -139,6 +142,7 @@ class MainActivity : AppCompatActivity() {
         val alarmIntent = Intent(applicationContext, AlarmReceiver::class.java).let {
             PendingIntent.getBroadcast(applicationContext, 0, it, 0)
         }
+        val bootReceiver = ComponentName(applicationContext, DeviceBootReceiver::class.java)
 
         // AlarmOption 값이 NONE이 아닐 때 AlarmManager 시작
         if (SplashActivity.alarmOption != AlarmOption.NONE.value) {
@@ -161,10 +165,24 @@ class MainActivity : AppCompatActivity() {
                 alarmIntent
             )
 
+            // 디바이스 재시작 대응
+            applicationContext.packageManager.setComponentEnabledSetting(
+                bootReceiver,
+                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                PackageManager.DONT_KILL_APP
+            )
+
             Toast.makeText(applicationContext, "매일 ${hour}시 ${min}분에 커밋 여부를 알려드려요", Toast.LENGTH_LONG).show()
         } else {
             // AlarmOption이 NONE인 경우 반복 작업 취소
             alarmManager.cancel(alarmIntent)
+
+            // 디바이스 재시작 대응 취소
+            applicationContext.packageManager.setComponentEnabledSetting(
+                bootReceiver,
+                PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                PackageManager.DONT_KILL_APP
+            )
         }
     }
 }
