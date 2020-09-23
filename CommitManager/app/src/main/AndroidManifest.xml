@@ -33,7 +33,11 @@
             android:screenOrientation="userPortrait" />
         <activity
             android:name=".MainActivity"
-            android:screenOrientation="userPortrait" />
+            android:screenOrientation="userPortrait">
+            <intent-filter>
+                <category android:name="android.intent.category.BROWSABLE" />
+            </intent-filter>
+        </activity>
 
         <receiver
             android:name=".alarm.DeviceBootReceiver"

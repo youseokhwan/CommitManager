@@ -60,7 +60,7 @@ class SettingsFragment : Fragment() {
         view.btnSave.setOnClickListener {
             // 변경된 설정 저장
             val settings = activity?.getSharedPreferences("settings", Context.MODE_PRIVATE) ?: return@setOnClickListener
-            with (settings.edit()) {
+            with(settings.edit()) {
                 // 설정 값을 Companion Object에 저장
                 when (view.rgSetNotification.checkedRadioButtonId) {
                     R.id.rbSetNoti01 -> SplashActivity.alarmOption = 0 // 알람 받지 않기

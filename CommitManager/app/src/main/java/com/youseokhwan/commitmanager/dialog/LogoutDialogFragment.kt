@@ -50,7 +50,7 @@ class LogoutDialogFragment : DialogFragment() {
 
                         // 데이터 초기화
                         val settings = activity?.getSharedPreferences("settings", Context.MODE_PRIVATE) ?: return@OnClickListener
-                        with (settings.edit()) {
+                        with(settings.edit()) {
                             // Companion Object 값 초기화
                             SplashActivity.isFirstRun  = true                   // 최초 실행 여부
                             SplashActivity.id          = ""                     // User ID

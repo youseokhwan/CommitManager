@@ -8,6 +8,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.graphics.Rect
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.MotionEvent
@@ -34,8 +35,6 @@ import java.util.*
  * @property fadeOut
  */
 class MainActivity : AppCompatActivity() {
-
-//    private var id: String = "DefaultID"
 
     // 뒤로가기 2번 누르면 앱 종료
     private val finishIntervalTime: Long = 3000
@@ -75,13 +74,19 @@ class MainActivity : AppCompatActivity() {
         txtFollower .text = "follower: ${SplashActivity.follower}명"
         txtFollowing.text = "following: ${SplashActivity.following}명"
 
+        // GitHub Page 버튼 클릭하면 Intent 호출
+        btnGitHubPage.setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/${SplashActivity.id}/"))
+            startActivity(intent)
+        }
+
         // 최초 실행이면 AlarmManager 실행
         if (SplashActivity.isFirstRun) {
             startAlarmManager()
 
             // isFirstRun false로 변경하고 SharedPreferences에 적용
             val settings = applicationContext.getSharedPreferences("settings", Context.MODE_PRIVATE)
-            with (settings.edit()) {
+            with(settings.edit()) {
                 SplashActivity.isFirstRun = false
 
                 putBoolean("isFirstRun" , SplashActivity.isFirstRun)

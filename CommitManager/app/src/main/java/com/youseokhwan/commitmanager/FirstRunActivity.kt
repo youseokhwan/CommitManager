@@ -78,7 +78,7 @@ class FirstRunActivity : AppCompatActivity() {
     fun finishInitialSettings(userInfo: UserInfo?) {
         // 사용자 설정을 저장하는 SharedPreferences
         val settings = applicationContext.getSharedPreferences("settings", Context.MODE_PRIVATE)
-        with (settings.edit()) {
+        with(settings.edit()) {
             // 설정 값을 Companion Object에 저장
             SplashActivity.id = edtGithubId.text.toString()
             when (rgNotification.checkedRadioButtonId) {
