@@ -18,7 +18,7 @@ class SplashActivity : AppCompatActivity() {
         var id          = ""                          // User ID
         var token       = ""                          // OAuth Token
         var alarmOption = AlarmOption.NONE.value // 알람 옵션
-        var alarmTime   = ""                          // 알람 시간
+        var alarmTime   = "22:00"                     // 알람 시간
         var vibOption   = VibOption.VIB.value    // 진동 옵션
         var name        = ""                          // Username
         var imgSrc      = ""                          // Avartar 이미지 경로

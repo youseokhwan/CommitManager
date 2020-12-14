@@ -69,7 +69,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         // UserInfo 패널 설정
-        Glide.with(this).load(SplashActivity.imgSrc).into(ImgAvatar)
+        Glide.with(this)
+            .load(SplashActivity.imgSrc)
+            .into(ImgAvatar)
         txtGitHubId .text = SplashActivity.id
         txtFollower .text = "follower: ${SplashActivity.follower}명"
         txtFollowing.text = "following: ${SplashActivity.following}명"

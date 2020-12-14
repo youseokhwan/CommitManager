@@ -56,7 +56,7 @@ class LogoutDialogFragment : DialogFragment() {
                             SplashActivity.id          = ""                     // User ID
                             SplashActivity.token       = ""                     // OAuth Token
                             SplashActivity.alarmOption = AlarmOption.NONE.value // 알람 옵션
-                            SplashActivity.alarmTime   = ""                     // 알람 시간
+                            SplashActivity.alarmTime   = "22:00"                // 알람 시간
                             SplashActivity.vibOption   = VibOption.VIB.value    // 진동 옵션
                             SplashActivity.name        = ""                     // Username
                             SplashActivity.imgSrc      = ""                     // Avartar 이미지 경로

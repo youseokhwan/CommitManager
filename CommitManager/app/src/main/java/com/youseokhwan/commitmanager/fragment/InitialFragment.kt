@@ -14,6 +14,7 @@ import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.youseokhwan.commitmanager.*
+import com.youseokhwan.commitmanager.dialog.AlarmTimeDialogFragment
 import com.youseokhwan.commitmanager.exception.InvalidParameterNameException
 import com.youseokhwan.commitmanager.exception.RetrofitException
 import com.youseokhwan.commitmanager.retrofit.UserInfo
@@ -105,7 +106,9 @@ class InitialFragment : Fragment() {
 
         // 알림 시간 팝업 다이얼로그
         view.edtTime.setOnClickListener {
-            showTimePickerDialog(it.id)
+            activity?.supportFragmentManager?.let { manager ->
+                AlarmTimeDialogFragment(it).show(manager, "initialAlarm")
+            }
         }
 
         // 시작하기 버튼을 클릭하면 Username을 받아서 저장하고 초기 설정을 마침
@@ -135,31 +138,31 @@ class InitialFragment : Fragment() {
         return view
     }
 
-    /**
-     * showTimePickerDialog()
-     * @param viewId
-     */
-    private fun showTimePickerDialog(viewId: Int) {
-        val cal = Calendar.getInstance()
-
-        when (viewId) {
-            R.id.edtTime -> {
-                val timeSetListener = TimePickerDialog.OnTimeSetListener { _, hour, minute ->
-                    cal.set(Calendar.HOUR_OF_DAY, hour)
-                    cal.set(Calendar.MINUTE     , minute)
-                    edtTime
-                        .setText(SimpleDateFormat("HH:mm", Locale.getDefault()).format(cal.time))
-                }
-                TimePickerDialog(context, timeSetListener, 18,0, true)
-                    .show()
-            }
-            else -> {
-                throw InvalidParameterNameException(
-                    "InvalidParameterNameException: 유효하지 않은 TimePickerDialog 호출입니다."
-                )
-            }
-        }
-    }
+//    /**
+//     * showTimePickerDialog()
+//     * @param viewId
+//     */
+//    private fun showTimePickerDialog(viewId: Int) {
+//        val cal = Calendar.getInstance()
+//
+//        when (viewId) {
+//            R.id.edtTime -> {
+//                val timeSetListener = TimePickerDialog.OnTimeSetListener { _, hour, minute ->
+//                    cal.set(Calendar.HOUR_OF_DAY, hour)
+//                    cal.set(Calendar.MINUTE     , minute)
+//                    edtTime
+//                        .setText(SimpleDateFormat("HH:mm", Locale.getDefault()).format(cal.time))
+//                }
+//                TimePickerDialog(context, timeSetListener, 18,0, true)
+//                    .show()
+//            }
+//            else -> {
+//                throw InvalidParameterNameException(
+//                    "InvalidParameterNameException: 유효하지 않은 TimePickerDialog 호출입니다."
+//                )
+//            }
+//        }
+//    }
 
     /**
      * OAuth 인증에 성공하면 UI 변경
