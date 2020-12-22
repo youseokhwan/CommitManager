@@ -18,7 +18,7 @@ class OAuthActivity : AppCompatActivity() {
 
     private var isSuccess = false
     private lateinit var realm: Realm
-    private var id = "default"
+    private var id    = "default"
     private var token = "default"
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,33 +52,8 @@ class OAuthActivity : AppCompatActivity() {
         this.isSuccess = true
 
         Log.d("CommitManagerLog", "설정 후: ${this.id}, ${this.token}")
-
-//        // 데이터를 SplashActivity의 Companion Object 변수에 저장
-//        SplashActivity.id = id
-//        SplashActivity.token = token
-
         finish()
     }
-
-    /**
-     * Webview에서 받아온 유저 정보를 통해 User 레코드 생성
-     */
-//    private fun createUserItem() {
-//        realm.executeTransactionAsync({ bgRealm ->
-//            val userItem = bgRealm.createObject<User>()
-//            userItem.id        = this.id
-//            userItem.token     = this.token
-//            userItem.name      = ""
-//            userItem.imgSrc    = ""
-//            userItem.follower  = 0
-//            userItem.following = 0
-//        }, {
-//            Log.d("CommitManagerLog", "executeTransactionAsync -> onSuccess() 호출")
-//        }, {
-//            Log.d("CommitManagerLog", "executeTransactionAsync -> onError() 호출")
-//            Log.d("CommitManagerLog", "오류 메시지: ${it.message}")
-//        })
-//    }
 
     override fun finish() {
         val intent = Intent()
@@ -104,7 +79,6 @@ class OAuthActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-//        createUserItem()  // User 데이터 삽입(최초 생성)
         realm.close()
     }
 }
