@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import com.youseokhwan.commitmanager.realm.Setting
 import com.youseokhwan.commitmanager.realm.User
 import io.realm.Realm
 import io.realm.kotlin.where
@@ -22,8 +23,8 @@ class SplashActivity : AppCompatActivity() {
         Realm.init(this)
         realm = Realm.getDefaultInstance()
 
-        // Record 검색해서 결과없으면 isFirstRun이 True임
-        val isFirstRun = realm.where<User>().findAll().count() == 0
+        // 초기 설정을 완료했는지 판단
+        val isFirstRun = realm.where<Setting>().findAll().count() == 0
         Log.d("RealmLog", "Realm FirstRun: $isFirstRun")
 
         if (isFirstRun) {

@@ -80,6 +80,8 @@ class InitialFragment : Fragment() {
             startActivityForResult(Intent(activity, OAuthActivity::class.java), 0)
 
             // GitHub 로그인 버튼 숨기고 Loading 띄우기
+            btnGitHubLogin.visibility = View.INVISIBLE
+            pbLoading     .visibility = View.VISIBLE
         }
 
         // 알림 여부 RadioGroup
@@ -148,42 +150,16 @@ class InitialFragment : Fragment() {
         return view
     }
 
-//    /**
-//     * showTimePickerDialog()
-//     * @param viewId
-//     */
-//    private fun showTimePickerDialog(viewId: Int) {
-//        val cal = Calendar.getInstance()
-//
-//        when (viewId) {
-//            R.id.edtTime -> {
-//                val timeSetListener = TimePickerDialog.OnTimeSetListener { _, hour, minute ->
-//                    cal.set(Calendar.HOUR_OF_DAY, hour)
-//                    cal.set(Calendar.MINUTE     , minute)
-//                    edtTime
-//                        .setText(SimpleDateFormat("HH:mm", Locale.getDefault()).format(cal.time))
-//                }
-//                TimePickerDialog(context, timeSetListener, 18,0, true)
-//                    .show()
-//            }
-//            else -> {
-//                throw InvalidParameterNameException(
-//                    "InvalidParameterNameException: 유효하지 않은 TimePickerDialog 호출입니다."
-//                )
-//            }
-//        }
-//    }
-
     /**
      * OAuth 인증에 성공하면 UI 변경
      */
     private fun showBottomUI() {
         val userItem = realm.where<User>().findFirst()
 
-        // GitHub 로그인 버튼, ID EditText
-        btnGitHubLogin.visibility = View.INVISIBLE
-        edtGithubId   .visibility = View.VISIBLE
-        edtGithubId   .setText(userItem?.id ?: "error")
+        // Loading, GitHubID EditText
+        pbLoading  .visibility = View.INVISIBLE
+        edtGithubId.visibility = View.VISIBLE
+        edtGithubId.setText(userItem?.id ?: "error")
 
         // 알림 여부
         txtNotificationLabel.visibility = View.VISIBLE
@@ -233,11 +209,15 @@ class InitialFragment : Fragment() {
                 Log.d("CommitManagerLog", "오류 메시지: ${it.message}")
 
                 // 로그인에 실패했으므로 Loading을 지우고 다시 GitHub 로그인 버튼을 띄워야 함
+                pbLoading     .visibility = View.INVISIBLE
+                btnGitHubLogin.visibility = View.VISIBLE
             })
         } else {
             Log.d("CommitManagerLog", "onActivityResult else문 진입")
 
             // 로그인에 실패했으므로 Loading을 지우고 다시 GitHub 로그인 버튼을 띄워야 함
+            pbLoading     .visibility = View.INVISIBLE
+            btnGitHubLogin.visibility = View.VISIBLE
         }
     }
 }

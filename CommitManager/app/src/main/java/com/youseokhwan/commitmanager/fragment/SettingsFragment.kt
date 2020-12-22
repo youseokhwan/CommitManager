@@ -101,34 +101,6 @@ class SettingsFragment : Fragment() {
         return view
     }
 
-//    /**
-//     * showTimePickerDialog()
-//     * @param viewId
-//     */
-//    private fun showTimePickerDialog(viewId: Int) {
-//        val cal = Calendar.getInstance()
-//        val currentHour = SplashActivity.alarmTime.substring(0..1).toInt()
-//        val currentMin = SplashActivity.alarmTime.substring(3..4).toInt()
-//
-//        when (viewId) {
-//            R.id.edtSetTime -> {
-//                val timeSetListener = TimePickerDialog.OnTimeSetListener { _, hour, minute ->
-//                    cal.set(Calendar.HOUR_OF_DAY, hour)
-//                    cal.set(Calendar.MINUTE     , minute)
-//                    edtSetTime
-//                        .setText(SimpleDateFormat("HH:mm", Locale.getDefault()).format(cal.time))
-//                }
-//                TimePickerDialog(context, timeSetListener, currentHour, currentMin, true)
-//                    .show()
-//            }
-//            else -> {
-//                throw InvalidParameterNameException(
-//                    "InvalidParameterNameException: 유효하지 않은 TimePickerDialog 호출입니다."
-//                )
-//            }
-//        }
-//    }
-
     /**
      * 수정된 내용을 AlarmManager에 반영
      */
