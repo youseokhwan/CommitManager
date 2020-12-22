@@ -5,7 +5,6 @@ import android.app.PendingIntent
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.graphics.Rect
 import android.net.Uri
@@ -23,8 +22,11 @@ import com.bumptech.glide.Glide
 import com.youseokhwan.commitmanager.alarm.AlarmOption
 import com.youseokhwan.commitmanager.alarm.AlarmReceiver
 import com.youseokhwan.commitmanager.alarm.DeviceBootReceiver
+import com.youseokhwan.commitmanager.realm.Setting
+import com.youseokhwan.commitmanager.realm.User
+import io.realm.Realm
+import io.realm.kotlin.where
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_settings.*
 import java.util.*
 
 /**
@@ -35,6 +37,8 @@ import java.util.*
  * @property fadeOut
  */
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var realm: Realm
 
     // 뒤로가기 2번 누르면 앱 종료
     private val finishIntervalTime: Long = 3000
@@ -48,6 +52,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        // Realm 인스턴스 초기화
+        realm = Realm.getDefaultInstance()
+        val userItem = realm.where<User>().findFirst()
+        val settingItem = realm.where<Setting>().findFirst()
+
         // 애니메이션 변수 초기화
         fadeIn  = AnimationUtils.loadAnimation(this, R.anim.fade_in)
         fadeOut = AnimationUtils.loadAnimation(this, R.anim.fade_out)
@@ -57,7 +66,8 @@ class MainActivity : AppCompatActivity() {
         nav_view.setupWithNavController(navController)
 
         // Toolbar Title 설정
-        toolbar.title = SplashActivity.name
+//        toolbar.title = SplashActivity.name
+        toolbar.title = userItem?.name ?: "1일 1커밋"
 
         // Toolbar 클릭하면 UserInfo 패널 Visible
         toolbar.setOnClickListener {
@@ -70,30 +80,26 @@ class MainActivity : AppCompatActivity() {
 
         // UserInfo 패널 설정
         Glide.with(this)
-            .load(SplashActivity.imgSrc)
+            .load(userItem?.imgSrc)
             .into(ImgAvatar)
-        txtGitHubId .text = SplashActivity.id
-        txtFollower .text = "follower: ${SplashActivity.follower}명"
-        txtFollowing.text = "following: ${SplashActivity.following}명"
+        txtGitHubId .text = userItem?.id ?: "error"
+        txtFollower .text = "follower: ${userItem?.follower ?: -1}명"
+        txtFollowing.text = "following: ${userItem?.following ?: -1}명"
 
         // GitHub Page 버튼 클릭하면 Intent 호출
         btnGitHubPage.setOnClickListener {
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/${SplashActivity.id}/"))
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/${userItem?.id ?: ""}/"))
             startActivity(intent)
         }
 
-        // 최초 실행이면 AlarmManager 실행
-        if (SplashActivity.isFirstRun) {
+        // 최초 실행이면 AlarmManager 실행하고 isFirstRun을 false로 수정
+        if (settingItem?.isFirstRun != false) {
             startAlarmManager()
 
-            // isFirstRun false로 변경하고 SharedPreferences에 적용
-            val settings = applicationContext.getSharedPreferences("settings", Context.MODE_PRIVATE)
-            with(settings.edit()) {
-                SplashActivity.isFirstRun = false
-
-                putBoolean("isFirstRun" , SplashActivity.isFirstRun)
-                apply()
-            }
+            // isFirstRun을 false로 설정
+            realm.beginTransaction()
+            settingItem?.isFirstRun = false
+            realm.commitTransaction()
         }
     }
 
@@ -116,6 +122,8 @@ class MainActivity : AppCompatActivity() {
      * UserInfo 패널 바깥 영역을 터치하면 Invisible 처리
      */
     override fun dispatchTouchEvent(event: MotionEvent?): Boolean {
+        val userItem = realm.where<User>().findFirst()
+
         // UserInfo 패널이 Visible 상태일 때
         if (cstLyUserInfo.visibility == View.VISIBLE) {
             val rect = Rect()
@@ -125,7 +133,7 @@ class MainActivity : AppCompatActivity() {
             if (!rect.contains(event?.x?.toInt() ?: 0, event?.y?.toInt() ?: 0)) {
                 cstLyUserInfo.startAnimation(fadeOut)
                 cstLyUserInfo.visibility = View.INVISIBLE
-                toolbar.title = SplashActivity.id
+                toolbar.title = userItem?.name ?: "1일 1커밋"
 
                 /*
                  * UserInfo 패널이 Visible인 상태에서 Toolbar를 터치하면
@@ -145,6 +153,8 @@ class MainActivity : AppCompatActivity() {
     private fun startAlarmManager() {
         Log.d("CommitManagerLog", "startAlarmManager() 호출됨")
 
+        val settingItem = realm.where<Setting>().findFirst()
+
         val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val alarmIntent = Intent(applicationContext, AlarmReceiver::class.java).let {
             PendingIntent.getBroadcast(applicationContext, 0, it, 0)
@@ -152,16 +162,16 @@ class MainActivity : AppCompatActivity() {
         val bootReceiver = ComponentName(applicationContext, DeviceBootReceiver::class.java)
 
         // AlarmOption 값이 NONE이 아닐 때 AlarmManager 시작
-        if (SplashActivity.alarmOption != AlarmOption.NONE.value) {
-            val hour = SplashActivity.alarmTime.substring(0..1).toInt()
-            val min  = SplashActivity.alarmTime.substring(3..4).toInt()
+        if (settingItem?.alarmOption != AlarmOption.NONE.value) {
+            val hour = settingItem?.alarmTime?.substring(0..1)?.toInt()
+            val min  = settingItem?.alarmTime?.substring(3..4)?.toInt()
 
             // 알림 시간 설정
             val calendar = Calendar.getInstance().apply {
                 timeInMillis = System.currentTimeMillis()
-                set(Calendar.HOUR_OF_DAY, hour)
-                set(Calendar.MINUTE     , min )
-                set(Calendar.SECOND     , 0   )
+                set(Calendar.HOUR_OF_DAY, hour ?: 22)
+                set(Calendar.MINUTE     , min  ?: 0 )
+                set(Calendar.SECOND     , 0         )
             }
 
             // 알림 시작

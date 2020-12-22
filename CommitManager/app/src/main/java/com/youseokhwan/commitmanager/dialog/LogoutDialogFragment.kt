@@ -12,16 +12,26 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
 import com.youseokhwan.commitmanager.SplashActivity
-import com.youseokhwan.commitmanager.alarm.AlarmOption
 import com.youseokhwan.commitmanager.alarm.AlarmReceiver
 import com.youseokhwan.commitmanager.alarm.DeviceBootReceiver
-import com.youseokhwan.commitmanager.alarm.VibOption
+import com.youseokhwan.commitmanager.realm.Commit
+import com.youseokhwan.commitmanager.realm.Setting
+import com.youseokhwan.commitmanager.realm.User
+import io.realm.Realm
+import io.realm.kotlin.where
 import java.lang.IllegalStateException
 
 /**
  * SettingsFragment의 btnLogout을 클릭하면 나타나는 Dialog
  */
 class LogoutDialogFragment : DialogFragment() {
+
+    private lateinit var realm: Realm
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        realm = Realm.getDefaultInstance()
+    }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
@@ -39,9 +49,9 @@ class LogoutDialogFragment : DialogFragment() {
 
                         // 디바이스 재시작 대응 취소
                         if (context != null) {
-                            val bootReceiver = ComponentName(context!!, DeviceBootReceiver::class.java)
+                            val bootReceiver = ComponentName(requireContext(), DeviceBootReceiver::class.java)
 
-                            context!!.packageManager.setComponentEnabledSetting(
+                            requireContext().packageManager.setComponentEnabledSetting(
                                 bootReceiver,
                                 PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
                                 PackageManager.DONT_KILL_APP
@@ -49,23 +59,22 @@ class LogoutDialogFragment : DialogFragment() {
                         }
 
                         // 데이터 초기화
-                        val settings = activity?.getSharedPreferences("settings", Context.MODE_PRIVATE) ?: return@OnClickListener
-                        with(settings.edit()) {
-                            // Companion Object 값 초기화
-                            SplashActivity.isFirstRun  = true                   // 최초 실행 여부
-                            SplashActivity.id          = ""                     // User ID
-                            SplashActivity.token       = ""                     // OAuth Token
-                            SplashActivity.alarmOption = AlarmOption.NONE.value // 알람 옵션
-                            SplashActivity.alarmTime   = "22:00"                // 알람 시간
-                            SplashActivity.vibOption   = VibOption.VIB.value    // 진동 옵션
-                            SplashActivity.name        = ""                     // Username
-                            SplashActivity.imgSrc      = ""                     // Avartar 이미지 경로
-                            SplashActivity.follower    = 0                      // Follower 수
-                            SplashActivity.following   = 0                      // Following 수
+                        realm.beginTransaction()
 
-                            // SharedPreferences 초기화
-                            clear().apply()
-                        }
+                        val userItem = realm.where<User>().findAll()
+                        userItem.deleteAllFromRealm()
+
+                        val settingItem = realm.where<Setting>().findAll()
+                        settingItem.deleteAllFromRealm()
+
+                        val commitItem = realm.where<Commit>().findAll()
+                        commitItem.deleteAllFromRealm()
+
+                        // =========================================================================
+                        // 추후 Achievement 모델 초기화 구현
+                        // =========================================================================
+
+                        realm.commitTransaction()
 
                         // 앱 재시작
                         val intent = Intent(context, SplashActivity::class.java).apply {
@@ -77,5 +86,10 @@ class LogoutDialogFragment : DialogFragment() {
                 .setNegativeButton("Cancel", null)
             builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        realm.close()
     }
 }

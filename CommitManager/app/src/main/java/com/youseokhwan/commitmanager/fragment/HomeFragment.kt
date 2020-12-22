@@ -10,10 +10,12 @@ import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.youseokhwan.commitmanager.R
-import com.youseokhwan.commitmanager.SplashActivity
 import com.youseokhwan.commitmanager.exception.RetrofitException
+import com.youseokhwan.commitmanager.realm.User
 import com.youseokhwan.commitmanager.retrofit.Commit
 import com.youseokhwan.commitmanager.retrofit.UserRetrofit
+import io.realm.Realm
+import io.realm.kotlin.where
 import kotlinx.android.synthetic.main.fragment_home.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -25,18 +27,27 @@ import java.util.*
  */
 class HomeFragment : Fragment() {
 
+    private lateinit var realm: Realm
+
     // 에니메이션 변수 선언
     private lateinit var fadeIn : Animation
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        realm = Realm.getDefaultInstance()
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val root = inflater.inflate(R.layout.fragment_home, container, false)
+
+        val userItem = realm.where<User>().findFirst()
 
         // 애니메이션 변수 초기화
         fadeIn  = AnimationUtils.loadAnimation(context, R.anim.fade_in)
 
         // 오늘 커밋 여부 아이콘 업데이트
         // GET("/commit?id=${id}&token=${token}")
-        UserRetrofit.getService().getTodayCommit(id = SplashActivity.id, token = SplashActivity.token)
+        UserRetrofit.getService().getTodayCommit(id = userItem?.id ?: "error", token = userItem?.token ?: "error")
             .enqueue(object : Callback<Commit> {
                 override fun onFailure(call: Call<Commit>?, t: Throwable?) {
                     Toast.makeText(context, "오류가 발생했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
@@ -46,7 +57,7 @@ class HomeFragment : Fragment() {
                 override fun onResponse(call: Call<Commit>, response: Response<Commit>) {
                     if (response.isSuccessful) {
                         // =========================================================================
-                        Log.d("CommitManagerLog", "id = ${SplashActivity.id}, token = ${SplashActivity.token}")
+                        Log.d("CommitManagerLog", "id = ${userItem?.id ?: "error"}, token = ${userItem?.token ?: "error"}")
                         Log.d("CommitManagerLog", "Response: ")
                         Log.d("CommitManagerLog", response.body().toString())
                         // =========================================================================
@@ -117,5 +128,10 @@ class HomeFragment : Fragment() {
         today += dayOfWeekKorean[cal.get(Calendar.DAY_OF_WEEK)] + ")"
 
         txtToday.text = today
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        realm.close()
     }
 }

@@ -2,7 +2,6 @@ package com.youseokhwan.commitmanager.fragment
 
 import android.app.AlarmManager
 import android.app.PendingIntent
-import android.app.TimePickerDialog
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
@@ -15,17 +14,16 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.youseokhwan.commitmanager.R
-import com.youseokhwan.commitmanager.SplashActivity
 import com.youseokhwan.commitmanager.alarm.AlarmOption
 import com.youseokhwan.commitmanager.alarm.AlarmReceiver
 import com.youseokhwan.commitmanager.alarm.DeviceBootReceiver
 import com.youseokhwan.commitmanager.dialog.AlarmTimeDialogFragment
 import com.youseokhwan.commitmanager.dialog.ContactUsDialogFragment
 import com.youseokhwan.commitmanager.dialog.LogoutDialogFragment
-import com.youseokhwan.commitmanager.exception.InvalidParameterNameException
-import kotlinx.android.synthetic.main.fragment_settings.*
+import com.youseokhwan.commitmanager.realm.Setting
+import io.realm.Realm
+import io.realm.kotlin.where
 import kotlinx.android.synthetic.main.fragment_settings.view.*
-import java.text.SimpleDateFormat
 import java.util.*
 
 /**
@@ -33,18 +31,27 @@ import java.util.*
  */
 class SettingsFragment : Fragment() {
 
+    private lateinit var realm: Realm
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        realm = Realm.getDefaultInstance()
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_settings, container, false)
 
+        val settingItem = realm.where<Setting>().findFirst()
+
         // '알림 여부' 기존 설정 불러오기
-        when (SplashActivity.alarmOption) {
+        when (settingItem?.alarmOption ?: 0) {
             0 -> view.rbSetNoti01.isChecked = true
             1 -> view.rbSetNoti02.isChecked = true
             2 -> view.rbSetNoti03.isChecked = true
         }
 
         // '시간' 기존 설정 불러오기
-        view.edtSetTime.setText(SplashActivity.alarmTime)
+        view.edtSetTime.setText(settingItem?.alarmTime ?: "33:33")
 
         // 알림 시간 팝업 다이얼로그
         view.edtSetTime.setOnClickListener {
@@ -54,38 +61,30 @@ class SettingsFragment : Fragment() {
         }
 
         // '진동' 기존 설정 불러오기
-        when (SplashActivity.vibOption) {
+        when (settingItem?.vibOption ?: 0) {
             0 -> view.rbSetVib01.isChecked = true
             1 -> view.rbSetVib02.isChecked = true
         }
 
         // 적용하기 버튼 클릭
         view.btnSave.setOnClickListener {
-            // 변경된 설정 저장
-            val settings = activity?.getSharedPreferences("settings", Context.MODE_PRIVATE) ?: return@setOnClickListener
-            with(settings.edit()) {
-                // 설정 값을 Companion Object에 저장
-                when (view.rgSetNotification.checkedRadioButtonId) {
-                    R.id.rbSetNoti01 -> SplashActivity.alarmOption = 0 // 알람 받지 않기
-                    R.id.rbSetNoti02 -> SplashActivity.alarmOption = 1 // 커밋 안한 날만 받기
-                    R.id.rbSetNoti03 -> SplashActivity.alarmOption = 2 // 커밋한 날도 받기
-                }
-                SplashActivity.alarmTime = view.edtSetTime.text.toString()
-                when (view.rgSetVibrate.checkedRadioButtonId) {
-                    R.id.rbSetVib01 -> SplashActivity.vibOption = 0 // 진동
-                    R.id.rbSetVib02 -> SplashActivity.vibOption = 1 // 무음
-                }
+            // 변경된 내용 저장
+            realm.beginTransaction()
 
-                // 설정 값을 SharedPreferences에 저장
-                putInt   ("alarmOption", SplashActivity.alarmOption)
-                putString("alarmTime"  , SplashActivity.alarmTime)
-                putInt   ("vibOption"  , SplashActivity.vibOption)
-
-                apply()
-
-                Toast.makeText(context, "저장되었습니다", Toast.LENGTH_SHORT).show()
+            when (view.rgSetNotification.checkedRadioButtonId) {
+                R.id.rbSetNoti01 -> settingItem?.alarmOption = 0 // 알람 받지 않기
+                R.id.rbSetNoti02 -> settingItem?.alarmOption = 1 // 커밋 안한 날만 받기
+                R.id.rbSetNoti03 -> settingItem?.alarmOption = 2 // 커밋한 날도 받기
+            }
+            settingItem?.alarmTime = view.edtSetTime.text.toString()
+            when (view.rgSetVibrate.checkedRadioButtonId) {
+                R.id.rbSetVib01 -> settingItem?.vibOption = 0 // 진동
+                R.id.rbSetVib02 -> settingItem?.vibOption = 1 // 무음
             }
 
+            realm.commitTransaction()
+
+            Toast.makeText(context, "저장되었습니다", Toast.LENGTH_SHORT).show()
             updateAlarmManager()
         }
 
@@ -136,15 +135,17 @@ class SettingsFragment : Fragment() {
     private fun updateAlarmManager() {
         Log.d("CommitManagerLog", "updateAlarmManager() 호출됨")
 
+        val settingItem = realm.where<Setting>().findFirst()
+
         val alarmManager = activity?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val alarmIntent = Intent(activity, AlarmReceiver::class.java).let {
             PendingIntent.getBroadcast(activity, 0, it, 0)
         }
 
         // AlarmOption 값이 NONE이 아닐 때 AlarmManager 시작
-        if (SplashActivity.alarmOption != AlarmOption.NONE.value) {
-            val hour = SplashActivity.alarmTime.substring(0..1).toInt()
-            val min  = SplashActivity.alarmTime.substring(3..4).toInt()
+        if (settingItem?.alarmOption ?: 0 != AlarmOption.NONE.value) {
+            val hour = settingItem?.alarmTime?.substring(0..1)?.toInt() ?: 22
+            val min  = settingItem?.alarmTime?.substring(3..4)?.toInt() ?: 0
 
             // 알림 시간 설정
             val calendar = Calendar.getInstance().apply {
@@ -164,9 +165,9 @@ class SettingsFragment : Fragment() {
 
             // 디바이스 재시작 대응
             if (activity != null) {
-                val bootReceiver = ComponentName(activity!!, DeviceBootReceiver::class.java)
+                val bootReceiver = ComponentName(requireActivity(), DeviceBootReceiver::class.java)
 
-                activity!!.packageManager.setComponentEnabledSetting(
+                requireActivity().packageManager.setComponentEnabledSetting(
                     bootReceiver,
                     PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
                     PackageManager.DONT_KILL_APP
@@ -178,14 +179,19 @@ class SettingsFragment : Fragment() {
 
             // 디바이스 재시작 대응 취소
             if (activity != null) {
-                val bootReceiver = ComponentName(activity!!, DeviceBootReceiver::class.java)
+                val bootReceiver = ComponentName(requireActivity(), DeviceBootReceiver::class.java)
 
-                activity!!.packageManager.setComponentEnabledSetting(
+                requireActivity().packageManager.setComponentEnabledSetting(
                     bootReceiver,
                     PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
                     PackageManager.DONT_KILL_APP
                 )
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        realm.close()
     }
 }

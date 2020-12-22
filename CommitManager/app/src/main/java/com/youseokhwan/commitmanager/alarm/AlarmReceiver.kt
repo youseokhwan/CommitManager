@@ -13,8 +13,12 @@ import androidx.core.app.NotificationManagerCompat
 import com.youseokhwan.commitmanager.R
 import com.youseokhwan.commitmanager.SplashActivity
 import com.youseokhwan.commitmanager.exception.RetrofitException
+import com.youseokhwan.commitmanager.realm.Setting
+import com.youseokhwan.commitmanager.realm.User
 import com.youseokhwan.commitmanager.retrofit.Commit
 import com.youseokhwan.commitmanager.retrofit.UserRetrofit
+import io.realm.Realm
+import io.realm.kotlin.where
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -22,12 +26,19 @@ import java.util.*
 
 class AlarmReceiver : BroadcastReceiver() {
 
+    private lateinit var realm: Realm
+
     private lateinit var notificationManager: NotificationManager
     private lateinit var title: String
     private lateinit var text: String
 
     override fun onReceive(context: Context?, intent: Intent?) {
         Log.d("CommitManagerLog", "AlarmReceiver, onReceive() 호출됨")
+
+        // Realm 인스턴스 초기화
+        realm = Realm.getDefaultInstance()
+        val userItem = realm.where<User>().findFirst()
+        val settingItem = realm.where<Setting>().findFirst()
 
         notificationManager = context?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
@@ -40,11 +51,12 @@ class AlarmReceiver : BroadcastReceiver() {
 
         // 오늘 Commit 여부 확인
         // GET("/commit?id=${id}&token=${token}")
-        UserRetrofit.getService().getTodayCommit(id = SplashActivity.id, token = SplashActivity.token)
+        UserRetrofit.getService().getTodayCommit(id = userItem?.id ?: "error", token = userItem?.token ?: "error")
             .enqueue(object : Callback<Commit> {
                 override fun onFailure(call: Call<Commit>?, t: Throwable?) {
                     text = "커밋 내역을 불러오는 중 오류가 발생하였습니다."
                     createNotification(context)
+                    realm.close()
                     throw RetrofitException("RetrofitException: onFailure()\n${t.toString()}")
                 }
 
@@ -54,7 +66,7 @@ class AlarmReceiver : BroadcastReceiver() {
                             title += " 완료!"
                             text = response.body()?.msg.toString()
 
-                            if (SplashActivity.alarmOption == 2) { // '커밋한 날도 받기'를 선택한 경우
+                            if (settingItem?.alarmOption == 2) { // '커밋한 날도 받기'를 선택한 경우
                                 createNotification(context)
                             }
                             // =====================================================================
@@ -68,10 +80,12 @@ class AlarmReceiver : BroadcastReceiver() {
                             text = "이대로 포기하실 건가요?"
                             createNotification(context)
                         }
+                        realm.close()
                     } else {
                         text = "커밋 내역을 불러오는 중 오류가 발생하였습니다."
                         createNotification(context)
 
+                        realm.close()
                         throw RetrofitException("RetrofitException: response.isSuccessful is false")
                     }
                 }

@@ -1,6 +1,6 @@
 package com.youseokhwan.commitmanager.fragment
 
-import android.app.TimePickerDialog
+import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -15,18 +15,19 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.youseokhwan.commitmanager.*
 import com.youseokhwan.commitmanager.dialog.AlarmTimeDialogFragment
-import com.youseokhwan.commitmanager.exception.InvalidParameterNameException
 import com.youseokhwan.commitmanager.exception.RetrofitException
+import com.youseokhwan.commitmanager.realm.User
 import com.youseokhwan.commitmanager.retrofit.UserInfo
 import com.youseokhwan.commitmanager.retrofit.UserRetrofit
 import com.youseokhwan.commitmanager.webview.OAuthActivity
+import io.realm.Realm
+import io.realm.kotlin.createObject
+import io.realm.kotlin.where
 import kotlinx.android.synthetic.main.fragment_initial.*
 import kotlinx.android.synthetic.main.fragment_initial.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.text.SimpleDateFormat
-import java.util.*
 
 /**
  * 최초 실행 시 초기 설정을 진행하는 Fragment
@@ -40,6 +41,8 @@ import java.util.*
  * @property fadeOut FadeOut 애니메이션
  */
 class InitialFragment : Fragment() {
+
+    private lateinit var realm: Realm
 
     private var firstRunActivity = FirstRunActivity()
     private lateinit var fadeIn0: Animation
@@ -59,6 +62,11 @@ class InitialFragment : Fragment() {
         fadeOut = AnimationUtils.loadAnimation(context, R.anim.fade_out)
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        realm = Realm.getDefaultInstance()
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_initial, container, false)
 
@@ -69,7 +77,9 @@ class InitialFragment : Fragment() {
         // GitHub 로그인 버튼을 클릭하면 WebView 띄우기
         view.btnGitHubLogin.setOnClickListener {
             // OAuthActivity 호출
-            startActivity(Intent(activity, OAuthActivity::class.java))
+            startActivityForResult(Intent(activity, OAuthActivity::class.java), 0)
+
+            // GitHub 로그인 버튼 숨기고 Loading 띄우기
         }
 
         // 알림 여부 RadioGroup
@@ -167,11 +177,13 @@ class InitialFragment : Fragment() {
     /**
      * OAuth 인증에 성공하면 UI 변경
      */
-    private fun showBottomUi() {
+    private fun showBottomUI() {
+        val userItem = realm.where<User>().findFirst()
+
         // GitHub 로그인 버튼, ID EditText
         btnGitHubLogin.visibility = View.INVISIBLE
         edtGithubId   .visibility = View.VISIBLE
-        edtGithubId   .setText(SplashActivity.id)
+        edtGithubId   .setText(userItem?.id ?: "error")
 
         // 알림 여부
         txtNotificationLabel.visibility = View.VISIBLE
@@ -186,16 +198,46 @@ class InitialFragment : Fragment() {
         rgVibrate .visibility = View.VISIBLE
 
         // 시작하기 버튼
-        btnStart.setTextColor(ContextCompat.getColor(context!!, R.color.limegreen))
+        btnStart.setTextColor(ContextCompat.getColor(requireContext(), R.color.limegreen))
         btnStart.isEnabled  = true
     }
 
-    override fun onStart() {
-        // OAuth 인증에 성공하여 저장된 id가 존재하는 경우
-        if (SplashActivity.id != "") {
-            showBottomUi()
-        }
+    override fun onDestroy() {
+        super.onDestroy()
+        realm.close()
+    }
 
-        super.onStart()
+    /**
+     * OAuthActivity가 종료될 때 id, token을 받아서 User 데이터 생성
+     */
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == 0 && resultCode == RESULT_OK) {
+            Log.d("CommitManagerLog",
+                "RESULT_OK: ${data?.getStringExtra("id")}, ${data?.getStringExtra("token")}")
+
+            // User 데이터 생성
+            realm.executeTransactionAsync({
+                val userItem = it.createObject<User>()
+                userItem.id        = data?.getStringExtra("id")    ?: "error"
+                userItem.token     = data?.getStringExtra("token") ?: "error"
+                userItem.name      = ""
+                userItem.imgSrc    = ""
+                userItem.follower  = 0
+                userItem.following = 0
+            }, {
+                showBottomUI() // 설정 UI 보이기
+            }, {
+                Log.d("CommitManagerLog", "executeTransactionAsync: onError()")
+                Log.d("CommitManagerLog", "오류 메시지: ${it.message}")
+
+                // 로그인에 실패했으므로 Loading을 지우고 다시 GitHub 로그인 버튼을 띄워야 함
+            })
+        } else {
+            Log.d("CommitManagerLog", "onActivityResult else문 진입")
+
+            // 로그인에 실패했으므로 Loading을 지우고 다시 GitHub 로그인 버튼을 띄워야 함
+        }
     }
 }
