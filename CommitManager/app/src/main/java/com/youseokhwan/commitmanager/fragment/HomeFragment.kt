@@ -65,7 +65,7 @@ class HomeFragment : Fragment() {
                         // count가 0보다 크면 커밋이 완료된 것임
                         if (response.body()?.count?:"0" != "0") {
                             // 커밋 내역이 있을 경우 V 이미지로 변경
-                            imgDaily.setImageResource(R.drawable.ic_check_black_24dp)
+                            imgDaily.setImageResource(R.drawable.ic_check_green_24dp)
                             imgDaily.startAnimation(fadeIn)
 
                             // =====================================================================
@@ -88,7 +88,7 @@ class HomeFragment : Fragment() {
                             // =====================================================================
                         } else {
                             // 커밋 내역이 없을 경우 X 이미지로 변경
-                            imgDaily.setImageResource(R.drawable.ic_close_black_24dp)
+                            imgDaily.setImageResource(R.drawable.ic_close_red_24dp)
                             imgDaily.startAnimation(fadeIn)
 
                             // 커밋 내역이 없을 경우 Repository, Msg 숨기기
