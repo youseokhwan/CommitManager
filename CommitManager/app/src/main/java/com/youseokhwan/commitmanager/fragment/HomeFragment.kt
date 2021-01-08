@@ -30,7 +30,7 @@ class HomeFragment : Fragment() {
     private lateinit var realm: Realm
 
     // 에니메이션 변수 선언
-    private lateinit var fadeIn : Animation
+    private lateinit var fadeIn: Animation
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +43,7 @@ class HomeFragment : Fragment() {
         val userItem = realm.where<User>().findFirst()
 
         // 애니메이션 변수 초기화
-        fadeIn  = AnimationUtils.loadAnimation(context, R.anim.fade_in)
+        fadeIn = AnimationUtils.loadAnimation(context, R.anim.fade_in)
 
         // 오늘 커밋 여부 아이콘 업데이트
         // GET("/commit?id=${id}&token=${token}")

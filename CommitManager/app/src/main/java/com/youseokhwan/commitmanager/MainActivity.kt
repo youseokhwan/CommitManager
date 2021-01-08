@@ -66,7 +66,6 @@ class MainActivity : AppCompatActivity() {
         nav_view.setupWithNavController(navController)
 
         // Toolbar Title 설정
-//        toolbar.title = SplashActivity.name
         toolbar.title = userItem?.name ?: "1일 1커밋"
 
         // Toolbar 클릭하면 UserInfo 패널 Visible
@@ -81,6 +80,7 @@ class MainActivity : AppCompatActivity() {
         // UserInfo 패널 설정
         Glide.with(this)
             .load(userItem?.imgSrc)
+            .error(R.drawable.ic_launcher_foreground)
             .into(ImgAvatar)
         txtGitHubId .text = userItem?.id ?: "error"
         txtFollower .text = "follower: ${userItem?.follower ?: -1}명"
